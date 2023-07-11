@@ -1,0 +1,12 @@
+query AboutPage($locale: String!) {
+    aboutPage(locale: $locale) {
+      pageTitle
+      richDescription
+      featImg {
+        url
+        width
+        height
+        alternativeText
+      }
+    }
+}
