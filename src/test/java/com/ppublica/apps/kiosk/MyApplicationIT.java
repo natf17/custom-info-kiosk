@@ -22,12 +22,14 @@ public class MyApplicationIT {
     @Autowired
     WebTestClient webTestClient;
 
+    // configured automatically by @SpringBootTest
     @Autowired
     HttpGraphQlTester graphqlTester;
 
     @BeforeAll
     static void setup() {
         // populate about page with feature image width value 100
+        
 
     }
 
