@@ -13,7 +13,18 @@ abstract class KioskPage {
 
     }
 
+    // getters
+    public KioskPageInternals getPageInternals() {
+        return this.pageInternals;
+    }
 
+    public PageTitleField getPageTitleField() {
+        return this.pageTitle;
+    }
+
+
+
+    // builder
 
     static abstract class Builder<B extends Builder<B, M>, M extends KioskPage> {
         private String pageTitle;

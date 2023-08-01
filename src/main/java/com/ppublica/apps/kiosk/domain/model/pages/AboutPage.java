@@ -22,13 +22,26 @@ public class AboutPage extends KioskPage {
 
     }
 
+    // getters
+
+    public ImageField getFeatureImageField() {
+        return this.featureImageField;
+    }
+
+    public RDescriptionField getRichDescriptionField() {
+        return this.richDescriptionField;
+    }
+
+
+    // builder
+
     public static class Builder extends KioskPage.Builder<Builder, AboutPage> {
         private Image featureImage;
         private String altText;
         private ImageField featureImageField;
         private String rDescription;
         private RDescriptionField rDescriptionField;
-        
+
 
         public Builder featureImage(Image image) {
             this.featureImageField = null;
@@ -87,9 +100,6 @@ public class AboutPage extends KioskPage {
                 this.rDescriptionField = new RDescriptionField(RICH_DESCR_FIELD_NAME, this.rDescription);
                 
             }
-
-
-
 
         }
 

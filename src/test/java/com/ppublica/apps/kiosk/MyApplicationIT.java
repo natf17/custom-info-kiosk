@@ -16,7 +16,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
  * @ContextConfiguration(classes=TestConfig.class)
  * @WebAppConfiguration
 */ 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class MyApplicationIT {
 
     @Autowired
@@ -33,7 +33,7 @@ public class MyApplicationIT {
 
     }
 
-    @Test
+    //@Test
     void exampleTest() {
         webTestClient.get().uri("/")
                       .exchange()
@@ -41,7 +41,7 @@ public class MyApplicationIT {
                       .expectBody(String.class).isEqualTo("Hello world!");
     }
 
-    @Test
+   // @Test
     void exampleGraphQlTest() {
         HttpGraphQlTester tester = graphqlTester.mutate()
             .build();

@@ -17,11 +17,11 @@ public abstract class PageField<T> {
         this.fieldValue = fieldValue;
     }
 
-    private String getFieldName() {
+    public String getFieldName() {
         return this.fieldName;
     }
     
-    private T getFieldValue() {
+    public T getFieldValue() {
         return this.fieldValue;
     }
 

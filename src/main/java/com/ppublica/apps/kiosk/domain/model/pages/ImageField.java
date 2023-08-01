@@ -24,27 +24,14 @@ public class ImageField extends PageField<Image>{
 
     }
 
+    public AlternateTextField getAltTextField() {
+        return this.altTextField;
+    }
+
     @Override
     public boolean isLocalized() {
         return false;
     }
-
-    class AlternateTextField extends PageField<String> {
-        public AlternateTextField(String fieldName) {
-            super(fieldName);
-        }
-
-        public AlternateTextField(String fieldName, String altText) {
-            super(fieldName, altText);
-        }
-
-        @Override
-        public boolean isLocalized() {
-            return true;
-        }
-
-    }
-
 
     
 }
