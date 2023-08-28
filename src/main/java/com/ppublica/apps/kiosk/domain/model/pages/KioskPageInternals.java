@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
+import com.ppublica.apps.kiosk.domain.model.util.KioskLocale;
+
 /*
  * The base class for all kiosk pages.
  * 
@@ -26,13 +28,13 @@ public class KioskPageInternals {
 
     // for use by repository classes ONLY
     @PersistenceCreator
-    public KioskPageInternals(KioskLocale locale, PageMetadata metadata) {
+    public KioskPageInternals(AggregateReference<KioskLocale, Long> locale, PageMetadata metadata) {
         this.locale = locale;
         this.metadata = metadata;
     }
 
 
-    public KioskLocale getLocale() {
+    public AggregateReference<KioskLocale, Long> getLocale() {
         return this.locale;
     }
     

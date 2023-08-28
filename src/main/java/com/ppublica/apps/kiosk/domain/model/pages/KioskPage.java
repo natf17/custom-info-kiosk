@@ -1,5 +1,7 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+
 abstract class KioskPage {
     public static final String DEFAULT_TITLE_FIELD_NAME = "PageTitle";
     
@@ -35,6 +37,7 @@ abstract class KioskPage {
         private String pageTitle;
         private PageTitleField pageTitleField;
         private KioskPageInternals pageInternals;
+        private Long localeId;
         
 
         public B pageTitle(String title) {
@@ -61,6 +64,12 @@ abstract class KioskPage {
             return self();
         }
 
+        public B withLocaleId(Long localeId) {
+            this.localeId = localeId;
+
+            return self();
+        }
+
         public M build() {
             validateAndPrepare();
             return buildChild();
@@ -79,7 +88,11 @@ abstract class KioskPage {
             }
 
             if (this.pageInternals == null) {
-                this.pageInternals = new KioskPageInternals(PageMetadata.newPage());
+                if(this.localeId == null) {
+                    throw new RuntimeException("The locale id is required to build the About page");
+                }
+
+                this.pageInternals = new KioskPageInternals(AggregateReference.to(this.localeId), PageMetadata.newPage());
             }
 
             validateAndPrepareChild();

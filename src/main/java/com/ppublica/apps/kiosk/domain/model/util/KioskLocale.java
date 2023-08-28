@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.domain.model.pages;
+package com.ppublica.apps.kiosk.domain.model.util;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -10,9 +10,8 @@ public class KioskLocale {
     private String abbrev;
     private String name;
 
-    // for use by repository classes ONLY
     @PersistenceCreator
-    KioskLocale(String abbrev, String name) {
+    public KioskLocale(String abbrev, String name) {
         this.abbrev = abbrev;
         this.name = name;
     }

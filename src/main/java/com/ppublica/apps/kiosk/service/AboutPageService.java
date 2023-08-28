@@ -6,6 +6,7 @@ import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
 import com.ppublica.apps.kiosk.domain.model.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.pages.ImageField;
 import com.ppublica.apps.kiosk.repository.AboutPageRepository;
+import com.ppublica.apps.kiosk.repository.KioskLocaleRepository;
 import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
 import com.ppublica.apps.kiosk.service.views.about.ImageView;
 
@@ -13,6 +14,9 @@ public class AboutPageService {
 
     @Autowired
     private AboutPageRepository repo;
+
+    @Autowired
+    private KioskLocaleRepository localeRepo;
     
 
     public AboutPageView getAboutPage(String locale) {

@@ -1,5 +1,8 @@
 package com.ppublica.apps.kiosk.repository;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +26,7 @@ import org.springframework.transaction.annotation.Propagation;
 
 import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
 import com.ppublica.apps.kiosk.domain.model.pages.Image;
+import com.ppublica.apps.kiosk.domain.model.util.KioskLocale;
 
 import graphql.Assert;
 
@@ -31,12 +39,24 @@ public class AboutPageRepositoryTest {
     @Autowired
     AboutPageRepository repo;
 
+    @Autowired
+    JdbcTemplate template;
+
+
     AboutPage pageEn;
     AboutPage pageSp;
 
     @BeforeEach
     public void setup() {
+
+        
+        Long enLocaleId = template.query("SELECT id FROM kiosk_locale WHERE abbrev = ?", new IdRowMapper(), "EN").get(0);
+        Long esLocaleId = template.query("SELECT id FROM kiosk_locale WHERE abbrev = ?", new IdRowMapper(), "ES").get(0);
+
+        
+
         pageEn = new AboutPage.Builder()
+                            .withLocaleId(enLocaleId)
                             .pageTitle("sampleTitle")
                             .featureImage(new Image("sample_url", 1, 1))
                             .featureImageAltText("Sample image alt text")
@@ -44,6 +64,7 @@ public class AboutPageRepositoryTest {
                             .build();
 
         pageSp = new AboutPage.Builder()
+                            .withLocaleId(esLocaleId)
                             .pageTitle("titulo")
                             .featureImage(new Image("direccion", 1, 1))
                             .featureImageAltText("texto de imagen")
@@ -55,7 +76,7 @@ public class AboutPageRepositoryTest {
     public void givenPageInternalsLocaleAbbrev_returns_pageId() {
         AboutPage result = repo.save(pageEn);
 
-        List<Long> returnedPageIds =  repo.getAboutPageIdsforLocale("EN");
+        List<Long> returnedPageIds = repo.getAboutPageIdsforLocale("EN");
         
         Assertions.assertTrue(returnedPageIds.size() == 1);
 
@@ -76,6 +97,15 @@ public class AboutPageRepositoryTest {
 
 
     }
+
+    class IdRowMapper implements RowMapper<Long>{
+    
+        public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+        
+            return rs.getLong("id");
+
+        }
+    }    
 
 
 
