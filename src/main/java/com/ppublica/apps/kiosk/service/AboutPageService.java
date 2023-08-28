@@ -1,5 +1,8 @@
 package com.ppublica.apps.kiosk.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
@@ -18,13 +21,25 @@ public class AboutPageService {
     @Autowired
     private KioskLocaleRepository localeRepo;
     
-
-    public AboutPageView getAboutPage(String locale) {
+    /*
+     * This service method expects only one about page for a given locale
+     * to exist.
+     */
+    public Optional<AboutPageView> getAboutPage(String locale) {
         
-        
-        AboutPage aboutPage = null; //repo.findByPageInternalsLocaleAbbrev(locale);
+        List<Long> aboutPageIds = repo.getAboutPageIdsforLocale(locale);
 
-        return transformToView(aboutPage);
+        if (aboutPageIds.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Optional<AboutPage> aboutPage = repo.findById(aboutPageIds.get(0));
+
+        if (aboutPage.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(transformToView(aboutPage.get()));
 
     }
 

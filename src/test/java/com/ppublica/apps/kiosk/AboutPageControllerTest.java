@@ -3,9 +3,10 @@ package com.ppublica.apps.kiosk;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
-import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
@@ -26,9 +27,6 @@ import com.ppublica.apps.kiosk.service.views.about.ImageView;
 public class AboutPageControllerTest {
 
     // It is already initialized with a configured WebTestClient bound to the A.C
-    //@Autowired
-    //private HttpGraphQlTester httpGraphQlTester;
-
     @Autowired
     private GraphQlTester graphqlTester;
 
@@ -69,7 +67,7 @@ public class AboutPageControllerTest {
         ImageView imageView = new ImageView("sample_url", 1, 1, "Sample image alt text");
         AboutPageView aboutPageView = new AboutPageView("sampleTitle", "Sample rich description", imageView);
        
-        when(pageService.getAboutPage("en")).thenReturn(aboutPageView);
+        when(pageService.getAboutPage("en")).thenReturn(Optional.of(aboutPageView));
 
 
         graphqlTester.documentName("aboutPage")
