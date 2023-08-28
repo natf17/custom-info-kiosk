@@ -3,15 +3,22 @@ package com.ppublica.apps.kiosk.domain.model.pages;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
+
 public class PageMetadata {
+    @Id
+    private Long id;
+    
     private PageStatus pageStatus;
     private LocalDate createdOn;
     private LocalDateTime lastModified;
 
     // to be called by enclosing page and factory method
-    PageMetadata(PageStatus pageStatus, LocalDate dateCreated, LocalDateTime lastModified) {
+    @PersistenceCreator
+    PageMetadata(PageStatus pageStatus, LocalDate createdOn, LocalDateTime lastModified) {
         this.pageStatus = pageStatus;
-        this.createdOn = dateCreated;
+        this.createdOn = createdOn;
         this.lastModified = lastModified;
     }
 

@@ -6,6 +6,11 @@ abstract class KioskPage {
     private KioskPageInternals pageInternals;
     private PageTitleField pageTitle;
 
+    // for use by repository classes ONLY
+    protected KioskPage(KioskPageInternals pageInternals, PageTitleField pageTitle) {
+        this.pageInternals = pageInternals;
+        this.pageTitle = pageTitle;
+    }
 
     public <B extends Builder<B,M>, M extends KioskPage> KioskPage(Builder<B, M> builder) {
         this.pageInternals = builder.pageInternals;

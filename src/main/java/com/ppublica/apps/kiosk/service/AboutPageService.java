@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
 import com.ppublica.apps.kiosk.domain.model.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.pages.ImageField;
-import com.ppublica.apps.kiosk.domain.model.pages.KioskLocale;
 import com.ppublica.apps.kiosk.repository.AboutPageRepository;
 import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
 import com.ppublica.apps.kiosk.service.views.about.ImageView;
@@ -18,7 +17,8 @@ public class AboutPageService {
 
     public AboutPageView getAboutPage(String locale) {
         
-        AboutPage aboutPage = repo.getAboutPage(KioskLocale.valueOf(locale));
+        
+        AboutPage aboutPage = null; //repo.findByPageInternalsLocaleAbbrev(locale);
 
         return transformToView(aboutPage);
 

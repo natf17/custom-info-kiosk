@@ -1,18 +1,29 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-public enum KioskLocale {
-    EN("EN");
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 
-    private String localeAbbrev;
+public class KioskLocale {
+    @Id
+    private Long id;   
+    
+    private String abbrev;
+    private String name;
 
-    KioskLocale(String localeAbbrev) {
-        this.localeAbbrev = localeAbbrev;
+    // for use by repository classes ONLY
+    @PersistenceCreator
+    KioskLocale(String abbrev, String name) {
+        this.abbrev = abbrev;
+        this.name = name;
     }
 
-    // todo: what happens if locale not found?
-    // use something beside an enum? we don't want to hardcode languages
+    KioskLocale(String abbrev) {
+        this(abbrev, null);
+    }
+
+    // returns a KioskLocale that might or might not exist
     static KioskLocale from(String localeAbbrev) {
-        return KioskLocale.valueOf(localeAbbrev.toUpperCase());
+        return new KioskLocale(localeAbbrev.toUpperCase());
     }
 
 

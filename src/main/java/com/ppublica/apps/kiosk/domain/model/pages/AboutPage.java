@@ -1,5 +1,8 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
+
 /*
  * Represents an About Page with the following:
  *  - page title
@@ -7,12 +10,22 @@ package com.ppublica.apps.kiosk.domain.model.pages;
  *  - feature image
  */
 public class AboutPage extends KioskPage {
+    @Id
+    private Long id;
+
     private static final String FEATURE_IMG_FIELD_NAME = "FeatImg";
     private static final String RICH_DESCR_FIELD_NAME = "RichDescription";
 
     private ImageField featureImageField;
     private RDescriptionField richDescriptionField;
 
+    // for use by repository classes ONLY
+    @PersistenceCreator
+    public AboutPage(KioskPageInternals pageInternals, PageTitleField pageTitle, ImageField featureImageField, RDescriptionField richDescriptionField) {
+        super(pageInternals, pageTitle);
+        this.featureImageField = featureImageField;
+        this.richDescriptionField = richDescriptionField;
+    }
 
     public AboutPage(Builder builder) {
         super(builder);
@@ -30,6 +43,10 @@ public class AboutPage extends KioskPage {
 
     public RDescriptionField getRichDescriptionField() {
         return this.richDescriptionField;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
 

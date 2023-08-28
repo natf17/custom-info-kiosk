@@ -1,5 +1,9 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+
 /*
  * The base class for all kiosk pages.
  * 
@@ -8,13 +12,20 @@ package com.ppublica.apps.kiosk.domain.model.pages;
  * Local-agnostic.
  */
 public class KioskPageInternals {
-    private static final KioskLocale DEFAULT_KIOSK_LOCALE = KioskLocale.EN;
-    private KioskLocale locale = DEFAULT_KIOSK_LOCALE;
+    @Id
+    private Long id;
+
+    //private static final KioskLocale DEFAULT_KIOSK_LOCALE = KioskLocale.from("EN");
+    //private KioskLocale locale = DEFAULT_KIOSK_LOCALE;
+    private AggregateReference<KioskLocale, Long> locale;
     private PageMetadata metadata;
     
     public KioskPageInternals(PageMetadata metadata) {
         this.metadata = metadata;
     }
+
+    // for use by repository classes ONLY
+    @PersistenceCreator
     public KioskPageInternals(KioskLocale locale, PageMetadata metadata) {
         this.locale = locale;
         this.metadata = metadata;

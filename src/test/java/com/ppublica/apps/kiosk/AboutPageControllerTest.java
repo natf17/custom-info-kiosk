@@ -4,23 +4,33 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.when;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.autoconfigure.graphql.tester.AutoConfigureHttpGraphQlTester;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.graphql.test.tester.HttpGraphQlTester;
+import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.AboutPageService;
 import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
 import com.ppublica.apps.kiosk.service.views.about.ImageView;
 
-
-@AutoConfigureHttpGraphQlTester
-@SpringBootTest
+/*
+ * Not using...
+ *   @AutoConfigureHttpGraphqlTester
+ *   @SpringBootTest
+ * 
+ * ... because it starts up a server and it reads entire configuration files,
+ * which processes schema files. We want to test a thinner slice.
+ *   
+ */
+@GraphQlTest(AboutPageController.class)
 public class AboutPageControllerTest {
 
     // It is already initialized with a configured WebTestClient bound to the A.C
+    //@Autowired
+    //private HttpGraphQlTester httpGraphQlTester;
+
     @Autowired
-    private HttpGraphQlTester httpGraphQlTester;
+    private GraphQlTester graphqlTester;
 
     @MockBean
     private AboutPageService pageService;
@@ -61,11 +71,8 @@ public class AboutPageControllerTest {
        
         when(pageService.getAboutPage("en")).thenReturn(aboutPageView);
 
-        
-        HttpGraphQlTester tester = httpGraphQlTester.mutate()
-            .build();
 
-        tester.documentName("aboutPage")
+        graphqlTester.documentName("aboutPage")
             .variable("locale", "en")
             .execute()
             .path("aboutPage", aboutPage -> { aboutPage
