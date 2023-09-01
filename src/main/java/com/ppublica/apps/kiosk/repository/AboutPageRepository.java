@@ -11,14 +11,6 @@ import com.ppublica.apps.kiosk.domain.model.util.KioskLocale;
 
 public interface AboutPageRepository extends CrudRepository<AboutPage, Long>{
 
-    //AboutPage findByPageInternalsLocaleAbbrev(String localeAbbrev);
-    
-    // get page id for locale
-
-    // get imagefield and image
-
-    // get rdescriptionfield
-
     /*
     @Query("SELECT about_page.id " + 
             "FROM about_page " + 
@@ -26,7 +18,7 @@ public interface AboutPageRepository extends CrudRepository<AboutPage, Long>{
             "INNER JOIN kiosk_locale ON kiosk_page_internals.id = kiosk_locale.kiosk_page_internals " +
             "WHERE kiosk_locale.abbrev = :locale")
     public List<Long> getAboutPageIdsforLocale(@Param("locale") String abbrev);
-*/
+    */
 
       @Query("SELECT about_page.id " + 
             "FROM about_page " + 

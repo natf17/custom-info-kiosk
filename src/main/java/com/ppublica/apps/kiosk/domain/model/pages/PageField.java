@@ -1,8 +1,13 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
 /*
- * Represents a user-provided entity that exists inside a page, 
- * such as an image, a text field, a label, ....
+ * Represents a single user-provided unit that exists inside a page, 
+ * (e.g. an image, a text field) with a single editable field value.
+ * However, it is possible for a PageField to have other PageFields.
+ *
+ * For page entities that do not represent a field value (e.g. a container
+ * or list of other PageFields), see PageFieldContainer. 
+ * 
  */
 public abstract class PageField<T> {
     private String fieldName;

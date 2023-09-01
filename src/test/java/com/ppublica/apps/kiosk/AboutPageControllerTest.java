@@ -53,16 +53,6 @@ public class AboutPageControllerTest {
     @Test
     public void GET_aboutPage_returns_page() {
 
-        /*
-        // set up mock
-        AboutPage page = new AboutPage.Builder()
-                            .pageTitle("sampleTitle")
-                            .featureImage(new Image("sample_url", 1, 1))
-                            .featureImageAltText("Sample image alt text")
-                            .richDescription("Sample rich description")
-                            .build();
-        */
-
         // set up mock
         ImageView imageView = new ImageView("sample_url", 1, 1, "Sample image alt text");
         AboutPageView aboutPageView = new AboutPageView("sampleTitle", "Sample rich description", imageView);
