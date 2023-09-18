@@ -1,5 +1,8 @@
 package com.ppublica.apps.kiosk.domain.model.cms.pages;
 
-public class Image {
-    
+public record Image(String location, Integer width, Integer height) {
+    public Image() {
+        this(null, null, null);
+    }
+   
 }

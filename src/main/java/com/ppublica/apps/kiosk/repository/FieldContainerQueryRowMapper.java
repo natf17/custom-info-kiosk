@@ -9,9 +9,9 @@ public class FieldContainerQueryRowMapper implements RowMapper<FieldContainerQue
 
     @Override
     public FieldContainerQueryResults mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Long id = rs.getLong("field_container.id");
-        String containerName = rs.getString("field_container.field_container_name");
-        Boolean hasNestedContainer = rs.getBoolean("field_container.has_nested_container");
+        Long id = rs.getLong("FC_ID");
+        String containerName = rs.getString("FC_NAME");
+        Boolean hasNestedContainer = rs.getBoolean("FC_HASNESTED");
 
         return new FieldContainerQueryResults(id, containerName, hasNestedContainer);
         

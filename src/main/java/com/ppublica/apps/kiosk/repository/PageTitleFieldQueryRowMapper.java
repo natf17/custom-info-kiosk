@@ -11,8 +11,8 @@ public class PageTitleFieldQueryRowMapper implements RowMapper<PageTitleField> {
 
     @Override
     public PageTitleField mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String fieldName = rs.getString("page_title_field.field_name");
-        String fieldValue = rs.getString("page_title_field.field_value");
+        String fieldName = rs.getString("PTF_FNAME");
+        String fieldValue = rs.getString("PTF_FVALUE");
 
         return new PageTitleField(fieldName, fieldValue);
     }

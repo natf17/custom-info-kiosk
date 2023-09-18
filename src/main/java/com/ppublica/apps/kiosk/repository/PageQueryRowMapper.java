@@ -15,14 +15,14 @@ public class PageQueryRowMapper implements RowMapper<Page> {
 
     @Override
     public Page mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Long id = rs.getLong("page.id");
-        String pageType = rs.getString("page.page_type");
-        String pageName = rs.getString("page.page_name");
-        Long pageInternalsLocale = rs.getLong("page_internals.locale");
+        Long id = rs.getLong("P_ID");
+        String pageType = rs.getString("P_PTYPE");
+        String pageName = rs.getString("P_PNAME");
+        Long pageInternalsLocale = rs.getLong("PI_LOC");
         
-        LocalDate createdOn = rs.getDate("page_internals.created_on").toLocalDate();
-        LocalDateTime lastModified = rs.getTimestamp("page_internals.last_modified").toLocalDateTime();
-        PageStatus pageStatus = PageStatus.valueOf(rs.getString("page_internals.page_status"));
+        LocalDate createdOn = rs.getDate("PI_CR").toLocalDate();
+        LocalDateTime lastModified = rs.getTimestamp("PI_LM").toLocalDateTime();
+        PageStatus pageStatus = PageStatus.valueOf(rs.getString("PI_PSTATUS"));
         
         PageInternals pageInternals = new PageInternals(pageInternalsLocale, pageStatus, createdOn, lastModified);
 

@@ -11,8 +11,8 @@ public class RichTextLongDescriptionFieldRowMapper implements RowMapper<RichText
 
     @Override
     public RichTextLongDescriptionField mapRow(ResultSet rs, int rowNum) throws SQLException {
-        String fieldName = rs.getString("rich_text_long_description_field.field_name");
-        String fieldValue = rs.getString("rich_text_long_description_field.field_value");
+        String fieldName = rs.getString("RTLDF_FNAME");
+        String fieldValue = rs.getString("RTLDF_FVALUE");
 
         return new RichTextLongDescriptionField(fieldName, fieldValue);
         
