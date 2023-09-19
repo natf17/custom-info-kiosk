@@ -12,5 +12,6 @@ public interface PageRepository {
 
     public boolean pageExists(String pageType, String localeAbbrev);
 
-    
+    public Page update(String pageType, String localeAbbrev, Page page);
+
 }

@@ -271,7 +271,7 @@ public class PageRepositoryImpl implements PageRepository {
          *    To accomplish this, first we obtain the pageId, then we use it to aggregate 
          *    all the ids in increasing "level" order, and then delete them in LIFO fashion.
          * 
-         * Deleting the field containers will automaticallt trigger a delete for all child fields.
+         * Deleting the field containers will automatically trigger a delete for all child fields.
          */
         LinkedList<Long> fcIdAggregator = new LinkedList<>();
         List<FieldContainerQueryResults> currentLevelFCs;
@@ -330,6 +330,15 @@ public class PageRepositoryImpl implements PageRepository {
         } catch (EmptyResultDataAccessException e) {
             return false;
         }
+        
+    }
+
+    @Override
+    public Page update(String pageType, String localeAbbrev, Page page) {
+        
+        deletePageWithLocale(pageType, localeAbbrev);
+        
+        return save(page);
         
     }
 
