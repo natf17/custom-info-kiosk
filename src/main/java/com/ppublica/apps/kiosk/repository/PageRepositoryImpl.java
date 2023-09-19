@@ -3,9 +3,12 @@ package com.ppublica.apps.kiosk.repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -262,9 +265,72 @@ public class PageRepositoryImpl implements PageRepository {
 
     @Override
     public void deletePageWithLocale(String pageType, String localeAbbrev) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePageWithLocale'");
+
+        /* 1. The field containers must be deleted manually.
+         *    All child containers will be deleted before the parent.
+         *    To accomplish this, first we obtain the pageId, then we use it to aggregate 
+         *    all the ids in increasing "level" order, and then delete them in LIFO fashion.
+         * 
+         * Deleting the field containers will automaticallt trigger a delete for all child fields.
+         */
+        LinkedList<Long> fcIdAggregator = new LinkedList<>();
+        List<FieldContainerQueryResults> currentLevelFCs;
+        List<FieldContainerQueryResults> nextLevelFCs;
+        List<FieldContainerQueryResults> nestedFCs;
+
+        Page page = this.template.queryForObject(FIND_PAGE_TABLE, new PageQueryRowMapper(), localeAbbrev, pageType);
+        
+        if (page == null) {
+            throw new RuntimeException("Delete failed: page not found");
+        }
+        
+        // get first level of field containers
+        currentLevelFCs = this.template.query(FIND_FIELD_CONTAINER_TABLE, new FieldContainerQueryRowMapper(), false, page.getId());
+
+        // process the field containers one level at a time, aggregating their ids
+        while(!currentLevelFCs.isEmpty()) {
+            nextLevelFCs = new ArrayList<>();
+            for (FieldContainerQueryResults fc : currentLevelFCs) {
+                fcIdAggregator.add(fc.getId());
+                
+                if(fc.hasNestedContainer()) {
+                    nestedFCs = this.template.query(FIND_FIELD_CONTAINER_TABLE, new FieldContainerQueryRowMapper(), false, fc.getId());
+                    nextLevelFCs.addAll(nestedFCs);
+                }
+            }
+
+            currentLevelFCs = nextLevelFCs;  
+            
+        }
+
+        Iterator<Long> descendingIterator = fcIdAggregator.descendingIterator();
+        Long currentFCId;
+
+        while(descendingIterator.hasNext()) {
+            currentFCId = descendingIterator.next();
+            this.template.update(DELETE_FIELD_CONTAINER_TABLE, currentFCId);
+        }
+
+
+        /*
+         * 2. Delete the page, which will also delete the associated page_internals and page_title_field
+         */
+
+        this.template.update(DELETE_PAGE_TABLE, page.getId());
+        
     }
 
-    
+    @Override
+    public boolean pageExists(String pageType, String localeAbbrev) {
+
+        try {
+            this.template.queryForObject(FIND_PAGE_TABLE, new PageQueryRowMapper(), localeAbbrev, pageType);
+            return true;
+
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+        
+    }
+
 }

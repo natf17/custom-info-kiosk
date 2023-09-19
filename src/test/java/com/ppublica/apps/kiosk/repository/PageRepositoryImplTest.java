@@ -61,18 +61,18 @@ public class PageRepositoryImplTest {
 
         LocalDate testDate = LocalDate.of(2023, 9, 12);
         LocalDateTime testDateTime = LocalDateTime.of(2023, 1, 9, 9, 30);
-        PageInternals newPageInternals = new PageInternals(enLocaleId, PageStatus.DRAFT, testDate, testDateTime);
+
         this.newPageNoNesting = new Page.Builder()
                             .pageType("about")
                             .pageName("about_page")
-                            .pageInternals(newPageInternals)
+                            .pageInternals(new PageInternals(enLocaleId, PageStatus.DRAFT, testDate, testDateTime))
                             .title("about_page_title")
                             .build();
 
         this.newPageNoNestingSp = new Page.Builder()
                             .pageType("about")
                             .pageName("pagina sobre...")
-                            .pageInternals(newPageInternals)
+                            .pageInternals(new PageInternals(esLocaleId, PageStatus.DRAFT, testDate, testDateTime))
                             .title("titulo de pagina")
                             .build();
 
@@ -84,7 +84,7 @@ public class PageRepositoryImplTest {
     }
 
 
-    //@Test
+    @Test
     public void givenNewPageWithNoNesting_saveAndRead_success() {
 
 
@@ -105,18 +105,8 @@ public class PageRepositoryImplTest {
         Assertions.assertTrue(newPageNoNesting.getFieldContainers().isEmpty());                 
 
     }
-
-    //@Test
-    public void givenTwoPagesSameType_saveAndRead_thowsException() {
-
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            repo.save(newPageNoNesting);
-            repo.save(newPageNoNesting);
-        });
-    }
-
     
-    //@Test
+    @Test
     public void givenNewPageWithNesting_saveAndRead_success() {
 
         repo.save(newPageWithComplexNesting);
@@ -242,19 +232,32 @@ public class PageRepositoryImplTest {
 
     }
 
-    //@Test
+    @Test
     public void givenPageWithNesting_saveAndDeletePageLocale_success() {
         repo.save(newPageWithComplexNesting);
         repo.save(newPageWithComplexNestingSp);
-        repo.deletePageWithLocale("about", "SP");
+        repo.deletePageWithLocale("sample", "SP");
 
         Assertions.assertThrows(RuntimeException.class, () -> {
-            repo.findByPageTypeAndKioskLocale("about", "SP");
+            repo.findByPageTypeAndKioskLocale("sample", "SP");
         });
 
-        Page otherPage = repo.findByPageTypeAndKioskLocale("about", "EN");
-        Assertions.assertEquals("about", otherPage.getPageType());
+        Page otherPage = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Assertions.assertEquals("sample", otherPage.getPageType());
         Assertions.assertEquals(enLocaleId, otherPage.getPageInternals().getKioskLocaleId());
+    }
+
+    @Test
+    public void givenPageWithNesting_pageExists_True() {
+        repo.save(newPageWithComplexNesting);
+        repo.save(newPageWithComplexNestingSp);
+
+        Assertions.assertTrue(repo.pageExists("sample", "EN"));
+    }
+
+    @Test
+    public void givenNoPage_pageExists_False() {
+        Assertions.assertFalse(repo.pageExists("sample", "EN"));
     }
 
     

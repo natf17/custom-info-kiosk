@@ -65,5 +65,13 @@ public class SQLStatements {
     protected static String FIND_URL_FIELD_TABLE = "SELECT url_field.field_name AS UF_FNAME, url_field.field_value AS UF_FVALUE "
                                                 + "FROM url_field "
                                                 + "WHERE url_field.field_container = ?";
+
+    protected static String FIND_FIELD_CONTAINER_IDS_TABLE = "SELECT url_field.field_name AS UF_FNAME, url_field.field_value AS UF_FVALUE "
+                                                + "FROM url_field "
+                                                + "WHERE url_field.field_container = ?";
+
+    protected static String DELETE_FIELD_CONTAINER_TABLE = "DELETE FROM field_container WHERE field_container.id = ?";
+
+    protected static String DELETE_PAGE_TABLE = "DELETE FROM page WHERE page.id = ?";
     
 }
