@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -74,13 +75,14 @@ public class PageRepositoryImpl implements PageRepository {
     }
 
     @Override
-    public Page findByPageTypeAndKioskLocale(String pageType, String localeAbbrev) {
-        // get all pages that match pageType and locale, obtaining pageInternals along the way
-
-        Page page = this.template.queryForObject(FIND_PAGE_TABLE, new PageQueryRowMapper(), localeAbbrev, pageType);
+    public Optional<Page> findByPageTypeAndKioskLocale(String pageType, String localeAbbrev) {
         
-        if (page == null) {
-            return null;
+        Page page = null;
+        try {
+            page = this.template.queryForObject(FIND_PAGE_TABLE, new PageQueryRowMapper(), localeAbbrev, pageType);
+
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
         }
 
         // get the page title field that matches
@@ -91,7 +93,7 @@ public class PageRepositoryImpl implements PageRepository {
 
         page = page.withFieldContainers(fieldContainers);
 
-        return page;
+        return Optional.of(page);
     }
 
 

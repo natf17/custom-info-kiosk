@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Propagation;
 
@@ -102,7 +103,10 @@ public class PageRepositoryImplTest {
 
         repo.save(newPageNoNesting);
 
-        Page savedPage = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Optional<Page> savedPageOpt = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Assertions.assertTrue(savedPageOpt.isPresent());
+
+        Page savedPage = savedPageOpt.get();
         PageInternals savedPageInternals = savedPage.getPageInternals();
         
         Assertions.assertNotNull(savedPage.getId());
@@ -123,7 +127,10 @@ public class PageRepositoryImplTest {
 
         repo.save(newPageWithComplexNesting);
 
-        Page savedPage = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Optional<Page> savedPageOpt = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Assertions.assertTrue(savedPageOpt.isPresent());
+        
+        Page savedPage = savedPageOpt.get();
         PageInternals savedPageInternals = savedPage.getPageInternals();
         List<FieldContainer> savedFieldContainers = savedPage.getFieldContainers();
         
@@ -234,11 +241,12 @@ public class PageRepositoryImplTest {
         repo.save(newPageNoNestingSp);
         repo.deletePageWithLocale("about", "SP");
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            repo.findByPageTypeAndKioskLocale("about", "SP");
-        });
+        Assertions.assertTrue(repo.findByPageTypeAndKioskLocale("about", "SP").isPresent());
 
-        Page otherPage = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Optional<Page> otherPageOpt = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Assertions.assertTrue(otherPageOpt.isPresent());
+        
+        Page otherPage = otherPageOpt.get();
         Assertions.assertEquals("about", otherPage.getPageType());
         Assertions.assertEquals(enLocaleId, otherPage.getPageInternals().getKioskLocaleId());
 
@@ -254,7 +262,10 @@ public class PageRepositoryImplTest {
             repo.findByPageTypeAndKioskLocale("sample", "SP");
         });
 
-        Page otherPage = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Optional<Page> otherPageOpt = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Assertions.assertTrue(otherPageOpt.isPresent());
+        
+        Page otherPage = otherPageOpt.get();
         Assertions.assertEquals("sample", otherPage.getPageType());
         Assertions.assertEquals(enLocaleId, otherPage.getPageInternals().getKioskLocaleId());
     }
@@ -278,7 +289,10 @@ public class PageRepositoryImplTest {
 
         repo.update("about", "EN", newPageNoNestingUpdated);
 
-        Page updatedPage = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Optional<Page> updatedPageOpt = repo.findByPageTypeAndKioskLocale("about", "EN");
+        Assertions.assertTrue(updatedPageOpt.isPresent());
+        
+        Page updatedPage = updatedPageOpt.get();
         
         PageInternals updatedPageInternals = updatedPage.getPageInternals();
         
@@ -301,7 +315,11 @@ public class PageRepositoryImplTest {
 
         repo.update("sample", "EN", newPageWithComplexNestingUpdated);
 
-        Page returnedPage = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Optional<Page> returnedPageOpt = repo.findByPageTypeAndKioskLocale("sample", "EN");
+        Assertions.assertTrue(returnedPageOpt.isPresent());
+        
+        Page returnedPage = returnedPageOpt.get();
+
         PageInternals returnedPageInternals = returnedPage.getPageInternals();
         List<FieldContainer> returnedFieldContainers = returnedPage.getFieldContainers();
         

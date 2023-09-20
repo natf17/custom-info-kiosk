@@ -1,57 +1,43 @@
 package com.ppublica.apps.kiosk.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
-import com.ppublica.apps.kiosk.domain.model.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.pages.ImageField;
-import com.ppublica.apps.kiosk.repository.AboutPageRepository;
-import com.ppublica.apps.kiosk.repository.KioskLocaleRepository;
+import com.ppublica.apps.kiosk.repository.PageRepository;
 import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
 import com.ppublica.apps.kiosk.service.views.about.ImageView;
 
 public class AboutPageService {
 
     @Autowired
-    private AboutPageRepository repo;
+    private PageRepository repo;
 
-    @Autowired
-    private KioskLocaleRepository localeRepo;
-    
-    /*
-     * This service method expects only one about page for a given locale
-     * to exist.
-     */
     public Optional<AboutPageView> getAboutPage(String locale) {
+
+        Optional<Page> aboutPageOpt = repo.findByPageTypeAndKioskLocale(AboutPage.PAGE_TYPE, locale);
         
-        List<Long> aboutPageIds = repo.getAboutPageIdsforLocale(locale);
-
-        if (aboutPageIds.isEmpty()) {
+        if (aboutPageOpt.isEmpty()) {
             return Optional.empty();
         }
 
-        Optional<AboutPage> aboutPage = repo.findById(aboutPageIds.get(0));
+        AboutPage aboutPage = AboutPage.fromPage(aboutPageOpt.get());
 
-        if (aboutPage.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(transformToView(aboutPage.get()));
+        return Optional.of(transformToView(aboutPage));
 
     }
 
 
 
-    private AboutPageView transformToView(AboutPage page) {
+    private AboutPageView transformToView(AboutPage aboutPage) {
 
         // build ImageView
-        ImageField imageField = page.getFeatureImageField();
-        String imageAltText = imageField.getAltTextField().getFieldValue(); 
+        String imageAltText = aboutPage.getImageAltText(); 
         
-        Image image = imageField.getFieldValue();
+        Image image = aboutPage.getImage();
         String imageLocation = image.location();
         Integer imageWidth = image.width();
         Integer imageHeight = image.height();
@@ -60,8 +46,8 @@ public class AboutPageService {
 
 
         // build and return AboutPage
-        String title = page.getPageTitleField().getFieldValue();
-        String richDescription = page.getRichDescriptionField().getFieldValue();
+        String title = aboutPage.getPageTitle();
+        String richDescription = aboutPage.getRichDescription();
 
         return new AboutPageView(title, richDescription, imageView);
 

@@ -1,7 +1,14 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.ImageField;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.RichTextLongDescriptionField;
 
 /*
  * Represents an About Page with the following:
@@ -10,127 +17,114 @@ import org.springframework.data.annotation.PersistenceCreator;
  *  - feature image
  */
 public class AboutPage extends KioskPage {
-    @Id
-    private Long id;
 
-    private static final String FEATURE_IMG_FIELD_NAME = "FeatImg";
-    private static final String RICH_DESCR_FIELD_NAME = "RichDescription";
+    public static final String FEATURE_IMAGE_FIELD_NAME = "FeatImg";
+    public static final String IMAGE_ALTERNATIVE_TEXT_FIELD_NAME = "alternativeText";
+    public static final String RICH_DESCRIPTION_TEXT_FIELD_NAME = "RichDescription";
 
-    private ImageField featureImageField;
-    private RDescriptionField richDescriptionField;
+    protected static final String IMAGE_CONTAINER_NAME = "featureImageFC";
+    protected static final String MAIN_CONTAINER_NAME = "mainFC";
 
-    // for use by repository classes ONLY
-    @PersistenceCreator
-    public AboutPage(KioskPageInternals pageInternals, PageTitleField pageTitle, ImageField featureImageField, RDescriptionField richDescriptionField) {
-        super(pageInternals, pageTitle);
-        this.featureImageField = featureImageField;
-        this.richDescriptionField = richDescriptionField;
+    private static final KioskPageType KIOSK_PAGE_TYPE = KioskPageType.ABOUT;
+    public static final String PAGE_TYPE = KIOSK_PAGE_TYPE.toString();
+    private static final String PAGE_NAME = "about_page";
+
+    private Page aboutPageRep;
+    private FieldContainer mainFc;
+    private FieldContainer featureImageFc;
+
+
+    private AboutPage(Page aboutPageRep) {
+        this.aboutPageRep = aboutPageRep;
+
+        this.mainFc = aboutPageRep.getFieldContainers().get(0);
+        this.featureImageFc = mainFc.getChildContainers().get(0); 
+
     }
 
-    public AboutPage(Builder builder) {
-        super(builder);
-
-        this.featureImageField = builder.featureImageField;
-        this.richDescriptionField = builder.rDescriptionField;
+    public String getImageAltText() {
+        return featureImageFc.getRegularTextLongDescriptionFields().get(0).getFieldValue();
 
     }
 
-    // getters
-
-    public ImageField getFeatureImageField() {
-        return this.featureImageField;
+    public Image getImage() {
+        return featureImageFc.getImageFields().get(0).getFieldValue();
     }
 
-    public RDescriptionField getRichDescriptionField() {
-        return this.richDescriptionField;
+    public String getRichDescription() {
+        return mainFc.getRichTextLongDescriptionFields().get(0).getFieldValue();
     }
 
-    public Long getId() {
-        return this.id;
+    @Override
+    protected Page getPageRep() {
+        return this.aboutPageRep;
     }
 
 
-    // builder
+    public static AboutPage fromPage(Page aboutPageRep) {
+        // TO ADD: a validator
+
+        return new AboutPage(aboutPageRep);
+    }
 
     public static class Builder extends KioskPage.Builder<Builder, AboutPage> {
+        public Builder() {
+            super(KIOSK_PAGE_TYPE, PAGE_NAME);
+        }
+
         private Image featureImage;
         private String altText;
-        private ImageField featureImageField;
-        private String rDescription;
-        private RDescriptionField rDescriptionField;
+        private String richDescription;
 
 
         public Builder featureImage(Image image) {
-            this.featureImageField = null;
             this.featureImage = image;
 
             return self();
         }
 
         public Builder featureImageAltText(String text) {
-            this.featureImageField = null;
             this.altText = text;
 
             return self();
         }
 
-        public Builder featureImageField(ImageField featureImageField) {
-            this.featureImage = null;
-            this.altText = null;
-            this.featureImageField = featureImageField;
-
-            return self();
-        }
-
         public Builder richDescription(String description) {
-            this.rDescriptionField = null;
-            this.rDescription = description;
+            this.richDescription = description;
 
             return self();
         }
 
-        public Builder richDesriptionField(RDescriptionField rDescriptionField) {
-            this.rDescription = null;            
-            this.rDescriptionField = rDescriptionField;
-
-            return self();
-        }
-
-        protected void validateAndPrepareChild() {
-            
-            if (this.featureImageField == null) {
-                if (this.featureImage == null || this.altText == null) {
-                    throw new RuntimeException("Invalid page build!");
-
-                }
-
-                // build image field with supplied image and alt text
-                this.featureImageField = new ImageField(FEATURE_IMG_FIELD_NAME, this.featureImage, this.altText);
-                
-            }
-
-            if (this.rDescriptionField == null) {
-                if (this.rDescription == null) {
-                    throw new RuntimeException("Invalid page build!");
-                }
-
-                this.rDescriptionField = new RDescriptionField(RICH_DESCR_FIELD_NAME, this.rDescription);
-                
-            }
-
-        }
-
-        protected AboutPage buildChild() {
-            return new AboutPage(this);
-        }
-
+        @Override
+        protected void validateAndPrepareChild() { }
 
         @Override
         protected Builder self() {
             return this;
         }
 
-        
+        @Override
+        protected AboutPage buildChild(Page.Builder pageRepBuilder) {
+
+            FieldContainer featureImageFC = new FieldContainer.Builder()
+                                                            .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(IMAGE_ALTERNATIVE_TEXT_FIELD_NAME, altText))
+                                                            .addImageField(new ImageField(FEATURE_IMAGE_FIELD_NAME, featureImage))
+                                                            .fieldContainerName(IMAGE_CONTAINER_NAME)
+                                                            .build();
+
+            FieldContainer mainFC = new FieldContainer.Builder()
+                                                            .addRichTextLongDescriptionField(new RichTextLongDescriptionField(RICH_DESCRIPTION_TEXT_FIELD_NAME, richDescription))
+                                                            .fieldContainerName(MAIN_CONTAINER_NAME)
+                                                            .addChildContainer(featureImageFC)
+                                                            .build();
+
+            List<FieldContainer> fieldContainers = new ArrayList<>();
+            fieldContainers.add(mainFC);
+
+            pageRepBuilder.fieldContainers(fieldContainers);
+
+            return new AboutPage(pageRepBuilder.build());
+        }
     }
-    
+
 }

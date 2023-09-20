@@ -1,5 +1,5 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-public enum PageType {
+public enum KioskPageType {
     ABOUT
 }

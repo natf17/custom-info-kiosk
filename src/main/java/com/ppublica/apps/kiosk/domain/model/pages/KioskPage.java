@@ -1,98 +1,120 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.PageInternals;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.PageTitleField;
 
 abstract class KioskPage {
-    public static final String DEFAULT_TITLE_FIELD_NAME = "PageTitle";
-    
-    private KioskPageInternals pageInternals;
-    private PageTitleField pageTitle;
+    public static final String PAGE_TITLE_FIELD_NAME = "PageTitle";
 
-    // for use by repository classes ONLY
-    protected KioskPage(KioskPageInternals pageInternals, PageTitleField pageTitle) {
-        this.pageInternals = pageInternals;
-        this.pageTitle = pageTitle;
-    }
-
-    public <B extends Builder<B,M>, M extends KioskPage> KioskPage(Builder<B, M> builder) {
-        this.pageInternals = builder.pageInternals;
-        this.pageTitle = builder.pageTitleField;
-
-    }
+    //public <B extends Builder<B,M>, M extends KioskPage> KioskPage(Builder<B, M> builder) { }
 
     // getters
-    public KioskPageInternals getPageInternals() {
-        return this.pageInternals;
+
+    public String getPageType() {
+        return getPageRep().getPageType();
     }
 
-    public PageTitleField getPageTitleField() {
-        return this.pageTitle;
+    public String getPageTitle() {
+        return getPageRep().getPageTitleField().getFieldValue();
     }
+
+    protected abstract Page getPageRep();
 
 
 
     // builder
 
     static abstract class Builder<B extends Builder<B, M>, M extends KioskPage> {
-        private String pageTitle;
-        private PageTitleField pageTitleField;
-        private KioskPageInternals pageInternals;
-        private Long localeId;
+        protected String pageTitle;
+        protected PageStatus pageStatus;
+        protected LocalDate createdOn;
+        protected LocalDateTime lastModified;
+        protected Long localeId;
+        protected KioskPageType kioskPageType;
+        protected String pageName;
+
+        protected Builder(KioskPageType kioskPageType, String pageName) {
+            this.kioskPageType = kioskPageType;
+            this.pageName = pageName;
+        }
         
 
+        public B pageName(String pageName) {
+            this.pageName = pageName;
+            return self();
+        }
+
+        public B pageStatus(PageStatus pageStatus) {
+            this.pageStatus = pageStatus;
+            return self();
+        }
+
         public B pageTitle(String title) {
-            this.pageTitleField = null;
             this.pageTitle = title;
-
             return self();
         }
 
-        public B pageTitleField(PageTitleField pageTitleField) {
-            this.pageTitle = null;
-            this.pageTitleField = pageTitleField;
-            
+        public B pageType(KioskPageType kioskPageType) {
+            this.kioskPageType = kioskPageType;
             return self();
         }
 
-        /*
-         * MUST BE CHANGED: KioskPageInternals should not be supplied; it's an internal class
-         */
+        public B createdOn(LocalDate createdOn) {
+            this.createdOn = createdOn;
+            return self();
+        }
 
-        public B pageInternals(KioskPageInternals pageInternals) {
-            this.pageInternals = pageInternals;
-            
+        public B lastModified(LocalDateTime lastModified) {
+            this.lastModified = lastModified;
             return self();
         }
 
         public B withLocaleId(Long localeId) {
             this.localeId = localeId;
-
             return self();
         }
 
         public M build() {
             validateAndPrepare();
-            return buildChild();
+            
+            Page.Builder pageRepBuilder = new Page.Builder().pageInternals(new PageInternals(localeId, pageStatus, createdOn, lastModified))
+                                .titleField(new PageTitleField(PAGE_TITLE_FIELD_NAME, pageTitle))
+                                .pageType(kioskPageType.toString())
+                                .pageName(pageName);
+
+            
+            return buildChild(pageRepBuilder);
         }
 
         private void validateAndPrepare() {
-
-            if (this.pageTitleField == null) {
-                if (this.pageTitle == null) {
-                    throw new RuntimeException("Invalid page build!");
-                }
-                
-                this.pageTitleField = new PageTitleField(DEFAULT_TITLE_FIELD_NAME, this.pageTitle);
-                
-
+            if(this.kioskPageType == null) {
+                throw new RuntimeException("The page type is required");
             }
 
-            if (this.pageInternals == null) {
-                if(this.localeId == null) {
-                    throw new RuntimeException("The locale id is required to build the About page");
-                }
+            if(this.pageName == null) {
+                throw new RuntimeException("The page name is required");
+            }
 
-                this.pageInternals = new KioskPageInternals(AggregateReference.to(this.localeId), PageMetadata.newPage());
+            if(this.pageStatus == null) {
+                throw new RuntimeException("PageStatus is required");
+            }
+
+            if(this.createdOn == null) {
+                throw new RuntimeException("CreatedOn is required");
+            }
+
+            if(this.lastModified == null) {
+                throw new RuntimeException("LastModified is required");
+            }
+
+            LocalDateTime createdOnTime = this.createdOn.atStartOfDay();
+            if(createdOnTime.isAfter(this.lastModified)) {
+                throw new RuntimeException("CreatedOn cannot be after lastModified");
             }
 
             validateAndPrepareChild();
@@ -101,7 +123,7 @@ abstract class KioskPage {
 
         protected abstract void validateAndPrepareChild();
 
-        protected abstract M buildChild();
+        protected abstract M buildChild(Page.Builder pageRepBuilder);
 
         protected abstract B self();        
 

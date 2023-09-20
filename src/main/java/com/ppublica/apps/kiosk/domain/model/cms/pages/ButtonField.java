@@ -1,6 +1,10 @@
 package com.ppublica.apps.kiosk.domain.model.cms.pages;
 
 public class ButtonField extends PageField<Boolean> {
+
+    public ButtonField(String fieldName) {
+        super(fieldName);
+    }
     
     public ButtonField(String fieldName, Boolean fieldValue) {
         super(fieldName, fieldValue);

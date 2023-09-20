@@ -2,6 +2,10 @@ package com.ppublica.apps.kiosk.domain.model.cms.pages;
 
 public class PageTitleField extends PageField<String> {
 
+    public PageTitleField(String fieldName) {
+        super(fieldName);
+    }
+
     public PageTitleField(String fieldName, String fieldValue) {
         super(fieldName, fieldValue);
     }
