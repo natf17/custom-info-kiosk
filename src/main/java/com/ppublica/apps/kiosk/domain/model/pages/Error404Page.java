@@ -1,7 +1,14 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ppublica.apps.kiosk.domain.model.cms.pages.ButtonField;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.UrlField;
+
 
 /*
  * Represents an Error 404 Page with the following:
@@ -11,121 +18,149 @@ import org.springframework.data.annotation.PersistenceCreator;
  *  - a redirect link
  */
 public class Error404Page extends KioskPage {
-    @Id
-    private Long id;
+    public static final String REDIRECT_URL_FIELD_NAME = "Url";
+    public static final String REDIRECT_DISPLAY_TEXT_FIELD_NAME = "DisplayText";
+    public static final String REDIRECT_DESCRIPTION_FIELD_NAME = "Description";
+    public static final String SHOW_REDIRECT_LINK_OPTION_FIELD_NAME = "ShowRedirectLink";
+    public static final String ERROR_DESCR__FIELD_NAME = "ErrorDescription";
 
-    private ErrorDescriptionField errorDescriptionField;
-    private ShowRedirectLinkOptionField showRedirectLinkField;
-    private RedirectLinkContainer redirectLinkContainer;
+    protected static final String REDIRECT_URL_CONTAINER_NAME = "redirectUrlFC";
+    protected static final String MAIN_CONTAINER_NAME = "mainFC";
 
-    private static final String ERROR_DESCR__FIELD_NAME = "ErrorDescription";
-    private static final String SHOW_REDIRECT_LINK_OPTION_FIELD_NAME = "ShowRedirectLink";
-    private static final String REDIRECT_LINK_CONTAINER_FIELD_NAME = "Redirect Link";
+    private static final KioskPageType KIOSK_PAGE_TYPE = KioskPageType.ERROR;
+    public static final String PAGE_TYPE = KIOSK_PAGE_TYPE.toString();
+    private static final String PAGE_NAME = "error_page";
 
-    // for use by repository classes ONLY
-    @PersistenceCreator
-    protected Error404Page(KioskPageInternals pageInternals, PageTitleField pageTitle, ErrorDescriptionField errorDescriptionField,
-                            ShowRedirectLinkOptionField showRedirectLinkField, RedirectLinkContainer redirectLinkContainer) {
-        super(pageInternals, pageTitle);
+    private Page errorPageRep;
+    private FieldContainer mainFC;
+    private FieldContainer redirectUrlFC;
+
+    private Error404Page(Page errorPageRep) {
+        this.errorPageRep = errorPageRep;
+
+        this.mainFC = errorPageRep.getFieldContainers().get(0);
+        this.redirectUrlFC = mainFC.getChildContainers().get(0);
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrlFC.getUrlFields().get(0).getFieldValue();
+    }
+
+    public String getRedirectDisplayText() {
+        List<RegularTextLongDescriptionField> fields = redirectUrlFC.getRegularTextLongDescriptionFields();
         
-        this.errorDescriptionField = errorDescriptionField;
-        this.showRedirectLinkField = showRedirectLinkField;
-        this.redirectLinkContainer = redirectLinkContainer;
+        for(RegularTextLongDescriptionField field : fields) {
+            if(field.getFieldName().equals(REDIRECT_DISPLAY_TEXT_FIELD_NAME)) {
+                return field.getFieldValue();
+            }
+        }
+
+        return null;
     }
 
-    public Error404Page(Builder builder) {
-        super(builder);
+    public String getRedirectDescription() {
+        List<RegularTextLongDescriptionField> fields = redirectUrlFC.getRegularTextLongDescriptionFields();
+        
+        for(RegularTextLongDescriptionField field : fields) {
+            if(field.getFieldName().equals(REDIRECT_DESCRIPTION_FIELD_NAME)) {
+                return field.getFieldValue();
+            }
+        }
 
-        this.errorDescriptionField = new ErrorDescriptionField(ERROR_DESCR__FIELD_NAME, builder.errorDescription);
-        this.showRedirectLinkField = new ShowRedirectLinkOptionField(SHOW_REDIRECT_LINK_OPTION_FIELD_NAME, builder.showRedirectLink);
-        this.redirectLinkContainer = builder.redirectLinkContainer;
+        return null;
     }
+
+    public String getErrorDescription() {
+        return mainFC.getRegularTextLongDescriptionFields().get(0).getFieldValue();
+    }
+
+    public Boolean shouldShowRedirectLink() {
+        return mainFC.getButtonFields().get(0).getFieldValue();
+    } 
+
+    @Override
+    protected Page getPageRep() {
+        return errorPageRep;
+    }
+
+    public static Error404Page fromPage(Page errorPageRep) {
+        // TO ADD: a validator
+
+        return new Error404Page(errorPageRep);
+    }
+
 
     public static class Builder extends KioskPage.Builder<Builder, Error404Page> {
+
         private String errorDescription;
         private boolean showRedirectLink;
         private String redirectUrl;
         private String redirectDisplayText;
         private String redirectDescription;
-        private RedirectLinkContainer redirectLinkContainer;
 
+        public Builder() {
+            super(KIOSK_PAGE_TYPE, PAGE_NAME);
+        }
 
         public Builder errorDescription(String errorDescription) {
             this.errorDescription = errorDescription;
-
             return self();
         }
 
-        public Builder shouldShowRedirectLink(boolean showRedirectLink) {
+        public Builder showRedirectLink(boolean showRedirectLink) {
             this.showRedirectLink = showRedirectLink;
-
             return self();
         }
 
         public Builder redirectUrl(String redirectUrl) {
-            this.redirectLinkContainer = null;
             this.redirectUrl = redirectUrl;
-
             return self();
         }
 
         public Builder redirectDisplayText(String redirectDisplayText) {
-            this.redirectLinkContainer = null;
             this.redirectDisplayText = redirectDisplayText;
-
             return self();
         }
 
         public Builder redirectDescription(String redirectDescription) {
-            this.redirectLinkContainer = null;
             this.redirectDescription = redirectDescription;
-
             return self();
         }
 
-        public Builder redirectLinkContainer(RedirectLinkContainer redirectLinkContainer) {
-            this.redirectLinkContainer = redirectLinkContainer;            
 
-            return self();
-        }
-
-        protected void validateAndPrepareChild() {
-
-
-            if (errorDescription == null) {
-                throw new RuntimeException("Invalid page build!");
-
-            }
-            
-            if (this.redirectLinkContainer == null) {
-                if (this.redirectUrl == null || this.redirectDisplayText == null || redirectDescription == null) {
-                    throw new RuntimeException("Invalid page build!");
-
-                }
-
-                // build redirect link container
-                this.redirectLinkContainer = new RedirectLinkContainer(REDIRECT_LINK_CONTAINER_FIELD_NAME, 
-                                                this.redirectUrl,this.redirectDisplayText
-                                                ,this.redirectDescription);
-                
-            }
-
-            if (this.errorDescription == null) {
-                throw new RuntimeException("Invalid page build!");                
-            }
-
-        }
-
-        protected Error404Page buildChild() {
-            return new Error404Page(this);
-        }
-
+        @Override
+        protected void validateAndPrepareChild() { }
 
         @Override
         protected Builder self() {
             return this;
         }
 
+        @Override
+        protected Error404Page buildChild(Page.Builder pageRepBuilder) {
+
+            FieldContainer redirectLinkFC = new FieldContainer.Builder()
+                                                            .addUrlField(new UrlField(REDIRECT_URL_FIELD_NAME, redirectUrl))
+                                                            .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(REDIRECT_DISPLAY_TEXT_FIELD_NAME, redirectDisplayText))
+                                                            .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(REDIRECT_DESCRIPTION_FIELD_NAME, redirectDescription))
+                                                            .fieldContainerName(REDIRECT_URL_CONTAINER_NAME)
+                                                            .build();
+
+
+            FieldContainer mainFC = new FieldContainer.Builder()
+                                                            .addButtonField(new ButtonField(SHOW_REDIRECT_LINK_OPTION_FIELD_NAME, showRedirectLink))
+                                                            .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(ERROR_DESCR__FIELD_NAME, errorDescription))
+                                                            .fieldContainerName(MAIN_CONTAINER_NAME)
+                                                            .addChildContainer(redirectLinkFC)
+                                                            .build();
+
+            List<FieldContainer> fieldContainers = new ArrayList<>();
+            fieldContainers.add(mainFC);
+
+            pageRepBuilder.fieldContainers(fieldContainers);
+
+            return new Error404Page(pageRepBuilder.build());
+        }
         
     }
     

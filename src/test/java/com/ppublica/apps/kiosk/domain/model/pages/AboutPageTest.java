@@ -31,7 +31,6 @@ public class AboutPageTest {
                                         .lastModified(lastModified)
                                         .pageStatus(PageStatus.DRAFT)
                                         .pageName("sample")
-                                        .pageType(KioskPageType.ABOUT)
                                         .pageTitle("page_title")
                                         .withLocaleId(5L)
                                         .featureImage(sampleImage)

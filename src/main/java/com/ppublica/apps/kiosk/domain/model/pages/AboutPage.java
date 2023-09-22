@@ -68,30 +68,26 @@ public class AboutPage extends KioskPage {
     }
 
     public static class Builder extends KioskPage.Builder<Builder, AboutPage> {
+        private Image featureImage;
+        private String altText;
+        private String richDescription;
+        
         public Builder() {
             super(KIOSK_PAGE_TYPE, PAGE_NAME);
         }
 
-        private Image featureImage;
-        private String altText;
-        private String richDescription;
-
-
         public Builder featureImage(Image image) {
             this.featureImage = image;
-
             return self();
         }
 
         public Builder featureImageAltText(String text) {
             this.altText = text;
-
             return self();
         }
 
         public Builder richDescription(String description) {
             this.richDescription = description;
-
             return self();
         }
 

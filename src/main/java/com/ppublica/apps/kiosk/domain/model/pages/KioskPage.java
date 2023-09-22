@@ -59,11 +59,6 @@ abstract class KioskPage {
             return self();
         }
 
-        public B pageType(KioskPageType kioskPageType) {
-            this.kioskPageType = kioskPageType;
-            return self();
-        }
-
         public B createdOn(LocalDate createdOn) {
             this.createdOn = createdOn;
             return self();

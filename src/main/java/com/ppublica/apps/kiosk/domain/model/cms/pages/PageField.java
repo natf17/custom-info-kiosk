@@ -1,5 +1,13 @@
 package com.ppublica.apps.kiosk.domain.model.cms.pages;
 
+/*
+ * Represents a single user-provided unit that exists inside a FieldContainer, 
+ * (e.g. an image, a text field) with a single editable field value.
+ *
+ * For page entities that do not represent a field value (e.g. a container
+ * or list of other PageFields), see PageFieldContainer. 
+ * 
+ */
 public abstract class PageField<T> {
     private String fieldName;
     private T fieldValue;
