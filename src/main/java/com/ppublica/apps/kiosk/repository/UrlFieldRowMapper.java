@@ -11,10 +11,11 @@ public class UrlFieldRowMapper implements RowMapper<UrlField> {
 
     @Override
     public UrlField mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String fieldType = rs.getString("UF_FTYPE");
         String fieldName = rs.getString("UF_FNAME");
         String fieldValue = rs.getString("UF_FVALUE");
 
-        return new UrlField(fieldName, fieldValue);
+        return new UrlField(fieldType, fieldName, fieldValue);
         
     }
 }

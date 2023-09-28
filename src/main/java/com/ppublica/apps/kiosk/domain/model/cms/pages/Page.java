@@ -136,7 +136,7 @@ public class Page {
                 if(title == null) {
                     throw new RuntimeException("A page title is required");
                 }
-                pageTitleField = new PageTitleField("page_title", title);
+                pageTitleField = new PageTitleField("page_title_type", "page_title", title);
             }
 
             if(fieldContainers == null) {

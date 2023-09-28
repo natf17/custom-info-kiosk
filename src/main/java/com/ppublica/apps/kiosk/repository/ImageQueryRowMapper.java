@@ -15,6 +15,7 @@ public class ImageQueryRowMapper implements RowMapper<ImageField> {
     @Nullable
     public ImageField mapRow(ResultSet rs, int rowNum) throws SQLException {
         Long imageFieldId = rs.getLong("IF_ID");
+        String imageFieldType = rs.getString("IF_FTYPE");
         String imageFieldName = rs.getString("IF_FNAME");
         Long imageId = rs.getLong("I_ID");
         String imageLocation = rs.getString("I_LOC");
@@ -23,7 +24,7 @@ public class ImageQueryRowMapper implements RowMapper<ImageField> {
 
         Image image = new Image(imageLocation, imageWidth, imageLength);
 
-        return new ImageField(imageFieldName, image);
+        return new ImageField(imageFieldType, imageFieldName, image);
     }
     
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.pages.Error404Page;
+import com.ppublica.apps.kiosk.domain.model.pages.RedirectUrlContainer;
 import com.ppublica.apps.kiosk.repository.PageRepository;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
@@ -23,21 +24,23 @@ public class Error404PageService {
             return Optional.empty();
         }
 
-        Error404Page error404Page = Error404Page.fromPage(errorPageOpt.get());
+        Error404Page error404Page = new Error404Page.Builder(errorPageOpt.get())
+                                    .build();
 
         return Optional.of(transformToView(error404Page));
 
     }
     
     private Error404PageView transformToView(Error404Page page) {
-        String redirectUrl = page.getRedirectUrl();
-        String redirectDisplayText = page.getRedirectDisplayText();
-        String redirectDescription = page.getRedirectDescription();
+        RedirectUrlContainer container = page.getRedirectUrlContainer();
+        String redirectUrl = container.getRedirectUrlField().getFieldValue();
+        String redirectDisplayText = container.getRedirectDisplayTextField().getFieldValue();
+        String redirectDescription = container.getRedirectDescriptionField().getFieldValue();
         RedirectLinkView redirectLinkView = new RedirectLinkView(redirectUrl, redirectDisplayText, redirectDescription); 
 
-        String pageTitle = page.getPageTitle();
-        String errorDescription = page.getErrorDescription();
-        Boolean showRedirectLink = page.shouldShowRedirectLink();
+        String pageTitle = page.getPageTitleField().getFieldValue();
+        String errorDescription = page.getErrorDescriptionField().getFieldValue();
+        Boolean showRedirectLink = page.shouldShowRedirectLink().getFieldValue();
 
         return new Error404PageView(pageTitle, errorDescription, showRedirectLink, redirectLinkView);
     }

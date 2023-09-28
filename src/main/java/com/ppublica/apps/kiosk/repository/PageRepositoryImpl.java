@@ -63,6 +63,7 @@ public class PageRepositoryImpl implements PageRepository {
         // 3. Insert PageTitleField
         PageTitleField pTitleField = savedPage.getPageTitleField();
         this.template.update(INSERT_PAGE_TITLE_FIELD_TABLE,
+                                pTitleField.getFieldType(),
                                 pTitleField.getFieldName(),
                                 pTitleField.getFieldValue(),
                                 savedPage.getId()
@@ -125,6 +126,7 @@ public class PageRepositoryImpl implements PageRepository {
         List<RichTextLongDescriptionField> richTextLongDescriptionFields = fieldContainer.getRichTextLongDescriptionFields();
         for (RichTextLongDescriptionField richTextLongDescr : richTextLongDescriptionFields) {
             this.template.update(INSERT_RICHTEXTLONGDESCR_FIELD_TABLE,
+                                richTextLongDescr.getFieldType(),
                                 richTextLongDescr.getFieldName(),
                                 richTextLongDescr.getFieldValue(),
                                 currentContainerId);
@@ -134,6 +136,7 @@ public class PageRepositoryImpl implements PageRepository {
         List<RegularTextLongDescriptionField> regTextLongDescriptionFields = fieldContainer.getRegularTextLongDescriptionFields();
         for (RegularTextLongDescriptionField regTextLongDescr : regTextLongDescriptionFields) {
             this.template.update(INSERT_REGTEXTLONGDESCR_FIELD_TABLE,
+                                regTextLongDescr.getFieldType(),
                                 regTextLongDescr.getFieldName(),
                                 regTextLongDescr.getFieldValue(),
                                 currentContainerId);
@@ -149,8 +152,9 @@ public class PageRepositoryImpl implements PageRepository {
             
             this.template.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(INSERT_IMAGE_FIELD_TABLE, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, imageField.getFieldName());
-                ps.setLong(2, currentContainerId);
+                ps.setString(1, imageField.getFieldType());
+                ps.setString(2, imageField.getFieldName());
+                ps.setLong(3, currentContainerId);
 
                 return ps;
             }, keyHolderIm);
@@ -172,6 +176,7 @@ public class PageRepositoryImpl implements PageRepository {
         List<ButtonField> buttonFields = fieldContainer.getButtonFields();
         for (ButtonField buttonField : buttonFields) {
             this.template.update(INSERT_BUTTON_FIELD_TABLE,
+                                buttonField.getFieldType(),
                                 buttonField.getFieldName(),
                                 buttonField.getFieldValue(),
                                 currentContainerId);
@@ -181,6 +186,7 @@ public class PageRepositoryImpl implements PageRepository {
         List<UrlField> urlFields = fieldContainer.getUrlFields();
         for (UrlField urlField : urlFields) {
             this.template.update(INSERT_URL_FIELD_TABLE,
+                                urlField.getFieldType(),
                                 urlField.getFieldName(),
                                 urlField.getFieldValue(),
                                 currentContainerId);

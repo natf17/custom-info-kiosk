@@ -11,10 +11,11 @@ public class RegularTextLongDescriptionFieldRowMapper implements RowMapper<Regul
 
     @Override
     public RegularTextLongDescriptionField mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String fieldType = rs.getString("REGTLDF_FTYPE");
         String fieldName = rs.getString("REGTLDF_FNAME");
         String fieldValue = rs.getString("REGTLDF_FVALUE");
 
-        return new RegularTextLongDescriptionField(fieldName, fieldValue);
+        return new RegularTextLongDescriptionField(fieldType, fieldName, fieldValue);
         
     }
 }

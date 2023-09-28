@@ -116,6 +116,7 @@ public class PageRepositoryImplTest {
         Assertions.assertEquals(newPageNoNesting.getPageInternals().getPageStatus(), savedPageInternals.getPageStatus());
         Assertions.assertEquals(newPageNoNesting.getPageInternals().getCreatedOn(), savedPageInternals.getCreatedOn());
         Assertions.assertEquals(newPageNoNesting.getPageInternals().getLastModified(), savedPageInternals.getLastModified());
+        Assertions.assertEquals(newPageNoNesting.getPageTitleField().getFieldType(), savedPage.getPageTitleField().getFieldType());
         Assertions.assertEquals(newPageNoNesting.getPageTitleField().getFieldName(), savedPage.getPageTitleField().getFieldName());
         Assertions.assertEquals(newPageNoNesting.getPageTitleField().getFieldValue(), savedPage.getPageTitleField().getFieldValue());
         Assertions.assertTrue(newPageNoNesting.getFieldContainers().isEmpty());                 
@@ -136,6 +137,7 @@ public class PageRepositoryImplTest {
         
         Assertions.assertNotNull(savedPage.getId());
         Assertions.assertEquals(newPageWithComplexNesting.getPageInternals().getKioskLocaleId(), savedPageInternals.getKioskLocaleId());
+        Assertions.assertEquals(newPageWithComplexNesting.getPageTitleField().getFieldType(), savedPage.getPageTitleField().getFieldType());
         Assertions.assertEquals(newPageWithComplexNesting.getPageTitleField().getFieldName(), savedPage.getPageTitleField().getFieldName());
         Assertions.assertEquals(newPageWithComplexNesting.getPageTitleField().getFieldValue(), savedPage.getPageTitleField().getFieldValue());
         Assertions.assertEquals(newPageWithComplexNesting.getFieldContainers().size(), savedFieldContainers.size());
@@ -159,20 +161,24 @@ public class PageRepositoryImplTest {
         Assertions.assertEquals(false, savedFieldContainer_1a.getButtonFields().get(0).getFieldValue());
         
         Assertions.assertEquals(1, savedFieldContainer_1a.getImageFields().size());
+        Assertions.assertEquals("image1a1_type", savedFieldContainer_1a.getImageFields().get(0).getFieldType());
         Assertions.assertEquals("image1a1", savedFieldContainer_1a.getImageFields().get(0).getFieldName());
         Assertions.assertEquals("image1a_path", savedFieldContainer_1a.getImageFields().get(0).getFieldValue().location());
         Assertions.assertEquals(1, savedFieldContainer_1a.getImageFields().get(0).getFieldValue().width());
         Assertions.assertEquals(2, savedFieldContainer_1a.getImageFields().get(0).getFieldValue().height());
         
         Assertions.assertEquals(1, savedFieldContainer_1a.getRegularTextLongDescriptionFields().size());
+        Assertions.assertEquals("regtldf1a1_type", savedFieldContainer_1a.getRegularTextLongDescriptionFields().get(0).getFieldType());
         Assertions.assertEquals("regtldf1a1", savedFieldContainer_1a.getRegularTextLongDescriptionFields().get(0).getFieldName());
         Assertions.assertEquals("sample regtldf1a1 value", savedFieldContainer_1a.getRegularTextLongDescriptionFields().get(0).getFieldValue());
 
         Assertions.assertEquals(1, savedFieldContainer_1a.getRichTextLongDescriptionFields().size());
+        Assertions.assertEquals("rtldf1a_type", savedFieldContainer_1a.getRichTextLongDescriptionFields().get(0).getFieldType());
         Assertions.assertEquals("rtldf1a", savedFieldContainer_1a.getRichTextLongDescriptionFields().get(0).getFieldName());
         Assertions.assertEquals("sample rtldf1a value", savedFieldContainer_1a.getRichTextLongDescriptionFields().get(0).getFieldValue());
         
         Assertions.assertEquals(1, savedFieldContainer_1a.getUrlFields().size());
+        Assertions.assertEquals("urlf1a1_type", savedFieldContainer_1a.getUrlFields().get(0).getFieldType());
         Assertions.assertEquals("urlf1a1", savedFieldContainer_1a.getUrlFields().get(0).getFieldName());
         Assertions.assertEquals("url: urlf1a1", savedFieldContainer_1a.getUrlFields().get(0).getFieldValue());
 
@@ -186,6 +192,7 @@ public class PageRepositoryImplTest {
         Assertions.assertTrue(savedFieldContainer_1b.getImageFields().isEmpty());
         Assertions.assertTrue(savedFieldContainer_1b.getRegularTextLongDescriptionFields().isEmpty());
         Assertions.assertEquals(1, savedFieldContainer_1b.getRichTextLongDescriptionFields().size());
+        Assertions.assertEquals("rtldf1b_type", savedFieldContainer_1b.getRichTextLongDescriptionFields().get(0).getFieldType());
         Assertions.assertEquals("rtldf1b", savedFieldContainer_1b.getRichTextLongDescriptionFields().get(0).getFieldName());
         Assertions.assertEquals("sample rtldf1b value", savedFieldContainer_1b.getRichTextLongDescriptionFields().get(0).getFieldValue());
         Assertions.assertTrue(savedFieldContainer_1b.getUrlFields().isEmpty());
@@ -199,6 +206,7 @@ public class PageRepositoryImplTest {
 
         Assertions.assertEquals("Layer2_FC", savedFieldContainer_2.getFieldContainerName());
         Assertions.assertEquals(1, savedFieldContainer_2.getRichTextLongDescriptionFields().size());
+        Assertions.assertEquals("rtldf2_type", savedFieldContainer_2.getRichTextLongDescriptionFields().get(0).getFieldType());
         Assertions.assertEquals("rtldf2", savedFieldContainer_2.getRichTextLongDescriptionFields().get(0).getFieldName());
         Assertions.assertEquals("sample rtldf2 value", savedFieldContainer_2.getRichTextLongDescriptionFields().get(0).getFieldValue());
         Assertions.assertEquals(2, savedFieldContainers_2.size());
@@ -241,7 +249,7 @@ public class PageRepositoryImplTest {
         repo.save(newPageNoNestingSp);
         repo.deletePageWithLocale("about", "SP");
 
-        Assertions.assertTrue(repo.findByPageTypeAndKioskLocale("about", "SP").isPresent());
+        Assertions.assertTrue(repo.findByPageTypeAndKioskLocale("about", "SP").isEmpty());
 
         Optional<Page> otherPageOpt = repo.findByPageTypeAndKioskLocale("about", "EN");
         Assertions.assertTrue(otherPageOpt.isPresent());
@@ -258,9 +266,7 @@ public class PageRepositoryImplTest {
         repo.save(newPageWithComplexNestingSp);
         repo.deletePageWithLocale("sample", "SP");
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            repo.findByPageTypeAndKioskLocale("sample", "SP");
-        });
+        Assertions.assertTrue(repo.findByPageTypeAndKioskLocale("sample", "SP").isEmpty());
 
         Optional<Page> otherPageOpt = repo.findByPageTypeAndKioskLocale("sample", "EN");
         Assertions.assertTrue(otherPageOpt.isPresent());
@@ -431,39 +437,39 @@ public class PageRepositoryImplTest {
      * 
      * -page
      *     -fieldContainer ("Layer1a_FC")
-     *         -buttonField ("bf1a1")
-     *         -imageField ("image1a1")
-     *         -regularTextLongDescriptionField ("regtldf1a1")
-     *         -richTextLongDescriptionField ("rtldf1a")
-     *         -urlField ("urlf1a1")
+     *         -buttonField ("bf1a1_type", "bf1a1", value)
+     *         -imageField ("image1a1_type", "image1a1", value)
+     *         -regularTextLongDescriptionField ("regtldf1a1_type", "regtldf1a1", value)
+     *         -richTextLongDescriptionField ("rtldf1a_type", "rtldf1a", value)
+     *         -urlField ("urlf1a1_type", "urlf1a1", value)
      *     -fieldContainer ("Layer1b_FC")
-     *         -richTextLongDescriptionField ("rtldf1b")
+     *         -richTextLongDescriptionField ("rtldf1b_type", "rtldf1b", value)
      *         -fieldContainer ("Layer2_FC")
-     *              -richTextLongDescriptionField ("rtldf2")
+     *              -richTextLongDescriptionField ("rtldf2_type", "rtldf2", value)
      *              -fieldContainer ("Layer3a_FC")
      *              -fieldContainer ("Layer3b_FC")
-     *                   -regularTextLongDescriptionField ("regtldf3b1")
-     *                   -regularTextLongDescriptionField ("regtldf3b2")
-     *                   -imageField ("image3b1")
-     *                   -imageField ("image3b2")
-     *                   -buttonField ("bf3b1")
-     *                   -buttonField ("bf3b2")
-     *                   -urlField ("urlf3b1")
-     *                   -urlField ("urlf3b2")
-     *                   -richTextLongDescriptionField ("rtldf3a")
-     *                   -richTextLongDescriptionField ("rtldf3b")
+     *                   -regularTextLongDescriptionField ("regtldf3b1_type", "regtldf3b1", value)
+     *                   -regularTextLongDescriptionField ("regtldf3b2_type", "regtldf3b2", value)
+     *                   -imageField ("image3b1_type", "image3b1", value)
+     *                   -imageField ("image3b2_type", "image3b2", value)
+     *                   -buttonField ("bf3b1_type", "bf3b1", value)
+     *                   -buttonField ("bf3b2_type", "bf3b2", value)
+     *                   -urlField ("urlf3b1_type", "urlf3b1", value)
+     *                   -urlField ("urlf3b2_type", "urlf3b2", value)
+     *                   -richTextLongDescriptionField ("rtldf3a_type","rtldf3a", value)
+     *                   -richTextLongDescriptionField ("rtldf3b_type", "rtldf3b", value)
      */
 
     private Page buildPageWithComplexNesting(PageInternals pageInternals, String pageType, String prefix) {
         List<FieldContainer> newPageFieldContainers = new ArrayList<>();
 
         FieldContainer f1 = new FieldContainer.Builder()
-                                .addButtonField(new ButtonField(prefix + "bf1a1",  false))
+                                .addButtonField(new ButtonField(prefix + "bf1a1_type", prefix + "bf1a1",  false))
                                 .fieldContainerName(prefix + "Layer1a_FC")
-                                .addImageField(new ImageField(prefix + "image1a1", new Image(prefix + "image1a_path", 1, 2)))
-                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf1a1", prefix + "sample regtldf1a1 value"))
-                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf1a", prefix + "sample rtldf1a value"))
-                                .addUrlField(new UrlField(prefix + "urlf1a1", prefix + "url: urlf1a1"))
+                                .addImageField(new ImageField(prefix + "image1a1_type", prefix + "image1a1", new Image(prefix + "image1a_path", 1, 2)))
+                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf1a1_type", prefix + "regtldf1a1", prefix + "sample regtldf1a1 value"))
+                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf1a_type", prefix + "rtldf1a", prefix + "sample rtldf1a value"))
+                                .addUrlField(new UrlField(prefix + "urlf1a1_type", prefix + "urlf1a1", prefix + "url: urlf1a1"))
                                 .build();
 
         FieldContainer f2 = new FieldContainer.Builder()
@@ -471,29 +477,29 @@ public class PageRepositoryImplTest {
                                 .build();
 
         FieldContainer f3 = new FieldContainer.Builder()
-                                .addButtonField(new ButtonField(prefix + "bf3b1",  false))
-                                .addButtonField(new ButtonField(prefix + "bf3b2",  true))
+                                .addButtonField(new ButtonField(prefix + "bf3b1_type", prefix + "bf3b1",  false))
+                                .addButtonField(new ButtonField(prefix + "bf3b2_type", prefix + "bf3b2",  true))
                                 .fieldContainerName(prefix + "Layer3b_FC")
-                                .addImageField(new ImageField(prefix + "image3b1", new Image(prefix + "image3b1_path", 1, 2)))
-                                .addImageField(new ImageField(prefix + "image3b2", new Image(prefix + "image3b2_path", 3, 4)))
-                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf3b1", prefix + "sample regtldf3b1 value"))
-                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf3b2", prefix + "sample regtldf3b1 value"))
-                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf3a", prefix + "sample rtldf3a value"))
-                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf3b", prefix + "sample rtldf3b value"))
-                                .addUrlField(new UrlField(prefix + "urlf3b1", prefix + "url: urlf3b1"))
-                                .addUrlField(new UrlField(prefix + "urlf3b2", prefix + "url: urlf3b2"))
+                                .addImageField(new ImageField(prefix + "image3b1_type", prefix + "image3b1", new Image(prefix + "image3b1_path", 1, 2)))
+                                .addImageField(new ImageField(prefix + "image3b2_type", prefix + "image3b2", new Image(prefix + "image3b2_path", 3, 4)))
+                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf3b1_type", prefix + "regtldf3b1", prefix + "sample regtldf3b1 value"))
+                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(prefix + "regtldf3b2_type", prefix + "regtldf3b2", prefix + "sample regtldf3b1 value"))
+                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf3a_type", prefix + "rtldf3a", prefix + "sample rtldf3a value"))
+                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf3b_type", prefix + "rtldf3b", prefix + "sample rtldf3b value"))
+                                .addUrlField(new UrlField(prefix + "urlf3b1_type", prefix + "urlf3b1", prefix + "url: urlf3b1"))
+                                .addUrlField(new UrlField(prefix + "urlf3b2_type", prefix + "urlf3b2", prefix + "url: urlf3b2"))
                                 .build();
 
         FieldContainer f4 = new FieldContainer.Builder()
                                 .fieldContainerName(prefix + "Layer2_FC")
-                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf2", prefix + "sample rtldf2 value"))
+                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf2_type", prefix + "rtldf2", prefix + "sample rtldf2 value"))
                                 .addChildContainer(f2)
                                 .addChildContainer(f3)
                                 .build();
 
         FieldContainer f5 = new FieldContainer.Builder()
                                 .fieldContainerName(prefix + "Layer1b_FC")
-                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf1b", prefix + "sample rtldf1b value"))
+                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(prefix + "rtldf1b_type", prefix + "rtldf1b", prefix + "sample rtldf1b value"))
                                 .addChildContainer(f4)
                                 .build();
 

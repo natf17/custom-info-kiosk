@@ -11,10 +11,11 @@ public class RichTextLongDescriptionFieldRowMapper implements RowMapper<RichText
 
     @Override
     public RichTextLongDescriptionField mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String fieldType = rs.getString("RTLDF_FTYPE");
         String fieldName = rs.getString("RTLDF_FNAME");
         String fieldValue = rs.getString("RTLDF_FVALUE");
 
-        return new RichTextLongDescriptionField(fieldName, fieldValue);
+        return new RichTextLongDescriptionField(fieldType, fieldName, fieldValue);
         
     }
 }

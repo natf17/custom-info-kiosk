@@ -11,10 +11,11 @@ public class ButtonFieldRowMapper implements RowMapper<ButtonField> {
 
     @Override
     public ButtonField mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String fieldType = rs.getString("BF_FTYPE");
         String fieldName = rs.getString("BF_FNAME");
         Boolean fieldValue = rs.getBoolean("BF_FVALUE");
 
-        return new ButtonField(fieldName, fieldValue);
+        return new ButtonField(fieldType, fieldName, fieldValue);
         
     }
 }

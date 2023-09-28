@@ -33,16 +33,16 @@ public class AboutPageTest {
                                         .pageName("sample")
                                         .pageTitle("page_title")
                                         .withLocaleId(5L)
-                                        .featureImage(sampleImage)
-                                        .featureImageAltText("feat_img")
-                                        .richDescription("r_desc")
+                                        .richDescriptionField(new EditedPageFieldPayload<String>("r_desc", "r_desc_field_name"))
+                                        .imageContainer(new EditedImageContainer(new EditedPageFieldPayload<Image>("feat_img_field_name", sampleImage), 
+                                                                                 new EditedPageFieldPayload<String>("feat_img", "feat_img_alt_text_field_name")))
                                         .build();
 
-        Assertions.assertEquals(sampleImage, aboutPage.getImage());
-        Assertions.assertEquals("feat_img", aboutPage.getImageAltText());
-        Assertions.assertEquals("page_title", aboutPage.getPageTitle());
-        Assertions.assertEquals("ABOUT", aboutPage.getPageType());
-        Assertions.assertEquals("r_desc", aboutPage.getRichDescription());
+        Assertions.assertEquals(sampleImage, aboutPage.getImageContainer().getImageField().getFieldValue());
+        Assertions.assertEquals("feat_img", aboutPage.getImageContainer().getImageAltTextField().getFieldName());
+        Assertions.assertEquals("page_title", aboutPage.getPageTitleField().getFieldValue());
+        Assertions.assertEquals(KioskPageType.ABOUT, aboutPage.getPageType());
+        Assertions.assertEquals("r_desc_field_name", aboutPage.getRichDescrField().getFieldValue());
 
     }
 
@@ -54,13 +54,13 @@ public class AboutPageTest {
         LocalDateTime lastModified = LocalDateTime.now();
 
         FieldContainer featureImageFC = new FieldContainer.Builder()
-                                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(AboutPage.IMAGE_ALTERNATIVE_TEXT_FIELD_NAME, "altText"))
-                                                .addImageField(new ImageField(AboutPage.FEATURE_IMAGE_FIELD_NAME, featureImage))
+                                                .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(AboutPage.IMAGE_ALTERNATIVE_TEXT_FIELD_TYPE, AboutPage.IMAGE_ALTERNATIVE_TEXT_FIELD_NAME_DEFAULT, "altText"))
+                                                .addImageField(new ImageField(AboutPage.FEATURE_IMAGE_FIELD_NAME_DEFAULT, AboutPage.FEATURE_IMAGE_FIELD_TYPE, featureImage))
                                                 .fieldContainerName(AboutPage.IMAGE_CONTAINER_NAME)
                                                 .build();
 
         FieldContainer mainFC = new FieldContainer.Builder()
-                                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(AboutPage.RICH_DESCRIPTION_TEXT_FIELD_NAME, "richDescription"))
+                                                .addRichTextLongDescriptionField(new RichTextLongDescriptionField(AboutPage.RICH_DESCRIPTION_TEXT_FIELD_TYPE, AboutPage.RICH_DESCRIPTION_TEXT_FIELD_NAME_DEFAULT, "richDescription"))
                                                 .fieldContainerName(AboutPage.MAIN_CONTAINER_NAME)
                                                 .addChildContainer(featureImageFC)
                                                 .build();
@@ -70,20 +70,22 @@ public class AboutPageTest {
 
 
         Page pageRep = new Page.Builder().pageInternals(new PageInternals(2L, PageStatus.PUBLISHED, createdOn, lastModified))
-                                .titleField(new PageTitleField(KioskPage.PAGE_TITLE_FIELD_NAME, "pageTitle"))
+                                .titleField(new PageTitleField(KioskPage.PAGE_TITLE_FIELD_TYPE, KioskPage.PAGE_TITLE_FIELD_NAME_DEFAULT, "pageTitle"))
                                 .pageType(KioskPageType.ABOUT.toString())
                                 .pageName("pageName")
                                 .fieldContainers(fieldContainers)
                                 .build();
 
 
-        AboutPage aboutPage = AboutPage.fromPage(pageRep);
+        AboutPage aboutPage = new AboutPage.Builder(pageRep)
+                                .build();
 
-        Assertions.assertEquals(featureImage, aboutPage.getImage());
-        Assertions.assertEquals("altText", aboutPage.getImageAltText());
-        Assertions.assertEquals("pageTitle", aboutPage.getPageTitle());
-        Assertions.assertEquals("ABOUT", aboutPage.getPageType());
-        Assertions.assertEquals("richDescription", aboutPage.getRichDescription());
+        Assertions.assertEquals(featureImage, aboutPage.getImageContainer().getImageField().getFieldValue());
+        Assertions.assertEquals("altText", aboutPage.getImageContainer().getImageAltTextField().getFieldValue());
+        Assertions.assertEquals("pageTitle", aboutPage.getPageTitleField().getFieldValue());
+        Assertions.assertEquals(KioskPageType.ABOUT, aboutPage.getPageType());
+        Assertions.assertEquals("richDescription", aboutPage.getRichDescrField().getFieldValue());
         
     }
+
 }

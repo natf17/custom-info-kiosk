@@ -11,10 +11,11 @@ public class PageTitleFieldQueryRowMapper implements RowMapper<PageTitleField> {
 
     @Override
     public PageTitleField mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String fieldType = rs.getString("PTF_FTYPE");
         String fieldName = rs.getString("PTF_FNAME");
         String fieldValue = rs.getString("PTF_FVALUE");
 
-        return new PageTitleField(fieldName, fieldValue);
+        return new PageTitleField(fieldType, fieldName, fieldValue);
     }
 
 }
