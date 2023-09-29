@@ -27,8 +27,8 @@ public class Error404Page extends KioskPage {
     public static final String REDIRECT_DESCRIPTION_FIELD_NAME_DEFAULT = "Description";
     public static final String SHOW_REDIRECT_LINK_OPTION_FIELD_TYPE = "ShowRedirectLink";
     public static final String SHOW_REDIRECT_LINK_OPTION_FIELD_NAME_DEFAULT = "ShowRedirectLink";
-    public static final String ERROR_DESCR__FIELD_TYPE = "ErrorDescription";
-    public static final String ERROR_DESCR__FIELD_NAME_DEFAULT = "ErrorDescription";
+    public static final String ERROR_DESCR_FIELD_TYPE = "ErrorDescription";
+    public static final String ERROR_DESCR_FIELD_NAME_DEFAULT = "ErrorDescription";
 
     protected static final String REDIRECT_URL_CONTAINER_NAME = "redirectUrlFC";
     protected static final String MAIN_CONTAINER_NAME = "mainFC";
@@ -144,10 +144,10 @@ public class Error404Page extends KioskPage {
 
             if(errorDescriptionField == null) {
                 if(editedErrorDescriptionField == null) {
-                    editedErrorDescriptionField = new EditedPageFieldPayload<String>(ERROR_DESCR__FIELD_NAME_DEFAULT, null);
+                    editedErrorDescriptionField = new EditedPageFieldPayload<String>(ERROR_DESCR_FIELD_NAME_DEFAULT, null);
                 }
 
-                errorDescriptionField = editedErrorDescriptionField.toKioskPageField(ERROR_DESCR__FIELD_TYPE, true);
+                errorDescriptionField = editedErrorDescriptionField.toKioskPageField(ERROR_DESCR_FIELD_TYPE, true);
             }
 
             if(shouldShowRedirectLink == null) {
@@ -173,7 +173,7 @@ public class Error404Page extends KioskPage {
                 throw new RuntimeException("Invalid field type in the RedirectUrlFieldContainer");
             }
 
-            if (!KioskPageFieldTypeValidator.isValid(errorDescriptionField, ERROR_DESCR__FIELD_TYPE)) {
+            if (!KioskPageFieldTypeValidator.isValid(errorDescriptionField, ERROR_DESCR_FIELD_TYPE)) {
                 throw new RuntimeException("The field type for the error description does not match");
             }
 

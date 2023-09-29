@@ -57,7 +57,7 @@ public class Error404PageTest {
         LocalDateTime lastModified = LocalDateTime.now();
 
         FieldContainer redirectLinkFC = new FieldContainer.Builder()
-                                                            .addUrlField(new UrlField(Error404Page.ERROR_DESCR__FIELD_TYPE, Error404Page.ERROR_DESCR__FIELD_NAME_DEFAULT, "/redirect"))
+                                                            .addUrlField(new UrlField(Error404Page.ERROR_DESCR_FIELD_TYPE, Error404Page.ERROR_DESCR_FIELD_NAME_DEFAULT, "/redirect"))
                                                             .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(Error404Page.REDIRECT_DISPLAY_TEXT_FIELD_TYPE, Error404Page.REDIRECT_DISPLAY_TEXT_FIELD_NAME_DEFAULT, "redirect_display_text"))
                                                             .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(Error404Page.REDIRECT_DESCRIPTION_FIELD_TYPE, Error404Page.REDIRECT_DESCRIPTION_FIELD_NAME_DEFAULT, "redirect_description"))
                                                             .fieldContainerName(Error404Page.REDIRECT_URL_CONTAINER_NAME)
@@ -66,7 +66,7 @@ public class Error404PageTest {
 
         FieldContainer mainFC = new FieldContainer.Builder()
                                                         .addButtonField(new ButtonField(Error404Page.SHOW_REDIRECT_LINK_OPTION_FIELD_TYPE, Error404Page.SHOW_REDIRECT_LINK_OPTION_FIELD_NAME_DEFAULT, true))
-                                                        .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(Error404Page.ERROR_DESCR__FIELD_TYPE, Error404Page.ERROR_DESCR__FIELD_NAME_DEFAULT, "error_descr"))
+                                                        .addRegularTextLongDescriptionField(new RegularTextLongDescriptionField(Error404Page.ERROR_DESCR_FIELD_TYPE, Error404Page.ERROR_DESCR_FIELD_NAME_DEFAULT, "error_descr"))
                                                         .fieldContainerName(Error404Page.MAIN_CONTAINER_NAME)
                                                         .addChildContainer(redirectLinkFC)
                                                         .build();
