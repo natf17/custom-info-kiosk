@@ -42,6 +42,7 @@ public class Error404PageTest {
         Assertions.assertEquals("error_descr", error404Page.getErrorDescriptionField().getFieldValue());
         Assertions.assertEquals("page_title", error404Page.getPageTitleField().getFieldValue());
         Assertions.assertEquals(KioskPageType.ERROR, error404Page.getPageType());
+        Assertions.assertEquals("error404", error404Page.getPageName());
         Assertions.assertEquals("redirect_description_value", error404Page.getRedirectUrlContainer().getRedirectDescriptionField().getFieldValue());
         Assertions.assertEquals("redirect_display_text_value", error404Page.getRedirectUrlContainer().getRedirectDisplayTextField().getFieldValue());
         Assertions.assertEquals("/redirect", error404Page.getRedirectUrlContainer().getRedirectUrlField().getFieldValue());
@@ -89,6 +90,7 @@ public class Error404PageTest {
         Assertions.assertEquals("error_descr", error404Page.getErrorDescriptionField().getFieldValue());
         Assertions.assertEquals("page_title", error404Page.getPageTitleField().getFieldValue());
         Assertions.assertEquals(KioskPageType.ERROR, error404Page.getPageType());
+        Assertions.assertEquals("error404", error404Page.getPageName());
         Assertions.assertEquals("redirect_description", error404Page.getRedirectUrlContainer().getRedirectDescriptionField().getFieldValue());
         Assertions.assertEquals("redirect_display_text", error404Page.getRedirectUrlContainer().getRedirectDisplayTextField().getFieldValue());
         Assertions.assertEquals("/redirect", error404Page.getRedirectUrlContainer().getRedirectUrlField().getFieldValue());

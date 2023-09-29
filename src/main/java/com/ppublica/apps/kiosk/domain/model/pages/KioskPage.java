@@ -49,6 +49,10 @@ abstract class KioskPage {
         return this.metadata;
     }
 
+    public String getPageName() {
+        return this.pageName;
+    }
+
     public Page getPageRep() {
 
         Page.Builder pageRepBuilder;

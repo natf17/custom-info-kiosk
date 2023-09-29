@@ -38,6 +38,7 @@ public class HomePageTest {
         Assertions.assertEquals("tap-to_value", homePage.getTapToContinueText().getFieldValue());
         Assertions.assertEquals("home_title", homePage.getPageTitleField().getFieldValue());
         Assertions.assertEquals(KioskPageType.HOME, homePage.getPageType());
+        Assertions.assertEquals("home page", homePage.getPageName());
         Assertions.assertEquals("welcome_value", homePage.getWelcomeText().getFieldValue());
         Assertions.assertTrue(homePage.shouldShowSelectFromAvailableLocales().getFieldValue());
 
@@ -74,6 +75,7 @@ public class HomePageTest {
         Assertions.assertEquals("tap-to_value", homePage.getTapToContinueText().getFieldValue());
         Assertions.assertEquals("home_title", homePage.getPageTitleField().getFieldValue());
         Assertions.assertEquals(KioskPageType.HOME, homePage.getPageType());
+        Assertions.assertEquals("home page", homePage.getPageName());
         Assertions.assertEquals("welcome_value", homePage.getWelcomeText().getFieldValue());
         Assertions.assertTrue(homePage.shouldShowSelectFromAvailableLocales().getFieldValue());
         

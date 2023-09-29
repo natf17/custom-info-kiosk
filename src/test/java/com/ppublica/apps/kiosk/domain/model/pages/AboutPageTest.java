@@ -41,6 +41,7 @@ public class AboutPageTest {
         Assertions.assertEquals(sampleImage, aboutPage.getImageContainer().getImageField().getFieldValue());
         Assertions.assertEquals("feat_img", aboutPage.getImageContainer().getImageAltTextField().getFieldName());
         Assertions.assertEquals("page_title", aboutPage.getPageTitleField().getFieldValue());
+        Assertions.assertEquals("sample", aboutPage.getPageName());
         Assertions.assertEquals(KioskPageType.ABOUT, aboutPage.getPageType());
         Assertions.assertEquals("r_desc_field_name", aboutPage.getRichDescrField().getFieldValue());
 
@@ -72,7 +73,7 @@ public class AboutPageTest {
         Page pageRep = new Page.Builder().pageInternals(new PageInternals(2L, PageStatus.PUBLISHED, createdOn, lastModified))
                                 .titleField(new PageTitleField(KioskPage.PAGE_TITLE_FIELD_TYPE, KioskPage.PAGE_TITLE_FIELD_NAME_DEFAULT, "pageTitle"))
                                 .pageType(KioskPageType.ABOUT.toString())
-                                .pageName("pageName")
+                                .pageName("sample")
                                 .fieldContainers(fieldContainers)
                                 .build();
 
@@ -83,6 +84,7 @@ public class AboutPageTest {
         Assertions.assertEquals(featureImage, aboutPage.getImageContainer().getImageField().getFieldValue());
         Assertions.assertEquals("altText", aboutPage.getImageContainer().getImageAltTextField().getFieldValue());
         Assertions.assertEquals("pageTitle", aboutPage.getPageTitleField().getFieldValue());
+        Assertions.assertEquals("sample", aboutPage.getPageName());
         Assertions.assertEquals(KioskPageType.ABOUT, aboutPage.getPageType());
         Assertions.assertEquals("richDescription", aboutPage.getRichDescrField().getFieldValue());
         
