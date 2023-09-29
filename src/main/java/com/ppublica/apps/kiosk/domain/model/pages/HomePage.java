@@ -7,8 +7,8 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.ButtonField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
+import com.ppublica.apps.kiosk.domain.model.pages.selector.FieldSelector;
 import com.ppublica.apps.kiosk.domain.model.pages.validator.KioskPageFieldTypeValidator;
-import com.ppublica.apps.kiosk.domain.model.util.FieldSelector;
 
 /*
  * Represents a the Home Page, which containts the following:

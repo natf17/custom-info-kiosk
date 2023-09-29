@@ -1,10 +1,6 @@
 package com.ppublica.apps.kiosk.domain.model.pages;
 
-import java.util.List;
-
 import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.UrlField;
 import com.ppublica.apps.kiosk.domain.model.pages.converter.ToCmsPageFieldConverter;

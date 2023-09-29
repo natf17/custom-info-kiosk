@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.domain.model.util;
+package com.ppublica.apps.kiosk.domain.model.pages.selector;
 
 import java.util.List;
 
