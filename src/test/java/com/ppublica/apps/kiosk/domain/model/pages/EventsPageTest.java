@@ -8,16 +8,12 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.ppublica.apps.kiosk.domain.model.cms.pages.ButtonField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageTitleField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.UrlField;
 
 public class EventsPageTest {
 
