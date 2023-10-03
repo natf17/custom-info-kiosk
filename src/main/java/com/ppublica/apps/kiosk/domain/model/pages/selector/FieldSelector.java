@@ -26,6 +26,19 @@ public class FieldSelector {
 
     }
 
+    public FieldContainer selectChildContainer(String fieldContainerName) {
+        List<FieldContainer> childContainers = fieldContainer.getChildContainers();
+
+        for(FieldContainer fc : childContainers) {
+            if(fc.getFieldContainerName().equals(fieldContainerName)) {
+                return fc;
+            }
+        }
+
+        throw new RuntimeException("No child FieldContainer found matching " + fieldContainerName);
+
+    }
+
     
     
 }
