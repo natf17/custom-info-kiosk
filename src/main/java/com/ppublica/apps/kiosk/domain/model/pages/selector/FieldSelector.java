@@ -2,7 +2,9 @@ package com.ppublica.apps.kiosk.domain.model.pages.selector;
 
 import java.util.List;
 
+import com.ppublica.apps.kiosk.domain.model.cms.pages.ButtonField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.FieldContainer;
+import com.ppublica.apps.kiosk.domain.model.cms.pages.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.RegularTextLongDescriptionField;
 
 public class FieldSelector {
@@ -17,6 +19,32 @@ public class FieldSelector {
         List<RegularTextLongDescriptionField> fields = fieldContainer.getRegularTextLongDescriptionFields();
         
         for(RegularTextLongDescriptionField field : fields) {
+            if(field.getFieldType().equals(fieldType)) {
+                return field;
+            }
+        }
+
+        throw new RuntimeException("No RegularTextLongDescriptionField found matching " + fieldType);
+
+    }
+
+    public ButtonField selectButtonField(String fieldType) {
+        List<ButtonField> fields = fieldContainer.getButtonFields();
+        
+        for(ButtonField field : fields) {
+            if(field.getFieldType().equals(fieldType)) {
+                return field;
+            }
+        }
+
+        throw new RuntimeException("No RegularTextLongDescriptionField found matching " + fieldType);
+
+    }
+
+    public ImageField selectImageField(String fieldType) {
+        List<ImageField> fields = fieldContainer.getImageFields();
+        
+        for(ImageField field : fields) {
             if(field.getFieldType().equals(fieldType)) {
                 return field;
             }
