@@ -40,34 +40,42 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         
     }
 
+    @Override
     public SimpleCollectionType withId(Long id) {
         return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
     }
 
+    @Override
     public Long getId() {
         return this.id;
     }
 
+    @Override
     public String getType() {
         return this.type;
     }
 
+    @Override
     public CollectionNameField getCollectionNameField() {
         return this.collectionNameField;
     }
 
+    @Override
     public List<TextField> getTextFields() {
         return this.textFields;
     }
 
+    @Override
     public List<NumericField> getNumericFields() {
         return this.numericFields;
     }
 
+    @Override
     public List<ImageField> getImageFields() {
         return this.imageFields;
     }
 
+    @Override
     public CollectionInternals getCollectionInternals() {
         return this.collectionInternals;
     }

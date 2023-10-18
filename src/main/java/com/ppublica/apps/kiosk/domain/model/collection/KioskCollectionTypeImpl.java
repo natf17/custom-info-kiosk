@@ -7,12 +7,17 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
 public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
 
+    private Long id;
     private CollectionTypeName type;
     private KioskCollectionField<String> collectionNameField;
     private KioskCollectionMetadata kioskCollectionMetadata;
 
     public static String COLLECTION_NAME_FIELD_NAME_DEFAULT = "Collection Name";
 
+    @Override
+    public Long getId() {
+        return this.id;
+    }
 
     @Override
     public CollectionTypeName getKioskCollectionTypeName() {
@@ -29,13 +34,16 @@ public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
         return this.kioskCollectionMetadata;
     }
 
-    protected KioskCollectionTypeImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata) {
+    protected KioskCollectionTypeImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id) {
+        this.id = id;
         this.type = type;
         this.collectionNameField = collectionNameField;
         this.kioskCollectionMetadata = kioskCollectionMetadata;
     }
 
     public static abstract class Builder<B extends Builder<B, M>, M extends KioskCollectionTypeImpl> {
+        protected Long id;
+
         protected CollectionTypeName type;
 
         protected KioskCollectionField<String> collectionNameField;
@@ -48,6 +56,11 @@ public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
 
         protected Builder(CollectionTypeName type) {
             this.type = type;
+        }
+
+        public B id(Long id) {
+            this.id = id;
+            return self();
         }
 
 

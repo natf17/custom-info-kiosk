@@ -19,6 +19,22 @@ public class KioskCollectionMetadata {
         this.lastModified = lastModified;
     }
 
+    public Long getKioskLocaleId() {
+        return this.localeId;
+    }
+
+    public PageStatus getStatus() {
+        return this.status;
+    }
+
+    public LocalDate getCreatedOn() {
+        return this.createdOn;
+    }
+
+    public LocalDateTime getLastModified() {
+        return this.lastModified;
+    }
+
     public CollectionInternals getCollectionInternals() {
         return new CollectionInternals(localeId, status, createdOn, lastModified);
     }

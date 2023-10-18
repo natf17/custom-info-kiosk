@@ -8,16 +8,16 @@ public class LocationImpl extends KioskCollectionTypeImpl implements Location {
     private KioskCollectionField<Long> levelNum;
     private KioskCollectionField<String> fullName;
     private KioskCollectionField<Image> map;
-    private static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.LOCATION;
+    public static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.LOCATION;
     private static final String LEVELNAME_FIELD_NAME_DEFAULT = "Level_name";
     private static final String LEVELNUM_FIELD_NAME_DEFAULT = "Level_num";
     private static final String FULLNAME_FIELD_NAME_DEFAULT = "Fullname";
     private static final String MAP_FIELD_NAME_DEFAULT = "Map";
 
 
-    private LocationImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, 
+    private LocationImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
                     KioskCollectionField<String> levelName, KioskCollectionField<Long> levelNum, KioskCollectionField<String> fullName, KioskCollectionField<Image> map) {
-        super(type, collectionNameField, kioskCollectionMetadata);
+        super(type, collectionNameField, kioskCollectionMetadata, id);
         this.levelName = levelName;
         this.levelNum = levelNum;
         this.fullName = fullName;
@@ -87,37 +87,19 @@ public class LocationImpl extends KioskCollectionTypeImpl implements Location {
 
             if(levelName == null) {   
                 levelName = new KioskCollectionField<String>(LEVELNAME_FIELD_NAME_DEFAULT, null, true);
-                //collectionNameField = editedCollectionNameField.toKioskCollectionField(COLLECTION_NAME_FIELD_TYPE, false);
             }
             
             if(levelNum == null) {   
                 levelNum = new KioskCollectionField<Long>(LEVELNUM_FIELD_NAME_DEFAULT, null, true);
-                //collectionNameField = editedCollectionNameField.toKioskCollectionField(COLLECTION_NAME_FIELD_TYPE, false);
             }
 
             if(fullName == null) {   
                 fullName = new KioskCollectionField<String>(FULLNAME_FIELD_NAME_DEFAULT, null, true);
-                //collectionNameField = editedCollectionNameField.toKioskCollectionField(COLLECTION_NAME_FIELD_TYPE, false);
             }
 
             if(map == null) {   
                 map = new KioskCollectionField<Image>(MAP_FIELD_NAME_DEFAULT, null, true);
-                //collectionNameField = editedCollectionNameField.toKioskCollectionField(COLLECTION_NAME_FIELD_TYPE, false);
             }
-
-            /*
-            // validate objects
-            imageContainerValidator = new ImageContainerValidator(FEATURE_IMAGE_FIELD_TYPE, IMAGE_ALTERNATIVE_TEXT_FIELD_TYPE);
-            
-            if(!imageContainerValidator.isValid(imageContainer)) {
-                throw new RuntimeException("Invalid field type fin the ImageContainer");
-            }
-
-            if (!KioskPageFieldTypeValidator.isValid(richDescriptionField, RICH_DESCRIPTION_TEXT_FIELD_TYPE)) {
-                throw new RuntimeException("RichTextLongDescriptionField fieldType does not match");
-            }
-
-             */
 
         }
 
@@ -129,7 +111,7 @@ public class LocationImpl extends KioskCollectionTypeImpl implements Location {
         @Override
         protected LocationImpl buildChild() {
 
-            return new LocationImpl(super.type, super.collectionNameField, super.kioskCollectionMetadata, levelName, levelNum, fullName, map);
+            return new LocationImpl(super.type, super.collectionNameField, super.kioskCollectionMetadata, super.id, levelName, levelNum, fullName, map);
         }
     }
 

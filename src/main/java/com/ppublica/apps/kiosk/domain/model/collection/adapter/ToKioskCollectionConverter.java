@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.domain.model.collection.converter;
+package com.ppublica.apps.kiosk.domain.model.collection.adapter;
 
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;

@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.domain.model.collection.selector;
+package com.ppublica.apps.kiosk.domain.model.collection.adapter;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionType;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionTypeImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
+import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.collection.Location;
@@ -23,7 +24,14 @@ public class LocationAdapter extends SimpleCollectionTypeAdapter implements Loca
     private static final String FULLNAME_FIELD_TYPE = "Fullname";
     private static final String MAP_FIELD_NAME_TYPE = "Map";
 
+    /*
+     * Expects SimpleCollectionType to be compatible with Location!
+     */
     public LocationAdapter(SimpleCollectionType cmsRep) {
+        if(!cmsRep.getType().equals(CollectionTypeName.LOCATION.toString())) {
+            throw new RuntimeException("Build error: Incompatible type. Expected " + CollectionTypeName.LOCATION.toString());
+        }
+
         this.cmsRep = cmsRep;
     }
 
@@ -34,22 +42,38 @@ public class LocationAdapter extends SimpleCollectionTypeAdapter implements Loca
 
     @Override
     public KioskCollectionField<String> getLevelNameField() {
-        return getAndSetKioskRep().getLevelNameField();
+        return getOrBuildAndSetKioskRep().getLevelNameField();
+    }
+
+    public static String getCmsLevelNameFieldType() {
+        return LEVELNAME_FIELD_TYPE;
     }
 
     @Override
     public KioskCollectionField<Long> getLevelNumField() {
-        return getAndSetKioskRep().getLevelNumField();
+        return getOrBuildAndSetKioskRep().getLevelNumField();
+    }
+
+    public static String getCmsLevelNumFieldType() {
+        return LEVELNUM_FIELD_TYPE;
     }
 
     @Override
     public KioskCollectionField<String> getFullNameField() {
-        return getAndSetKioskRep().getFullNameField();
+        return getOrBuildAndSetKioskRep().getFullNameField();
+    }
+
+    public static String getCmsFullNameFieldType() {
+        return FULLNAME_FIELD_TYPE;
     }
 
     @Override
     public KioskCollectionField<Image> getMapField() {
-          return getAndSetKioskRep().getMapField();
+          return getOrBuildAndSetKioskRep().getMapField();
+    }
+
+    public static String getCmsMapFieldType() {
+        return MAP_FIELD_NAME_TYPE;
     }
 
     @Override
@@ -71,7 +95,7 @@ public class LocationAdapter extends SimpleCollectionTypeAdapter implements Loca
     }
 
     @Override
-    protected Location getAndSetKioskRep() {
+    protected Location getOrBuildAndSetKioskRep() {
         if(this.kioskRep != null) {
             return kioskRep;
         }
@@ -82,7 +106,7 @@ public class LocationAdapter extends SimpleCollectionTypeAdapter implements Loca
 
         SimpleCollectionType cmsRep = this.cmsRep;
 
-        processAndSetKioskRep(builder);
+        processKioskRep(builder);
 
         List<ImageField> imageFields = cmsRep.getImageFields();
         List<NumericField> numericFields = cmsRep.getNumericFields();
@@ -99,6 +123,8 @@ public class LocationAdapter extends SimpleCollectionTypeAdapter implements Loca
                 builder.fullName(super.toKioskCollectionConverter.toStringField(i));
             }
         });
+
+        this.kioskRep = builder.build();
 
 
         return kioskRep;
