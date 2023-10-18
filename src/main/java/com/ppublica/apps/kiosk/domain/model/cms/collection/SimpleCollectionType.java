@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface SimpleCollectionType {
 
+    SimpleCollectionType withId(Long id);
+
     Long getId();
 
     String getType();
@@ -18,5 +20,7 @@ public interface SimpleCollectionType {
     List<ImageField> getImageFields();
 
     CollectionInternals getCollectionInternals();
+
+    List<LinkedCollectionField> getLinkedCollectionFields();
 
 }

@@ -15,11 +15,12 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
     private List<TextField> textFields;
     private List<NumericField> numericFields;
     private List<ImageField> imageFields;
+    private List<LinkedCollectionField> linkedCollectionFields;
     private CollectionInternals collectionInternals;
     
 
     public SimpleCollectionTypeImpl(Long id, String type, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields,
-                List<ImageField> imageFields, CollectionInternals collectionInternals) {
+                List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
         
         this.id = id;
         this.type = type;
@@ -27,19 +28,20 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         this.textFields = textFields;
         this.numericFields = numericFields;
         this.imageFields = imageFields;
+        this.linkedCollectionFields = linkedCollectionFields;
         this.collectionInternals = collectionInternals;
         
     }
 
     public SimpleCollectionTypeImpl(String type, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields,
-                List<ImageField> imageFields, CollectionInternals collectionInternals) {
+                List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
         
-        this(null, type, collectionNameField, textFields, numericFields, imageFields, collectionInternals);
+        this(null, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
         
     }
 
     public SimpleCollectionType withId(Long id) {
-        return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, collectionInternals);
+        return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
     }
 
     public Long getId() {
@@ -70,6 +72,11 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         return this.collectionInternals;
     }
 
+    @Override
+    public List<LinkedCollectionField> getLinkedCollectionFields() {
+        return this.linkedCollectionFields;
+    }
+
     public static class Builder {
         private Long id;
         private String type;
@@ -77,6 +84,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         private List<TextField> textFields = new ArrayList<>();
         private List<NumericField> numericFields = new ArrayList<>();
         private List<ImageField> imageFields = new ArrayList<>();
+        private List<LinkedCollectionField> linkedCollectionFields = new ArrayList<>();
         private CollectionInternals collectionInternals;
         private Long kioskLocaleId;
 
@@ -134,6 +142,19 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
             return this;
         }
 
+        public Builder linkedCollectionFields(List<LinkedCollectionField> linkedCollectionFields) {
+            if(linkedCollectionFields == null) {
+                throw new RuntimeException("A non-null argument is required");
+            }
+            this.linkedCollectionFields = linkedCollectionFields;
+            return this;
+        }
+
+        public Builder addLinkedCollectionField(LinkedCollectionField linkedCollectionField) {
+            this.linkedCollectionFields.add(linkedCollectionField);
+            return this;
+        }
+
         public Builder collectionInternals(CollectionInternals collectionInternals) {
             this.collectionInternals = collectionInternals;
             return this;
@@ -162,7 +183,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
                 throw new RuntimeException("A CollectionNameField is required");
             }
 
-            return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, collectionInternals);
+            return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
         }
     }
 
