@@ -15,6 +15,9 @@ public class SQLStatements {
     protected static String INSERT_NUMERIC_FIELD_TABLE = "INSERT INTO numeric_field(field_type, field_name, field_value, simple_collection_type) "
                                                                     + "VALUES (?, ?, ?, ?)";
 
+    protected static String INSERT_BOOLEAN_FIELD_TABLE = "INSERT INTO boolean_field(field_type, field_name, field_value, simple_collection_type) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+
     protected static String INSERT_IMAGE_FIELD_TABLE = "INSERT INTO image_field_coll(field_type, field_name, simple_collection_type) "
                                                                     + "VALUES (?, ?, ?) RETURNING id" ;
                                                             
@@ -39,6 +42,10 @@ public class SQLStatements {
     protected static String FIND_NUMERIC_FIELD_TABLE = "SELECT numeric_field.field_type AS NF_FTYPE, numeric_field.field_name AS NF_FNAME, numeric_field.field_value AS NF_FVALUE "
                                                 + "FROM numeric_field "
                                                 + "WHERE numeric_field.simple_collection_type = ?";
+
+    protected static String FIND_BOOLEAN_FIELD_TABLE = "SELECT boolean_field.field_type AS BF_FTYPE, boolean_field.field_name AS BF_FNAME, boolean_field.field_value AS BF_FVALUE "
+                                                + "FROM boolean_field "
+                                                + "WHERE boolean_field.simple_collection_type = ?";
     
     protected static String FIND_IMAGE_FIELD_TABLE = "SELECT image_field_coll.id AS IF_ID, image_field_coll.field_type AS IF_FTYPE, image_field_coll.field_name AS IF_FNAME, "
                                                 + "image_coll.id AS I_ID, image_coll.location AS I_LOC, image_coll.width AS I_WIDTH, image_coll.height AS I_HEIGHT "

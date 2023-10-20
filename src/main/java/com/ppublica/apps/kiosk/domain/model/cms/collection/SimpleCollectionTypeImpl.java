@@ -14,19 +14,21 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
     private CollectionNameField collectionNameField;
     private List<TextField> textFields;
     private List<NumericField> numericFields;
+    private List<BooleanField> booleanFields;
     private List<ImageField> imageFields;
     private List<LinkedCollectionField> linkedCollectionFields;
     private CollectionInternals collectionInternals;
     
 
     public SimpleCollectionTypeImpl(Long id, String type, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields,
-                List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
+                List<BooleanField> booleanFields, List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
         
         this.id = id;
         this.type = type;
         this.collectionNameField = collectionNameField;
         this.textFields = textFields;
         this.numericFields = numericFields;
+        this.booleanFields = booleanFields;
         this.imageFields = imageFields;
         this.linkedCollectionFields = linkedCollectionFields;
         this.collectionInternals = collectionInternals;
@@ -34,15 +36,15 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
     }
 
     public SimpleCollectionTypeImpl(String type, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields,
-                List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
+                List<BooleanField> booleanFields, List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields, CollectionInternals collectionInternals) {
         
-        this(null, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
+        this(null, type, collectionNameField, textFields, numericFields, booleanFields, imageFields, linkedCollectionFields, collectionInternals);
         
     }
 
     @Override
     public SimpleCollectionType withId(Long id) {
-        return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
+        return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, booleanFields, imageFields, linkedCollectionFields, collectionInternals);
     }
 
     @Override
@@ -71,6 +73,11 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
     }
 
     @Override
+    public List<BooleanField> getBooleanFields() {
+        return this.booleanFields;
+    }
+
+    @Override
     public List<ImageField> getImageFields() {
         return this.imageFields;
     }
@@ -91,6 +98,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         private CollectionNameField collectionNameField;
         private List<TextField> textFields = new ArrayList<>();
         private List<NumericField> numericFields = new ArrayList<>();
+        private List<BooleanField> booleanFields = new ArrayList<>();
         private List<ImageField> imageFields = new ArrayList<>();
         private List<LinkedCollectionField> linkedCollectionFields = new ArrayList<>();
         private CollectionInternals collectionInternals;
@@ -134,6 +142,19 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
 
         public Builder addNumericField(NumericField numericField) {
             this.numericFields.add(numericField);
+            return this;
+        }
+
+        public Builder booleanFields(List<BooleanField> booleanFields) {
+            if(booleanFields == null) {
+                throw new RuntimeException("A non-null argument is required");
+            }
+            this.booleanFields = booleanFields;
+            return this;
+        }
+
+        public Builder addBooleanField(BooleanField booleanField) {
+            this.booleanFields.add(booleanField);
             return this;
         }
 
@@ -191,7 +212,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
                 throw new RuntimeException("A CollectionNameField is required");
             }
 
-            return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, imageFields, linkedCollectionFields, collectionInternals);
+            return new SimpleCollectionTypeImpl(id, type, collectionNameField, textFields, numericFields, booleanFields, imageFields, linkedCollectionFields, collectionInternals);
         }
     }
 

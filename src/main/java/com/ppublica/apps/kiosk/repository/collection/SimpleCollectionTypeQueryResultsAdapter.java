@@ -2,6 +2,7 @@ package com.ppublica.apps.kiosk.repository.collection;
 
 import java.util.List;
 
+import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
@@ -15,14 +16,16 @@ public class SimpleCollectionTypeQueryResultsAdapter implements SimpleCollection
     private SimpleCollectionTypeQueryResults simpleCollectionTypeResult;
     private List<TextField> textFields;
     private List<NumericField> numericFields;
+    private List<BooleanField> booleanFields;
     private List<ImageField> imageFields;
-    List<LinkedCollectionField> linkedCollectionFields;
+    private List<LinkedCollectionField> linkedCollectionFields;
 
     public SimpleCollectionTypeQueryResultsAdapter(SimpleCollectionTypeQueryResults simpleCollectionTypeResult, List<TextField> textFields, 
-                                                    List<NumericField> numericFields, List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields) {
+                                                    List<NumericField> numericFields, List<BooleanField> booleanFields, List<ImageField> imageFields, List<LinkedCollectionField> linkedCollectionFields) {
         this.simpleCollectionTypeResult = simpleCollectionTypeResult;
         this.textFields = textFields;
         this.numericFields = numericFields;
+        this.booleanFields = booleanFields;
         this.imageFields = imageFields;
         this.linkedCollectionFields = linkedCollectionFields;
     }
@@ -30,7 +33,7 @@ public class SimpleCollectionTypeQueryResultsAdapter implements SimpleCollection
     @Override
     public SimpleCollectionType withId(Long id) {
         return new SimpleCollectionTypeImpl(id,simpleCollectionTypeResult.getType(), simpleCollectionTypeResult.getCollectionNameField(), 
-                                                textFields, numericFields, imageFields, linkedCollectionFields, simpleCollectionTypeResult.getCollectionInternals());
+                                                textFields, numericFields, booleanFields, imageFields, linkedCollectionFields, simpleCollectionTypeResult.getCollectionInternals());
     }
 
     @Override
@@ -56,6 +59,11 @@ public class SimpleCollectionTypeQueryResultsAdapter implements SimpleCollection
     @Override
     public List<NumericField> getNumericFields() {
         return this.numericFields;
+    }
+
+    @Override
+    public List<BooleanField> getBooleanFields() {
+        return this.booleanFields;
     }
 
     @Override

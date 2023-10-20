@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
@@ -82,7 +83,17 @@ public class SimpleCollectionTypeRepositoryImpl implements SimpleCollectionTypeR
                                 savedSimpleCollectionTypeId);
         }
 
-        // 6. Insert ImageFields
+        // 6. Insert BooleanFields
+        List<BooleanField> booleanFields = savedSimpleCollectionType.getBooleanFields();
+        for (BooleanField booleanField : booleanFields) {
+            this.template.update(INSERT_BOOLEAN_FIELD_TABLE,
+                                booleanField.getFieldType(),
+                                booleanField.getFieldName(),
+                                booleanField.getFieldValue(),
+                                savedSimpleCollectionTypeId);
+        }
+
+        // 7. Insert ImageFields
         List<ImageField> imageFields = savedSimpleCollectionType.getImageFields();
         KeyHolder keyHolderIm = new GeneratedKeyHolder();
 
@@ -112,7 +123,7 @@ public class SimpleCollectionTypeRepositoryImpl implements SimpleCollectionTypeR
         
         }
 
-        // 7. Insert LinkedCollectionFields
+        // 8. Insert LinkedCollectionFields
         List<LinkedCollectionField> linkedCollectionFields = savedSimpleCollectionType.getLinkedCollectionFields();
         for (LinkedCollectionField linkedCollectionField : linkedCollectionFields) {
             this.template.update(INSERT_LINKEDCOLL_FIELD_TABLE,
@@ -147,13 +158,16 @@ public class SimpleCollectionTypeRepositoryImpl implements SimpleCollectionTypeR
         // Get NumericFields
         List<NumericField> numericFields = template.query(FIND_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), collectionTypeId);
 
+        // Get BooleanFields
+        List<BooleanField> booleanFields = template.query(FIND_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), collectionTypeId);
+
         // Get ImageFields
         List<ImageField> imageFields = template.query(FIND_IMAGE_FIELD_TABLE, new ImageQueryRowMapper(), collectionTypeId);
 
         // Get LinkedCollectionFields
         List<LinkedCollectionField> linkedCollectionFields = template.query(FIND_LINKEDCOLL_FIELD_TABLE, new LinkedCollectionFieldQueryRowMapper(), collectionTypeId);
         
-        return new SimpleCollectionTypeQueryResultsAdapter(simpleCollectionTypeResult, textFields, numericFields, imageFields, linkedCollectionFields);
+        return new SimpleCollectionTypeQueryResultsAdapter(simpleCollectionTypeResult, textFields, numericFields, booleanFields, imageFields, linkedCollectionFields);
     }
 
     @Override
@@ -182,10 +196,6 @@ public class SimpleCollectionTypeRepositoryImpl implements SimpleCollectionTypeR
 
     @Override
     public SimpleCollectionType updateInstance(Long id, SimpleCollectionType collectionInstance) {
-        /*
-        deletePageWithLocale(pageType, localeAbbrev);
-        
-        return save(page); */
 
         deleteCollectionInstance(id);
 

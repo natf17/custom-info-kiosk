@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.test.context.TestPropertySource;
 
+import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
@@ -75,6 +76,8 @@ public class SimpleCollectionTypeRepositoryImplTest {
                                             .addTextField(new TextField("tf_fieldType_1a_2", "tf_fieldName_1a_2", "tf_fieldValue_1a_2"))
                                             .addNumericField(new NumericField("nf_fieldType_1a", "nf_fieldName_1a", 34L))
                                             .addNumericField(new NumericField("nf_fieldType_1a_2", "nf_fieldName_1a_2", 37L))
+                                            .addBooleanField(new BooleanField("bf_fieldType_1a", "bf_fieldName_1a", true))
+                                            .addBooleanField(new BooleanField("bf_fieldType_1a_2", "bf_fieldName_1a_2", true))
                                             .addImageField(new ImageField("if_fieldType_1a", "if_fieldName_1a", new Image("url_1a", 1, 2)))
                                             .addImageField(new ImageField("if_fieldType_1a_2", "if_fieldName_1a_2", new Image("url_1a_2", 3, 4)))
                                             .collectionInternals(new CollectionInternals(enLocaleId, PageStatus.PUBLISHED, testDate, testDateTime));
@@ -102,6 +105,7 @@ public class SimpleCollectionTypeRepositoryImplTest {
                                             .collectionNameField(new CollectionNameField("coll_nf_fieldName_1a_UPD", "coll_nf_fieldValue_1a_UPD"))
                                             .addTextField(new TextField("tf_fieldType_1a_UPD", "tf_fieldName_1a_UPD", "tf_fieldValue_1a_UPD"))
                                             .addNumericField(new NumericField("nf_fieldType_1a_UPD", "nf_fieldName_1a_UPD", 60L))
+                                            .addBooleanField(new BooleanField("bf_fieldType_1a_UPD", "bf_fieldName_1a_UPD", false))
                                             .addImageField(new ImageField("if_fieldType_1a_UPD", "if_fieldName_1a_UPD", new Image("url_1a_UPD", 3, 4)))
                                             .collectionInternals(new CollectionInternals(enLocaleId, PageStatus.PUBLISHED, testDate, testDateTime))
                                             .build();
@@ -157,6 +161,17 @@ public class SimpleCollectionTypeRepositoryImplTest {
         Assertions.assertEquals("nf_fieldName_1a_2", numField2.getFieldName());
         Assertions.assertEquals(37L, numField2.getFieldValue());
 
+        Assertions.assertEquals(2, savedCollectionType.getBooleanFields().size());
+        Assertions.assertTrue(savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a") || savedCollectionType.getBooleanFields().get(1).getFieldType().equals("bf_fieldType_1a"));
+        BooleanField boolField1 = savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a") ? savedCollectionType.getBooleanFields().get(0) : savedCollectionType.getBooleanFields().get(1);
+        BooleanField boolField2 = savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a_2") ? savedCollectionType.getBooleanFields().get(0) : savedCollectionType.getBooleanFields().get(1);
+        Assertions.assertEquals("bf_fieldType_1a", boolField1.getFieldType());
+        Assertions.assertEquals("bf_fieldName_1a", boolField1.getFieldName());
+        Assertions.assertEquals(true, boolField2.getFieldValue());
+        Assertions.assertEquals("bf_fieldType_1a_2", boolField2.getFieldType());
+        Assertions.assertEquals("bf_fieldName_1a_2", boolField2.getFieldName());
+        Assertions.assertEquals(true, boolField2.getFieldValue());
+
         Assertions.assertEquals(2, savedCollectionType.getTextFields().size());
         Assertions.assertTrue(savedCollectionType.getTextFields().get(0).getFieldType().equals("tf_fieldType_1a") || savedCollectionType.getTextFields().get(1).getFieldType().equals("tf_fieldType_1a"));
         TextField textField1 = savedCollectionType.getTextFields().get(0).getFieldType().equals("tf_fieldType_1a") ? savedCollectionType.getTextFields().get(0) : savedCollectionType.getTextFields().get(1);
@@ -202,14 +217,13 @@ public class SimpleCollectionTypeRepositoryImplTest {
         Assertions.assertTrue(savedCollectionType.getImageFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getLinkedCollectionFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getNumericFields().isEmpty());
+        Assertions.assertTrue(savedCollectionType.getBooleanFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getTextFields().isEmpty());
         
-
     }
 
     @Test
     public void givenNewSimpleCollTypeDiffType_saveAndFind_success() {
-
 
         repo.saveInstance(newSimpleCollectionType1b);
         repo.saveInstance(newSimpleCollectionType2);
@@ -233,8 +247,8 @@ public class SimpleCollectionTypeRepositoryImplTest {
         Assertions.assertTrue(savedCollectionType.getImageFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getLinkedCollectionFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getNumericFields().isEmpty());
+        Assertions.assertTrue(savedCollectionType.getBooleanFields().isEmpty());
         Assertions.assertTrue(savedCollectionType.getTextFields().isEmpty());
-        
 
     }
 
@@ -356,6 +370,17 @@ public class SimpleCollectionTypeRepositoryImplTest {
         Assertions.assertEquals("nf_fieldType_1a_2", numField2.getFieldType());
         Assertions.assertEquals("nf_fieldName_1a_2", numField2.getFieldName());
         Assertions.assertEquals(37L, numField2.getFieldValue());
+
+        Assertions.assertEquals(2, savedCollectionType.getBooleanFields().size());
+        Assertions.assertTrue(savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a") || savedCollectionType.getBooleanFields().get(1).getFieldType().equals("bf_fieldType_1a"));
+        BooleanField boolField1 = savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a") ? savedCollectionType.getBooleanFields().get(0) : savedCollectionType.getBooleanFields().get(1);
+        BooleanField boolField2 = savedCollectionType.getBooleanFields().get(0).getFieldType().equals("bf_fieldType_1a_2") ? savedCollectionType.getBooleanFields().get(0) : savedCollectionType.getBooleanFields().get(1);
+        Assertions.assertEquals("bf_fieldType_1a", boolField1.getFieldType());
+        Assertions.assertEquals("bf_fieldName_1a", boolField1.getFieldName());
+        Assertions.assertEquals(true, boolField2.getFieldValue());
+        Assertions.assertEquals("bf_fieldType_1a_2", boolField2.getFieldType());
+        Assertions.assertEquals("bf_fieldName_1a_2", boolField2.getFieldName());
+        Assertions.assertEquals(true, boolField2.getFieldValue());
 
         Assertions.assertEquals(2, savedCollectionType.getTextFields().size());
         Assertions.assertTrue(savedCollectionType.getTextFields().get(0).getFieldType().equals("tf_fieldType_1a") || savedCollectionType.getTextFields().get(1).getFieldType().equals("tf_fieldType_1a"));

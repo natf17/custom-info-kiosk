@@ -17,6 +17,8 @@ public interface SimpleCollectionType {
 
     List<NumericField> getNumericFields();
 
+    List<BooleanField> getBooleanFields();
+
     List<ImageField> getImageFields();
 
     CollectionInternals getCollectionInternals();
