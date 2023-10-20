@@ -2,6 +2,7 @@ package com.ppublica.apps.kiosk.domain.model.collection.adapter;
 
 import java.util.List;
 
+import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionType;

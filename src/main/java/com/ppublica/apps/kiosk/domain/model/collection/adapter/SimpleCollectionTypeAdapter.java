@@ -2,6 +2,7 @@ package com.ppublica.apps.kiosk.domain.model.collection.adapter;
 
 import java.util.List;
 
+import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
@@ -67,6 +68,11 @@ public abstract class SimpleCollectionTypeAdapter implements KioskCollectionType
     @Override
     public List<NumericField> getNumericFields() {
         return getOrBuildAndSetCmsRep().getNumericFields();
+    }
+
+    @Override
+    public List<BooleanField> getBooleanFields() {
+        return getOrBuildAndSetCmsRep().getBooleanFields();
     }
 
     @Override

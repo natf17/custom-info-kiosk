@@ -85,6 +85,7 @@ public class LocationAdapterTest {
         Assertions.assertEquals(cmsObj.getImageFields().size(), locationAdapter.getImageFields().size());
         Assertions.assertEquals(cmsObj.getLinkedCollectionFields().size(), locationAdapter.getLinkedCollectionFields().size());
         Assertions.assertEquals(cmsObj.getNumericFields().size(), locationAdapter.getNumericFields().size());
+        Assertions.assertEquals(cmsObj.getBooleanFields().size(), locationAdapter.getBooleanFields().size());
         Assertions.assertEquals(cmsObj.getTextFields().size(), locationAdapter.getTextFields().size());
 
     }
@@ -166,6 +167,7 @@ public class LocationAdapterTest {
         Assertions.assertEquals(3L, numericFields.get(0).getFieldValue());
 
         Assertions.assertTrue(locationAdapter.getLinkedCollectionFields().isEmpty());
+        Assertions.assertTrue(locationAdapter.getBooleanFields().isEmpty());
 
     }
 
