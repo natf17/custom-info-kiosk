@@ -9,7 +9,7 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
     private KioskCollectionField<Boolean> isWheelChairAccessible;
     private KioskCollectionField<String> name;
     private KioskCollectionField<String> note;
-    private KioskCollectionField<Location> location;
+    private KioskCollectionField<LinkedCollectionReference> location;
 
     public static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.AMENITY;
     private static final String FEATIMG_FIELD_NAME_DEFAULT = "FeatImg";
@@ -21,7 +21,7 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
 
     protected AmenityImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
                     KioskCollectionField<Image> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
-                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<Location> location) {
+                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location) {
         super(type, collectionNameField, kioskCollectionMetadata, id);
         this.featImg = featImg;
         this.svgElemId = svgElemId;
@@ -57,7 +57,7 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
     }
 
     @Override
-    public KioskCollectionField<Location> getLocation() {
+    public KioskCollectionField<LinkedCollectionReference> getLocation() {
         return this.location;
     }
 
@@ -67,7 +67,7 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
         protected KioskCollectionField<Boolean> isWheelChairAccessible;
         protected KioskCollectionField<String> name;
         protected KioskCollectionField<String> note;
-        protected KioskCollectionField<Location> location;
+        protected KioskCollectionField<LinkedCollectionReference> location;
 
         public Builder() {
             super(KIOSK_COLLECTION_TYPE_NAME);
@@ -102,7 +102,7 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
             return self();
         }
 
-        public B location(KioskCollectionField<Location> location) {
+        public B location(KioskCollectionField<LinkedCollectionReference> location) {
             this.location = location;
             return self();
         }
@@ -131,8 +131,8 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
                 note = new KioskCollectionField<String>(NOTE_FIELD_NAME_DEFAULT, null, true);
             }
 
-            if(location == null) {   
-                location = new KioskCollectionField<Location>(LOCATION_FIELD_NAME_DEFAULT, null, true);
+            if(location == null) {
+                location = new KioskCollectionField<LinkedCollectionReference>(LOCATION_FIELD_NAME_DEFAULT, null, true);
             }
 
         }

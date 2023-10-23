@@ -11,7 +11,7 @@ public class Bathroom extends AmenityImpl {
 
     protected Bathroom(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
                     KioskCollectionField<Image> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
-                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<Location> location, KioskCollectionField<String> gender) {
+                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location, KioskCollectionField<String> gender) {
         super(type, collectionNameField, kioskCollectionMetadata, id, featImg, svgElemId, isWheelChairAccessible, name, note, location);
         this.gender = gender;
     }

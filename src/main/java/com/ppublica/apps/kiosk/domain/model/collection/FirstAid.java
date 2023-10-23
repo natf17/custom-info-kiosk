@@ -8,7 +8,7 @@ public class FirstAid extends AmenityImpl {
 
     protected FirstAid(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
                     KioskCollectionField<Image> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
-                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<Location> location) {
+                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location) {
         super(type, collectionNameField, kioskCollectionMetadata, id, featImg, svgElemId, isWheelChairAccessible, name, note, location);
     }
 
