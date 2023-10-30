@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
+import com.ppublica.apps.kiosk.domain.model.collection.adapter.BathroomImpl;
 
 public class BathroomTest {
 
@@ -19,7 +20,7 @@ public class BathroomTest {
 
         Image testFeatImg = new Image("url", 1, 2);
 
-        Bathroom bathroomInstance = new Bathroom.Builder()
+        BathroomTypeImpl bathroomInstance = new BathroomTypeImpl.Builder()
                                         .id(2L)
                                         .collectionNameField(new KioskCollectionField<String>("coll_name_fieldName", "coll_name_fieldValue", true))
                                         .kioskCollectionMetadata(new KioskCollectionMetadata(1L, PageStatus.PUBLISHED, testDate, testDateTime))

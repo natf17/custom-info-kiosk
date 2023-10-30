@@ -5,40 +5,47 @@ import java.time.LocalDateTime;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
+/*
+ * Base class for composite kiosk collections.
+ */
 public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
-
+    private KioskCollectionType kioskCollectionType;
+    /*
     private Long id;
     private CollectionTypeName type;
     private KioskCollectionField<String> collectionNameField;
     private KioskCollectionMetadata kioskCollectionMetadata;
-
-    public static String COLLECTION_NAME_FIELD_NAME_DEFAULT = "Collection Name";
-
+ */
     @Override
     public Long getId() {
-        return this.id;
+        return this.kioskCollectionType.getId();
     }
 
     @Override
     public CollectionTypeName getKioskCollectionTypeName() {
-        return this.type;
+        return this.kioskCollectionType.getKioskCollectionTypeName();
     }
 
     @Override
     public KioskCollectionField<String> getKioskCollectionNameField() {
-        return this.collectionNameField;
+        return this.kioskCollectionType.getKioskCollectionNameField();
     }
 
     @Override
     public KioskCollectionMetadata getKioskCollectionMetadata() {
-        return this.kioskCollectionMetadata;
+        return this.kioskCollectionType.getKioskCollectionMetadata();
     }
 
+    /*
     protected KioskCollectionTypeImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id) {
         this.id = id;
         this.type = type;
         this.collectionNameField = collectionNameField;
         this.kioskCollectionMetadata = kioskCollectionMetadata;
+    }  */
+
+    protected KioskCollectionTypeImpl(KioskCollectionType kioskCollectionType) {
+        this.kioskCollectionType = kioskCollectionType;
     }
 
     public static abstract class Builder<B extends Builder<B, M>, M extends KioskCollectionTypeImpl> {
@@ -62,7 +69,6 @@ public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
             this.id = id;
             return self();
         }
-
 
         public B collectionNameField(KioskCollectionField<String> editedCollectionNameField) {
             this.collectionNameField = editedCollectionNameField;
@@ -96,68 +102,36 @@ public abstract class KioskCollectionTypeImpl implements KioskCollectionType {
 
         public M build() {
             validateAndPrepare();
-               
-            return buildChild();
+
+            DefaultKioskCollection.Builder kioskCollectionBuilder = new DefaultKioskCollection.Builder(type)
+                                                                    .collectionNameField(collectionNameField)
+                                                                    .id(id);
+            if(this.kioskCollectionMetadata == null) {
+                kioskCollectionBuilder.pageStatus(pageStatus)
+                                        .createdOn(createdOn)
+                                        .withLocaleId(kioskLocaleId)
+                                        .lastModified(lastModified);
+            } else {
+                kioskCollectionBuilder.kioskCollectionMetadata(kioskCollectionMetadata);
+            }
+            
+            KioskCollectionType kioskCollectionType = kioskCollectionBuilder.build();
+
+            return buildChild(kioskCollectionType);
         }
 
 
         /*
-         * Components can be either set directly, or in "pieces".
-         * If the component is set directly, it overrides the "pieces".
+         * anything in addition to  validation already provided by the underlying DefaultKioskCollection builder...
          */
         private void validateAndPrepare() {
-
-            if(this.type == null) {
-                throw new RuntimeException("The collection type name is required");
-            }
-
-
-            if(collectionNameField == null) {   
-                collectionNameField = new KioskCollectionField<String>(COLLECTION_NAME_FIELD_NAME_DEFAULT, null, true);
-            }
-
-
-
-
-            if(kioskCollectionMetadata == null) {
-                if(this.pageStatus == null) {
-                    throw new RuntimeException("PageStatus is required");
-                }
-
-                if(this.createdOn == null) {
-                    throw new RuntimeException("CreatedOn is required");
-                }
-
-                if(this.lastModified == null) {
-                    throw new RuntimeException("LastModified is required");
-                }
-
-                LocalDateTime createdOnTime = this.createdOn.atStartOfDay();
-                if(createdOnTime.isAfter(this.lastModified)) {
-                    throw new RuntimeException("CreatedOn cannot be after lastModified");
-                }
-
-                if(this.kioskLocaleId == null) {
-                    throw new RuntimeException("Locale id is required");
-                }
-
-                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId, pageStatus, createdOn, lastModified);
-
-            }
-
-
-            if(this.type == null) {
-                throw new RuntimeException("The collecion type is required");
-            }
-
-            
             validateAndPrepareChild();
-
+            
         }
 
         protected abstract void validateAndPrepareChild();
 
-        protected abstract M buildChild();
+        protected abstract M buildChild(KioskCollectionType kioskCollectionType);
 
         protected abstract B self();        
 

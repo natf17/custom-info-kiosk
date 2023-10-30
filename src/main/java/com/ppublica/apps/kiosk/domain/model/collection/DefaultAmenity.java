@@ -2,7 +2,7 @@ package com.ppublica.apps.kiosk.domain.model.collection;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 
-public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
+public class DefaultAmenity implements Amenity {
 
     private KioskCollectionField<Image> featImg;
     private KioskCollectionField<Long> svgElemId;
@@ -19,10 +19,8 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
     private static final String NOTE_FIELD_NAME_DEFAULT = "Note";
     private static final String LOCATION_FIELD_NAME_DEFAULT = "Location";
 
-    protected AmenityImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
-                    KioskCollectionField<Image> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
-                    KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location) {
-        super(type, collectionNameField, kioskCollectionMetadata, id);
+    protected DefaultAmenity(KioskCollectionField<Image> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
+                            KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location) {
         this.featImg = featImg;
         this.svgElemId = svgElemId;
         this.isWheelChairAccessible = isWheelChairAccessible;
@@ -61,60 +59,56 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
         return this.location;
     }
 
-    public static abstract class Builder<B extends Builder<B,M>, M extends AmenityImpl> extends KioskCollectionTypeImpl.Builder<Builder<B,M>, M> {
+    public static class Builder {
         protected KioskCollectionField<Image> featImg;
         protected KioskCollectionField<Long> svgElemId;
         protected KioskCollectionField<Boolean> isWheelChairAccessible;
         protected KioskCollectionField<String> name;
         protected KioskCollectionField<String> note;
         protected KioskCollectionField<LinkedCollectionReference> location;
-
-        public Builder() {
-            super(KIOSK_COLLECTION_TYPE_NAME);
-        }
-
-        public Builder(CollectionTypeName kioskCollectionTypeName) {
-            super(kioskCollectionTypeName);
-        }
-        
-        public B featImg(KioskCollectionField<Image> editedFeatImg) {
+            
+        public Builder featImg(KioskCollectionField<Image> editedFeatImg) {
             this.featImg = editedFeatImg;
-            return self();
+            return this;
         }
 
-        public B svgElemId(KioskCollectionField<Long> editedSvgElemId) {
+        public Builder svgElemId(KioskCollectionField<Long> editedSvgElemId) {
             this.svgElemId = editedSvgElemId;
-            return self();
+            return this;
         }
 
-        public B isWheelChairAccessible(KioskCollectionField<Boolean> editedIsWheelChairAccessible) {
+        public Builder isWheelChairAccessible(KioskCollectionField<Boolean> editedIsWheelChairAccessible) {
             this.isWheelChairAccessible = editedIsWheelChairAccessible;
-            return self();
+            return this;
         }
 
-        public B name(KioskCollectionField<String> editedName) {
+        public Builder name(KioskCollectionField<String> editedName) {
             this.name = editedName;
-            return self();
+            return this;
         }
 
-        public B note(KioskCollectionField<String> editedNote) {
+        public Builder note(KioskCollectionField<String> editedNote) {
             this.note = editedNote;
-            return self();
+            return this;
         }
 
-        public B location(KioskCollectionField<LinkedCollectionReference> location) {
+        public Builder location(KioskCollectionField<LinkedCollectionReference> location) {
             this.location = location;
-            return self();
+            return this;
         }
-        
 
-        @Override
-        protected void validateAndPrepareChild() {
-        
+        public Amenity build() {
+            validateAndPrepare();
+
+            return new DefaultAmenity(featImg, svgElemId, isWheelChairAccessible, name, note, location);
+        }
+            
+        protected void validateAndPrepare() {
+    
             if(featImg == null) {   
                 featImg = new KioskCollectionField<Image>(FEATIMG_FIELD_NAME_DEFAULT, null, true);
             }
-            
+                
             if(svgElemId == null) {   
                 svgElemId = new KioskCollectionField<Long>(SVGELEM_FIELD_NAME_DEFAULT, null, true);
             }
@@ -136,11 +130,6 @@ public class AmenityImpl extends KioskCollectionTypeImpl implements Amenity {
             }
 
         }
-
-        protected abstract B self();
-
-        protected abstract M buildChild();
-
     }
-    
+        
 }

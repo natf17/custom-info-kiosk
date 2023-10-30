@@ -19,8 +19,8 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionMetadata;
-import com.ppublica.apps.kiosk.domain.model.collection.Location;
-import com.ppublica.apps.kiosk.domain.model.collection.LocationImpl;
+import com.ppublica.apps.kiosk.domain.model.collection.LocationType;
+import com.ppublica.apps.kiosk.domain.model.collection.LocationTypeImpl;
 
 public class LocationAdapterTest {
 
@@ -30,7 +30,7 @@ public class LocationAdapterTest {
     Image testMap;
     SimpleCollectionType cmsObj;
 
-    Location kioskObj;
+    LocationType kioskObj;
 
     @BeforeEach
     public void setup() {
@@ -41,15 +41,15 @@ public class LocationAdapterTest {
         this.cmsObj = new SimpleCollectionTypeImpl.Builder()
                                                 .collectionNameField(new CollectionNameField("coll_nf_fieldName", "coll_nf_fieldValue"))
                                                 .collectionInternals(new CollectionInternals(enLocaleId, PageStatus.PUBLISHED, testDate, testDateTime))
-                                                .addTextField(new TextField(LocationAdapter.getCmsFullNameFieldType(), "fullName_fieldName", "fullName_fieldValue"))
-                                                .addTextField(new TextField(LocationAdapter.getCmsLevelNameFieldType(), "levelName_fieldName", "levelName_fieldValue"))
-                                                .addImageField(new ImageField(LocationAdapter.getCmsMapFieldType(), "map_fieldName", testMap))
-                                                .addNumericField(new NumericField(LocationAdapter.getCmsLevelNumFieldType(), "levelNum_fieldName", 3L))
-                                                .type(LocationImpl.KIOSK_COLLECTION_TYPE_NAME.toString())
+                                                .addTextField(new TextField(LocationWithBaseAdapter.getCmsFullNameFieldType(), "fullName_fieldName", "fullName_fieldValue"))
+                                                .addTextField(new TextField(LocationWithBaseAdapter.getCmsLevelNameFieldType(), "levelName_fieldName", "levelName_fieldValue"))
+                                                .addImageField(new ImageField(LocationWithBaseAdapter.getCmsMapFieldType(), "map_fieldName", testMap))
+                                                .addNumericField(new NumericField(LocationWithBaseAdapter.getCmsLevelNumFieldType(), "levelNum_fieldName", 3L))
+                                                .type(LocationTypeImpl.KIOSK_COLLECTION_TYPE_NAME.toString())
                                                 .withId(45L)
                                                 .build();
 
-        this.kioskObj = new LocationImpl.Builder()
+        this.kioskObj = new LocationTypeImpl.Builder()
                                             .id(45L)
                                             .collectionNameField(new KioskCollectionField<String>("coll_nf_fieldName", "coll_nf_fieldValue", true))
                                             .kioskCollectionMetadata(new KioskCollectionMetadata(enLocaleId, PageStatus.PUBLISHED, testDate, testDateTime))
@@ -64,7 +64,7 @@ public class LocationAdapterTest {
     @Test
     public void givenValidSimpleCollectionType_correctCmsGetters() {
 
-        LocationAdapter locationAdapter = new LocationAdapter(cmsObj);
+        LocationWithBaseAdapter locationAdapter = new LocationWithBaseAdapter(cmsObj);
 
 
         Assertions.assertEquals(cmsObj.getId(), locationAdapter.getId());
@@ -93,9 +93,9 @@ public class LocationAdapterTest {
     @Test
     public void givenValidSimpleCollectionType_correctKioskGetters() {
 
-        LocationAdapter locationAdapter = new LocationAdapter(cmsObj);
+        LocationWithBaseAdapter locationAdapter = new LocationWithBaseAdapter(cmsObj);
 
-        Assertions.assertEquals(LocationImpl.KIOSK_COLLECTION_TYPE_NAME, locationAdapter.getKioskCollectionTypeName());
+        Assertions.assertEquals(LocationTypeImpl.KIOSK_COLLECTION_TYPE_NAME, locationAdapter.getKioskCollectionTypeName());
 
         Assertions.assertEquals("coll_nf_fieldName", locationAdapter.getKioskCollectionNameField().getFieldName());
         Assertions.assertEquals("coll_nf_fieldValue", locationAdapter.getKioskCollectionNameField().getFieldValue());
@@ -124,11 +124,11 @@ public class LocationAdapterTest {
     @Test
     public void givenValidLocation_correctCmsGetters() {
 
-        LocationAdapter locationAdapter = new LocationAdapter(kioskObj);
+        LocationWithBaseAdapter locationAdapter = new LocationWithBaseAdapter(kioskObj);
 
 
         Assertions.assertEquals(45L, locationAdapter.getId());
-        Assertions.assertEquals(LocationImpl.KIOSK_COLLECTION_TYPE_NAME.toString(), locationAdapter.getType());
+        Assertions.assertEquals(LocationTypeImpl.KIOSK_COLLECTION_TYPE_NAME.toString(), locationAdapter.getType());
 
         CollectionInternals adapterCollInternals = locationAdapter.getCollectionInternals();
 
@@ -143,26 +143,26 @@ public class LocationAdapterTest {
 
         List<ImageField> imageFields = locationAdapter.getImageFields();
         Assertions.assertEquals(1, imageFields.size());
-        Assertions.assertEquals(LocationAdapter.getCmsMapFieldType(), imageFields.get(0).getFieldType());
+        Assertions.assertEquals(LocationWithBaseAdapter.getCmsMapFieldType(), imageFields.get(0).getFieldType());
         Assertions.assertEquals("map_fieldName", imageFields.get(0).getFieldName());
         Assertions.assertEquals(testMap, imageFields.get(0).getFieldValue());
 
         List<TextField> textFields = locationAdapter.getTextFields();
         Assertions.assertEquals(2, textFields.size());
         
-        TextField levelNameTextField = textFields.get(0).getFieldType().equals(LocationAdapter.getCmsLevelNameFieldType()) ? textFields.get(0) : textFields.get(1);
-        Assertions.assertEquals(LocationAdapter.getCmsLevelNameFieldType(), levelNameTextField.getFieldType());
+        TextField levelNameTextField = textFields.get(0).getFieldType().equals(LocationWithBaseAdapter.getCmsLevelNameFieldType()) ? textFields.get(0) : textFields.get(1);
+        Assertions.assertEquals(LocationWithBaseAdapter.getCmsLevelNameFieldType(), levelNameTextField.getFieldType());
         Assertions.assertEquals("levelName_fieldName", levelNameTextField.getFieldName());
         Assertions.assertEquals("levelName_fieldValue", levelNameTextField.getFieldValue());
 
-        TextField fullNameTextField = textFields.get(0).getFieldType().equals(LocationAdapter.getCmsFullNameFieldType()) ? textFields.get(0) : textFields.get(1);
-        Assertions.assertEquals(LocationAdapter.getCmsFullNameFieldType(), fullNameTextField.getFieldType());
+        TextField fullNameTextField = textFields.get(0).getFieldType().equals(LocationWithBaseAdapter.getCmsFullNameFieldType()) ? textFields.get(0) : textFields.get(1);
+        Assertions.assertEquals(LocationWithBaseAdapter.getCmsFullNameFieldType(), fullNameTextField.getFieldType());
         Assertions.assertEquals("fullName_fieldName", fullNameTextField.getFieldName());
         Assertions.assertEquals("fullName_fieldValue", fullNameTextField.getFieldValue());
 
         List<NumericField> numericFields = locationAdapter.getNumericFields();
         Assertions.assertEquals(1, numericFields.size());
-        Assertions.assertEquals(LocationAdapter.getCmsLevelNumFieldType(), numericFields.get(0).getFieldType());
+        Assertions.assertEquals(LocationWithBaseAdapter.getCmsLevelNumFieldType(), numericFields.get(0).getFieldType());
         Assertions.assertEquals("levelNum_fieldName", numericFields.get(0).getFieldName());
         Assertions.assertEquals(3L, numericFields.get(0).getFieldValue());
 
@@ -173,7 +173,7 @@ public class LocationAdapterTest {
 
     @Test
     public void givenValidLocation_correctKioskGetters() {
-        LocationAdapter locationAdapter = new LocationAdapter(kioskObj);
+        LocationWithBaseAdapter locationAdapter = new LocationWithBaseAdapter(kioskObj);
 
         Assertions.assertEquals(kioskObj.getKioskCollectionTypeName(), locationAdapter.getKioskCollectionTypeName());
 

@@ -2,22 +2,19 @@ package com.ppublica.apps.kiosk.domain.model.collection;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 
-public class LocationImpl extends KioskCollectionTypeImpl implements Location {
-
+public class DefaultLocation implements Location {
     private KioskCollectionField<String> levelName;
     private KioskCollectionField<Long> levelNum;
     private KioskCollectionField<String> fullName;
     private KioskCollectionField<Image> map;
+
     public static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.LOCATION;
     private static final String LEVELNAME_FIELD_NAME_DEFAULT = "Level_name";
     private static final String LEVELNUM_FIELD_NAME_DEFAULT = "Level_num";
     private static final String FULLNAME_FIELD_NAME_DEFAULT = "Fullname";
     private static final String MAP_FIELD_NAME_DEFAULT = "Map";
-
-
-    private LocationImpl(CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long id,
-                    KioskCollectionField<String> levelName, KioskCollectionField<Long> levelNum, KioskCollectionField<String> fullName, KioskCollectionField<Image> map) {
-        super(type, collectionNameField, kioskCollectionMetadata, id);
+    
+    private DefaultLocation(KioskCollectionField<String> levelName, KioskCollectionField<Long> levelNum, KioskCollectionField<String> fullName, KioskCollectionField<Image> map) {
         this.levelName = levelName;
         this.levelNum = levelNum;
         this.fullName = fullName;
@@ -44,46 +41,40 @@ public class LocationImpl extends KioskCollectionTypeImpl implements Location {
         return this.map;
     }
 
-    public static class Builder extends KioskCollectionTypeImpl.Builder<Builder, LocationImpl> {
+    public static class Builder {
         private KioskCollectionField<String> levelName;
         private KioskCollectionField<Long> levelNum;
         private KioskCollectionField<String> fullName;
         private KioskCollectionField<Image> map;
-
-        public Builder() {
-            super(KIOSK_COLLECTION_TYPE_NAME);
-        }
         
         public Builder levelName(KioskCollectionField<String> editedLevelName) {
             this.levelName = editedLevelName;
-            return self();
+            return this;
         }
 
         public Builder levelNum(KioskCollectionField<Long> editedLevelNum) {
             this.levelNum = editedLevelNum;
-            return self();
+            return this;
         }
 
         public Builder fullName(KioskCollectionField<String> editedFullName) {
             this.fullName = editedFullName;
-            return self();
+            return this;
         }
 
         public Builder map(KioskCollectionField<Image> editedMap) {
             this.map = editedMap;
-            return self();
+            return this;
         }
 
         
-        //private ImageContainerValidator imageContainerValidator;
+        public Location build() {
+            validateAndPrepare();
 
-        
+            return new DefaultLocation(levelName, levelNum, fullName, map);
+        }
 
-        
-
-        @Override
-        protected void validateAndPrepareChild() {
-        
+        protected void validateAndPrepare() {
 
             if(levelName == null) {   
                 levelName = new KioskCollectionField<String>(LEVELNAME_FIELD_NAME_DEFAULT, null, true);
@@ -103,18 +94,7 @@ public class LocationImpl extends KioskCollectionTypeImpl implements Location {
 
         }
 
-        @Override
-        protected Builder self() {
-            return this;
-        }
-
-        @Override
-        protected LocationImpl buildChild() {
-
-            return new LocationImpl(super.type, super.collectionNameField, super.kioskCollectionMetadata, super.id, levelName, levelNum, fullName, map);
-        }
     }
 
 
-    
 }

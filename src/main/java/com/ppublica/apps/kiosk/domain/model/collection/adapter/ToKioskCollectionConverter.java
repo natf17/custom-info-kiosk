@@ -7,6 +7,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
+import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.collection.LinkedCollectionReference;
 
@@ -35,6 +36,10 @@ public class ToKioskCollectionConverter {
     public KioskCollectionField<LinkedCollectionReference> toLinkedCollectionReferenceField(LinkedCollectionField linkedCollectionField) {
         LinkedCollectionReference linkedCollRef = linkedCollectionField.getFieldValue() == null ? null : new LinkedCollectionReference(linkedCollectionField.getFieldValue());
         return new KioskCollectionField<LinkedCollectionReference>(linkedCollectionField.getFieldName(), linkedCollRef, true);
+    }
+
+    public CollectionTypeName toCollectionTypeName(String type) {
+        return CollectionTypeName.valueOf(type);
     }
     
 }
