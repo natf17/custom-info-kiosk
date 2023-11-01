@@ -52,7 +52,6 @@ public class AboutPageService {
         // build and return AboutPage
         String title = aboutPage.getPageTitleField().getFieldValue();
         String richDescription = aboutPage.getRichDescrField().getFieldValue();
-;
 
         return new AboutPageView(title, richDescription, imageView);
 
