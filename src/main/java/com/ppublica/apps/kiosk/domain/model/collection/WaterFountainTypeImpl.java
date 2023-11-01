@@ -1,15 +1,15 @@
 package com.ppublica.apps.kiosk.domain.model.collection;
 
-public class WaterFountainImpl extends AmenityTypeImpl implements WaterFountainType {
+public class WaterFountainTypeImpl extends AmenityTypeImpl implements WaterFountainType {
 
     public static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.WATER_FOUNTAIN;
 
-    protected WaterFountainImpl(KioskCollectionType kioskCollectionType, Amenity amenity) {
+    protected WaterFountainTypeImpl(KioskCollectionType kioskCollectionType, Amenity amenity) {
         super(kioskCollectionType, amenity);
     }
 
 
-    public static class Builder extends AmenityTypeImpl.Builder<Builder, WaterFountainImpl> {
+    public static class Builder extends AmenityTypeImpl.Builder<Builder, WaterFountainTypeImpl> {
 
         public Builder() {
             super(KIOSK_COLLECTION_TYPE_NAME);
@@ -24,8 +24,8 @@ public class WaterFountainImpl extends AmenityTypeImpl implements WaterFountainT
         }
 
         @Override
-        protected WaterFountainImpl buildAmenityChild(KioskCollectionType kioskCollectionType, Amenity amenity) {
-            return new WaterFountainImpl(kioskCollectionType, amenity);
+        protected WaterFountainTypeImpl buildAmenityChild(KioskCollectionType kioskCollectionType, Amenity amenity) {
+            return new WaterFountainTypeImpl(kioskCollectionType, amenity);
         }
     }
     

@@ -31,7 +31,7 @@ public abstract class BaseAdapter implements KioskCollectionType, SimpleCollecti
     private KioskCollectionType baseKioskCollection;
     private SimpleCollectionType cmsCollection;
 
-    private KioskCollectionTypeConverter baseConverter;
+    private KioskCollectionTypeConverter baseConverter = new KioskCollectionTypeConverter();
 
     public BaseAdapter(KioskCollectionType baseKioskCollection, SimpleCollectionType cmsCollection) {
         this.baseKioskCollection = baseKioskCollection;

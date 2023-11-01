@@ -133,7 +133,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         }
 
         public Builder numericFields(List<NumericField> numericFields) {
-            if(textFields == null) {
+            if(numericFields == null) {
                 throw new RuntimeException("A non-null argument is required");
             }
             this.numericFields = numericFields;
@@ -159,7 +159,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
         }
 
         public Builder imageFields(List<ImageField> imageFields) {
-            if(textFields == null) {
+            if(imageFields == null) {
                 throw new RuntimeException("A non-null argument is required");
             }
             this.imageFields = imageFields;

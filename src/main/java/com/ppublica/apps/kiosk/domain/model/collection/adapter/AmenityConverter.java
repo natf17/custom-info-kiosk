@@ -19,12 +19,12 @@ public class AmenityConverter implements KioskAndCmsTypeConverter<Amenity> {
     protected ToCmsCollectionConverter toCmsCollectionConverter = new ToCmsCollectionConverter();
     protected ToKioskCollectionConverter toKioskCollectionConverter = new ToKioskCollectionConverter();
 
-    private static final String FEATIMG_FIELD_TYPE = "FeatImg";
-    private static final String SVGELEM_FIELD_TYPE = "svgElemId";
-    private static final String ISWHEELCHAIRACC_FIELD_TYPE = "isWheelchairAccessible";
-    private static final String NAME_FIELD_TYPE = "Name";
-    private static final String NOTE_FIELD_TYPE = "Note";
-    private static final String LOCATION_FIELD_TYPE = "Location";
+    public static final String FEATIMG_FIELD_TYPE = "FeatImg";
+    public static final String SVGELEM_FIELD_TYPE = "svgElemId";
+    public static final String ISWHEELCHAIRACC_FIELD_TYPE = "isWheelchairAccessible";
+    public static final String NAME_FIELD_TYPE = "Name";
+    public static final String NOTE_FIELD_TYPE = "Note";
+    public static final String LOCATION_FIELD_TYPE = "Location";
 
     @Override
     public Amenity convert(SimpleCollectionType cmsRep) {

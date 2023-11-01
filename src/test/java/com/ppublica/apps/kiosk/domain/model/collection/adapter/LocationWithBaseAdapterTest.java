@@ -22,7 +22,7 @@ import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.collection.LocationType;
 import com.ppublica.apps.kiosk.domain.model.collection.LocationTypeImpl;
 
-public class LocationAdapterTest {
+public class LocationWithBaseAdapterTest {
 
     LocalDate testDate;
     LocalDateTime testDateTime;
@@ -41,10 +41,10 @@ public class LocationAdapterTest {
         this.cmsObj = new SimpleCollectionTypeImpl.Builder()
                                                 .collectionNameField(new CollectionNameField("coll_nf_fieldName", "coll_nf_fieldValue"))
                                                 .collectionInternals(new CollectionInternals(enLocaleId, PageStatus.PUBLISHED, testDate, testDateTime))
-                                                .addTextField(new TextField(LocationWithBaseAdapter.getCmsFullNameFieldType(), "fullName_fieldName", "fullName_fieldValue"))
-                                                .addTextField(new TextField(LocationWithBaseAdapter.getCmsLevelNameFieldType(), "levelName_fieldName", "levelName_fieldValue"))
-                                                .addImageField(new ImageField(LocationWithBaseAdapter.getCmsMapFieldType(), "map_fieldName", testMap))
-                                                .addNumericField(new NumericField(LocationWithBaseAdapter.getCmsLevelNumFieldType(), "levelNum_fieldName", 3L))
+                                                .addTextField(new TextField(LocationConverter.FULLNAME_FIELD_TYPE, "fullName_fieldName", "fullName_fieldValue"))
+                                                .addTextField(new TextField(LocationConverter.LEVELNAME_FIELD_TYPE, "levelName_fieldName", "levelName_fieldValue"))
+                                                .addImageField(new ImageField(LocationConverter.MAP_FIELD_NAME_TYPE, "map_fieldName", testMap))
+                                                .addNumericField(new NumericField(LocationConverter.LEVELNUM_FIELD_TYPE, "levelNum_fieldName", 3L))
                                                 .type(LocationTypeImpl.KIOSK_COLLECTION_TYPE_NAME.toString())
                                                 .withId(45L)
                                                 .build();
@@ -143,26 +143,26 @@ public class LocationAdapterTest {
 
         List<ImageField> imageFields = locationAdapter.getImageFields();
         Assertions.assertEquals(1, imageFields.size());
-        Assertions.assertEquals(LocationWithBaseAdapter.getCmsMapFieldType(), imageFields.get(0).getFieldType());
+        Assertions.assertEquals(LocationConverter.MAP_FIELD_NAME_TYPE, imageFields.get(0).getFieldType());
         Assertions.assertEquals("map_fieldName", imageFields.get(0).getFieldName());
         Assertions.assertEquals(testMap, imageFields.get(0).getFieldValue());
 
         List<TextField> textFields = locationAdapter.getTextFields();
         Assertions.assertEquals(2, textFields.size());
         
-        TextField levelNameTextField = textFields.get(0).getFieldType().equals(LocationWithBaseAdapter.getCmsLevelNameFieldType()) ? textFields.get(0) : textFields.get(1);
-        Assertions.assertEquals(LocationWithBaseAdapter.getCmsLevelNameFieldType(), levelNameTextField.getFieldType());
+        TextField levelNameTextField = textFields.get(0).getFieldType().equals(LocationConverter.LEVELNAME_FIELD_TYPE) ? textFields.get(0) : textFields.get(1);
+        Assertions.assertEquals(LocationConverter.LEVELNAME_FIELD_TYPE, levelNameTextField.getFieldType());
         Assertions.assertEquals("levelName_fieldName", levelNameTextField.getFieldName());
         Assertions.assertEquals("levelName_fieldValue", levelNameTextField.getFieldValue());
 
-        TextField fullNameTextField = textFields.get(0).getFieldType().equals(LocationWithBaseAdapter.getCmsFullNameFieldType()) ? textFields.get(0) : textFields.get(1);
-        Assertions.assertEquals(LocationWithBaseAdapter.getCmsFullNameFieldType(), fullNameTextField.getFieldType());
+        TextField fullNameTextField = textFields.get(0).getFieldType().equals(LocationConverter.FULLNAME_FIELD_TYPE) ? textFields.get(0) : textFields.get(1);
+        Assertions.assertEquals(LocationConverter.FULLNAME_FIELD_TYPE, fullNameTextField.getFieldType());
         Assertions.assertEquals("fullName_fieldName", fullNameTextField.getFieldName());
         Assertions.assertEquals("fullName_fieldValue", fullNameTextField.getFieldValue());
 
         List<NumericField> numericFields = locationAdapter.getNumericFields();
         Assertions.assertEquals(1, numericFields.size());
-        Assertions.assertEquals(LocationWithBaseAdapter.getCmsLevelNumFieldType(), numericFields.get(0).getFieldType());
+        Assertions.assertEquals(LocationConverter.LEVELNUM_FIELD_TYPE, numericFields.get(0).getFieldType());
         Assertions.assertEquals("levelNum_fieldName", numericFields.get(0).getFieldName());
         Assertions.assertEquals(3L, numericFields.get(0).getFieldValue());
 

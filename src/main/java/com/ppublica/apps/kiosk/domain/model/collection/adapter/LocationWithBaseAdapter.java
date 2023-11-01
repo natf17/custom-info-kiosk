@@ -1,36 +1,29 @@
 package com.ppublica.apps.kiosk.domain.model.collection.adapter;
 
 import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionType;
+import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionTypeImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.collection.Location;
+import com.ppublica.apps.kiosk.domain.model.collection.LocationType;
 
 
 public class LocationWithBaseAdapter extends BaseAdapter implements Location {
     private Location kioskRepLocation;
-    private LocationConverter locationConverter;
-
-/*
-    public static final CollectionTypeName KIOSK_COLLECTION_TYPE_NAME = CollectionTypeName.LOCATION;
-    public static final String CMS_COLLECTION_TYPE_NAME = KIOSK_COLLECTION_TYPE_NAME.toString();
-
-    
-     * Expects SimpleCollectionType to be compatible with Location!
-     *
-    public LocationWithBaseAdapter(SimpleCollectionType cmsRep) {
-        super(cmsRep, CMS_COLLECTION_TYPE_NAME);
-    }
-
-    public LocationWithBaseAdapter(LocationType kioskRep) {
-        super(kioskRep, KIOSK_COLLECTION_TYPE_NAME);
-        this.kioskRep = kioskRep;
-    } */
+    private LocationConverter locationConverter = new LocationConverter();
 
     public LocationWithBaseAdapter(Location location, KioskCollectionType baseCollection, SimpleCollectionType baseCmsCollection) {
         super(baseCollection, baseCmsCollection);
         this.kioskRepLocation = location;
+    }
+
+    public LocationWithBaseAdapter(LocationType locationType) {
+        this(locationType, locationType, null);
+    }
+
+    public LocationWithBaseAdapter(SimpleCollectionType baseCmsCollection) {
+        this(null, null, baseCmsCollection);
     }
 
 
@@ -52,6 +45,11 @@ public class LocationWithBaseAdapter extends BaseAdapter implements Location {
     @Override
     public KioskCollectionField<Image> getMapField() {
         return getLocation().getMapField();
+    }
+
+    @Override
+    protected void processCmsBuilder(SimpleCollectionTypeImpl.Builder builder) {
+        locationConverter.transferKioskRep(builder, kioskRepLocation);
     }
 
     protected Location getLocation() {

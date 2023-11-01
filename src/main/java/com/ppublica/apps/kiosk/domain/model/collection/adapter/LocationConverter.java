@@ -15,10 +15,10 @@ public class LocationConverter implements KioskAndCmsTypeConverter<Location>{
     protected ToCmsCollectionConverter toCmsCollectionConverter = new ToCmsCollectionConverter();
     protected ToKioskCollectionConverter toKioskCollectionConverter = new ToKioskCollectionConverter();
 
-    private static final String LEVELNAME_FIELD_TYPE = "Level_name";
-    private static final String LEVELNUM_FIELD_TYPE = "Level_num";
-    private static final String FULLNAME_FIELD_TYPE = "Fullname";
-    private static final String MAP_FIELD_NAME_TYPE = "Map";
+    public static final String LEVELNAME_FIELD_TYPE = "Level_name";
+    public static final String LEVELNUM_FIELD_TYPE = "Level_num";
+    public static final String FULLNAME_FIELD_TYPE = "Fullname";
+    public static final String MAP_FIELD_NAME_TYPE = "Map";
 
     @Override
     public Location convert(SimpleCollectionType cmsRep) {

@@ -4,17 +4,26 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionType;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.SimpleCollectionTypeImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.collection.Amenity;
+import com.ppublica.apps.kiosk.domain.model.collection.AmenityType;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.collection.LinkedCollectionReference;
 
 public class AmenityWithBaseAdapter extends BaseAdapter implements Amenity {
     private Amenity kioskRepAmenity;
-    private AmenityConverter amenityConverter;
+    private AmenityConverter amenityConverter = new AmenityConverter();
 
     public AmenityWithBaseAdapter(Amenity amenity, KioskCollectionType baseCollection, SimpleCollectionType baseCmsCollection) {
         super(baseCollection, baseCmsCollection);
         this.kioskRepAmenity = amenity;
+    }
+
+    public AmenityWithBaseAdapter(AmenityType amenityType) {
+        this(amenityType, amenityType, null);
+    }
+
+    public AmenityWithBaseAdapter(SimpleCollectionType baseCmsCollection) {
+        this(null, null, baseCmsCollection);
     }
 
     @Override
