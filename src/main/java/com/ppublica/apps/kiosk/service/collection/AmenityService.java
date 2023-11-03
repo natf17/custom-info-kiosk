@@ -19,7 +19,7 @@ import com.ppublica.apps.kiosk.domain.model.collection.adapter.WaterFountainAdap
 import com.ppublica.apps.kiosk.repository.collection.SimpleCollectionTypeRepository;
 
 public class AmenityService {
-    ToCmsCollectionConverter toCmsConverter = new ToCmsCollectionConverter();
+    private ToCmsCollectionConverter toCmsConverter = new ToCmsCollectionConverter();
 
     @Autowired
     private SimpleCollectionTypeRepository repo;
@@ -59,6 +59,76 @@ public class AmenityService {
                                                     .collect(Collectors.toList());
         return firstAids;
     }
+
+    public BathroomType save(BathroomType bathroom) {
+        SimpleCollectionType savedBathroom = repo.saveInstance(new BathroomAdapter(bathroom));
+
+        return new BathroomAdapter(savedBathroom);
+    }
+
+    public WaterFountainType save(WaterFountainType waterFountain) {
+        SimpleCollectionType savedWaterFountain = repo.saveInstance(new WaterFountainAdapter(waterFountain));
+
+        return new WaterFountainAdapter(savedWaterFountain);
+    }
+
+    public DonationType save(DonationType donation) {
+        SimpleCollectionType savedDonation = repo.saveInstance(new DonationAdapter(donation));
+
+        return new DonationAdapter(savedDonation);
+    }
+
+    public FirstAidType save(FirstAidType firstAid) {
+        SimpleCollectionType savedFirstAid =  repo.saveInstance(new FirstAidAdapter(firstAid));
+
+        return new FirstAidAdapter(savedFirstAid);
+    }
+
+    public BathroomType update(Long id, BathroomType bathroom) {
+        SimpleCollectionType savedBathroom = repo.updateInstance(id, new BathroomAdapter(bathroom));
+
+        return new BathroomAdapter(savedBathroom);
+    }
+
+    public WaterFountainType update(Long id, WaterFountainType waterFountain) {
+        SimpleCollectionType savedWaterFountain = repo.updateInstance(id, new WaterFountainAdapter(waterFountain));
+
+        return new WaterFountainAdapter(savedWaterFountain);
+    }
+
+    public DonationType update(Long id, DonationType donation) {
+        SimpleCollectionType savedDonation = repo.updateInstance(id, new DonationAdapter(donation));
+
+        return new DonationAdapter(savedDonation);
+    }
+
+    public FirstAidType update(Long id, FirstAidType firstAid) {    
+        SimpleCollectionType savedFirstAid = repo.updateInstance(id, new FirstAidAdapter(firstAid));
+
+        return new FirstAidAdapter(savedFirstAid);
+    } 
+
+    public void deleteAllBathroomInstancesOfLocale(String locale) {
+        repo.deleteCollectionTypeInstancesWithLocale(toCmsConverter.toType(CollectionTypeName.BATHROOM), locale);
+    }
+
+    public void deleteAllWateFountainInstancesOfLocale(String locale) {
+        repo.deleteCollectionTypeInstancesWithLocale(toCmsConverter.toType(CollectionTypeName.WATER_FOUNTAIN), locale);
+    }
+
+    public void deleteAllDonationInstancesOfLocale(String locale) {
+        repo.deleteCollectionTypeInstancesWithLocale(toCmsConverter.toType(CollectionTypeName.DONATIONS), locale);
+    }
+
+    public void deleteAllFirstAidInstancesOfLocale(String locale) {
+        repo.deleteCollectionTypeInstancesWithLocale(toCmsConverter.toType(CollectionTypeName.FIRST_AID), locale);
+    }
+
+    public void deleteCollectionInstance(Long id) {
+        repo.deleteCollectionInstance(id);
+    }
+
+
 
     
     
