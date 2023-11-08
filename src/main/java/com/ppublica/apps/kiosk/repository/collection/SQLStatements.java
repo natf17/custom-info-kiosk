@@ -57,12 +57,40 @@ public class SQLStatements {
                                                 + "WHERE linked_coll_field.simple_collection_type = ?";
     
     protected static String DELETE_SIMPLE_COLL_TYPE_TABLE = "DELETE FROM simple_collection_type_impl WHERE simple_collection_type_impl.id = ?";
-    /*
-                                                        
-   
+    
+    /* DATA COLLECTION SQL BELOW */
 
-    protected static String DELETE_FIELD_CONTAINER_TABLE = "DELETE FROM field_container WHERE field_container.id = ?";
+    protected static String INSERT_DATA_COLL_TYPE_TABLE = "INSERT INTO data_collection_type_impl(type, subType) VALUES (?, ?) RETURNING id";
 
-    protected static String DELETE_PAGE_TABLE = "DELETE FROM page WHERE page.id = ?";
-     */
+    protected static String INSERT_DATA_COLL_INTERNALS_TABLE = "INSERT INTO data_collection_internals(locale, created_on, last_modified, "
+                                                            + "coll_status, data_collection_type) VALUES (?, ?, ?, ?, ?)";
+
+    protected static String INSERT_LOC_FIELDS_TABLE = "INSERT INTO data_collection_localized_fields(data_collection_type) VALUES (?) RETURNING id";
+
+    protected static String INSERT_DATA_COLL_NAME_FIELD_TABLE = "INSERT INTO data_collection_name_field(field_type, field_name, field_value, localized_fields) "
+                                                            + "VALUES (?, ?, ?, ?)";
+
+    protected static String INSERT_DATA_LOC_TEXT_FIELD_TABLE = "INSERT INTO data_localized_text_field(field_type, field_name, field_value, localized_fields) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+                                                                    
+    protected static String INSERT_DATA_LOC_NUMERIC_FIELD_TABLE = "INSERT INTO data_localized_numeric_field(field_type, field_name, field_value, localized_fields) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+
+    protected static String INSERT_DATA_LOC_BOOLEAN_FIELD_TABLE = "INSERT INTO data_localized_boolean_field(field_type, field_name, field_value, localized_fields) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+
+    protected static String INSERT_DATA_COLL_LOC_INTERNALS_TABLE = "INSERT INTO data_collection_localized_internals(locale, created_on, last_modified, "
+                                                            + "coll_status, localized_fields) VALUES (?, ?, ?, ?, ?)";
+
+    protected static String INSERT_DATA_ELEM_TABLE = "INSERT INTO data_linked_elem(data_collection_type) VALUES (?) RETURNING id";
+
+    protected static String INSERT_DATA_ELEM_TEXT_FIELD_TABLE = "INSERT INTO data_elem_text_field(field_type, field_name, field_value, data_linked_elem) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+                                                                    
+    protected static String INSERT_DATA_ELEM_NUMERIC_FIELD_TABLE = "INSERT INTO data_elem_numeric_field(field_type, field_name, field_value, data_linked_elem) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+
+    protected static String INSERT_DATA_ELEM_BOOLEAN_FIELD_TABLE = "INSERT INTO data_elem_boolean_field(field_type, field_name, field_value, data_linked_elem) "
+                                                                    + "VALUES (?, ?, ?, ?)";
+
 }

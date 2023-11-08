@@ -2,12 +2,10 @@ package com.ppublica.apps.kiosk.domain.model.cms.collection;
 
 import java.util.List;
 
-public interface LinkedDataElement {
+public interface DataCollectionElement {
     Long getId();
     
     String getType();
-
-    CollectionNameField getCollectionNameField();
 
     List<TextField> getTextFields();
 
@@ -15,8 +13,6 @@ public interface LinkedDataElement {
 
     List<BooleanField> getBooleanFields();
 
-    DataElementCollectionInternals getDataElementCollectionInternals();
-
-    LinkedCollectionField getLinkedCollectionField(); 
+    LinkedCollectionField getParentCollection(); //necessary?
 
 }

@@ -3,6 +3,7 @@ package com.ppublica.apps.kiosk.domain.model.cms.collection;
 import java.util.List;
 
 public interface DataCollectionType {
+    
     DataCollectionType withId(Long id);
 
     Long getId();
@@ -13,9 +14,8 @@ public interface DataCollectionType {
 
     LocalizedFields getLocalizedFields();
 
-    // locale here could be used to store language of field names in LinkedDataElements
     CollectionInternals getCollectionInternals();
 
-    List<LinkedDataElement> getLinkedDataElements();
+    List<DataCollectionElement> getLinkedDataElements();
 
 }

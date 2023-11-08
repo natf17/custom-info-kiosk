@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
-public class DataElementCollectionInternals {
+public class DataCollectionElementInternals {
     private PageStatus status;
     private LocalDate createdOn;
     private LocalDateTime lastModified;
 
 
-    public DataElementCollectionInternals(PageStatus status, LocalDate createdOn, LocalDateTime lastModified) {
+    public DataCollectionElementInternals(PageStatus status, LocalDate createdOn, LocalDateTime lastModified) {
         this.status = status;
         this.createdOn = createdOn;
         this.lastModified = lastModified;

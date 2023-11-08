@@ -1,26 +1,26 @@
 package com.ppublica.apps.kiosk.domain.model.cms.collection;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
-public class LinkedDataElementImpl implements LinkedDataElement {
+public class DataCollectionElementImpl implements DataCollectionElement {
 
     private Long id;
     private String type;
-    private CollectionNameField collectionNameField;
     private List<TextField> textFields;
     private List<NumericField> numericFields;
     private List<BooleanField> booleanFields;
-    private LinkedCollectionField linkedCollectionField;
-    private DataElementCollectionInternals dataElementCollectionInternals;
+    private LinkedCollectionField parentCollection;
 
-    protected LinkedDataElementImpl(Long id, String type, CollectionNameField collectionNameField, List<TextField> textFields, 
-                                    List<NumericField> numericFields, List<BooleanField> booleanFields, LinkedCollectionField linkedCollectionField, 
-                                    DataElementCollectionInternals dataElementCollectionInternals) {
+    protected DataCollectionElementImpl(Long id, String type, List<TextField> textFields, 
+                                    List<NumericField> numericFields, List<BooleanField> booleanFields, LinkedCollectionField parentCollection) {
+        
+        this.id = id;
+        this.type = type;
+        this.textFields = textFields;
+        this.numericFields = numericFields;
+        this.booleanFields = booleanFields;
 
     }
 
@@ -32,11 +32,6 @@ public class LinkedDataElementImpl implements LinkedDataElement {
     @Override
     public String getType() {
         return this.type;
-    }
-
-    @Override
-    public CollectionNameField getCollectionNameField() {
-        return this.collectionNameField;
     }
 
     @Override
@@ -55,24 +50,17 @@ public class LinkedDataElementImpl implements LinkedDataElement {
     }
 
     @Override
-    public DataElementCollectionInternals getDataElementCollectionInternals() {
-        return this.dataElementCollectionInternals;
-    }
-
-    @Override
-    public LinkedCollectionField getLinkedCollectionField() {
-        return this.linkedCollectionField;
+    public LinkedCollectionField getParentCollection() {
+        return this.parentCollection;
     }
 
     public static class Builder {
         private Long id;
         private String type;
-        private CollectionNameField collectionNameField;
         private List<TextField> textFields = new ArrayList<>();
         private List<NumericField> numericFields = new ArrayList<>();
         private List<BooleanField> booleanFields = new ArrayList<>();
-        private LinkedCollectionField linkedCollectionField;
-        private DataElementCollectionInternals dataElementCollectionInternals;
+        private LinkedCollectionField parentCollection;
 
         public Builder withId(Long id) {
             this.id = id;
@@ -81,11 +69,6 @@ public class LinkedDataElementImpl implements LinkedDataElement {
 
         public Builder type(String type) {
             this.type = type;
-            return this;
-        }
-
-        public Builder collectionNameField(CollectionNameField collectionNameField) {
-            this.collectionNameField = collectionNameField;
             return this;
         }
 
@@ -127,33 +110,23 @@ public class LinkedDataElementImpl implements LinkedDataElement {
             this.booleanFields.add(booleanField);
             return this;
         }
-
-        public Builder linkedCollectionField(LinkedCollectionField linkedCollectionField) {
-            this.linkedCollectionField = linkedCollectionField;
+        
+        public Builder parentCollection(LinkedCollectionField parentCollection) {
+            this.parentCollection = parentCollection;
             return this;
         }
 
-        public Builder collectionInternals(DataElementCollectionInternals dataElementCollectionInternals) {
-            this.dataElementCollectionInternals = dataElementCollectionInternals;
-            return this;
-        }
-
-        public LinkedDataElementImpl build() {
-
-            if(dataElementCollectionInternals == null) {
-
-                dataElementCollectionInternals = new DataElementCollectionInternals(PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
-            }
+        public DataCollectionElementImpl build() {
 
             if(type == null) {
                 throw new RuntimeException("A collection type is required");
             }
 
-            if(collectionNameField == null) {
-                throw new RuntimeException("A CollectionNameField is required");
+            if(parentCollection == null) {
+                throw new RuntimeException("This element needs a parent collection");
             }
 
-            return new LinkedDataElementImpl(id, type, collectionNameField, textFields, numericFields, booleanFields, linkedCollectionField, dataElementCollectionInternals);
+            return new DataCollectionElementImpl(id, type, textFields, numericFields, booleanFields, parentCollection);
         }
     }
     

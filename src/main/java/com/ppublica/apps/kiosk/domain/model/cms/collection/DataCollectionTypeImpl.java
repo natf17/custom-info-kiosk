@@ -13,9 +13,9 @@ public class DataCollectionTypeImpl implements DataCollectionType {
     private String subType;
     private LocalizedFields localizedFields;
     private CollectionInternals collectionInternals;
-    private List<LinkedDataElement> linkedDataElements = new ArrayList<>();
+    private List<DataCollectionElement> linkedDataElements = new ArrayList<>();
 
-    protected DataCollectionTypeImpl(Long id, String type, String subType, LocalizedFields localizedFields, List<LinkedDataElement> linkedDataElements, CollectionInternals collectionInternals) {
+    protected DataCollectionTypeImpl(Long id, String type, String subType, LocalizedFields localizedFields, List<DataCollectionElement> linkedDataElements, CollectionInternals collectionInternals) {
         this.id = id;
         this.type = type;
         this.subType = subType;
@@ -55,7 +55,7 @@ public class DataCollectionTypeImpl implements DataCollectionType {
     }
 
     @Override
-    public List<LinkedDataElement> getLinkedDataElements() {
+    public List<DataCollectionElement> getLinkedDataElements() {
         return this.linkedDataElements;
     }
 
@@ -65,7 +65,7 @@ public class DataCollectionTypeImpl implements DataCollectionType {
         private String subType;
         private LocalizedFields localizedFields;
         private CollectionInternals collectionInternals;
-        private List<LinkedDataElement> linkedDataElements = new ArrayList<>();
+        private List<DataCollectionElement> linkedDataElements = new ArrayList<>();
         private Long kioskLocaleId;
 
         public Builder withId(Long id) {
@@ -88,7 +88,7 @@ public class DataCollectionTypeImpl implements DataCollectionType {
             return this;
         }
 
-        public Builder linkedDataElements(List<LinkedDataElement> linkedDataElements) {
+        public Builder linkedDataElements(List<DataCollectionElement> linkedDataElements) {
             if(linkedDataElements == null) {
                 throw new RuntimeException("A non-null argument is required");
             }
@@ -96,7 +96,7 @@ public class DataCollectionTypeImpl implements DataCollectionType {
             return this;
         }
 
-        public Builder addLinkedDataElements(LinkedDataElement linkedDataElement) {
+        public Builder addLinkedDataElements(DataCollectionElement linkedDataElement) {
             this.linkedDataElements.add(linkedDataElement);
             return this;
         }

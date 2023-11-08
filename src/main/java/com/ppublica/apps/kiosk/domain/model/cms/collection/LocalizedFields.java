@@ -2,25 +2,21 @@ package com.ppublica.apps.kiosk.domain.model.cms.collection;
 
 import java.util.List;
 
-import com.ppublica.apps.kiosk.domain.model.cms.locale.KioskLocale;
 
 public class LocalizedFields {
-    private KioskLocale locale;
     private CollectionNameField collectionNameField;
     private List<TextField> textFields;
     private List<NumericField> numericFields;
     private List<BooleanField> booleanFields;
+    private CollectionInternals collectionLocalizedInternals;
 
-    public LocalizedFields(KioskLocale locale, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields) {
-        this.locale = locale;
+    public LocalizedFields(CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields, 
+                            CollectionInternals collectionLocalizedInternals) {
         this.collectionNameField = collectionNameField;
         this.textFields = textFields;
         this.numericFields = numericFields;
         this.booleanFields = booleanFields;
-    }
-
-    public KioskLocale getLocale() {
-        return this.locale;
+        this.collectionLocalizedInternals = collectionLocalizedInternals;
     }
 
     public CollectionNameField getCollectionNameField() {
@@ -37,6 +33,10 @@ public class LocalizedFields {
 
     public List<BooleanField> getBooleanFields() {
         return this.booleanFields;
+    }
+
+    public CollectionInternals getCollectionLocalizedInternals() {
+        return this.collectionLocalizedInternals;
     }
 
 }
