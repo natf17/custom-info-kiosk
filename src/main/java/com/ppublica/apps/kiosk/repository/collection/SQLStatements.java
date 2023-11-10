@@ -93,4 +93,47 @@ public class SQLStatements {
     protected static String INSERT_DATA_ELEM_BOOLEAN_FIELD_TABLE = "INSERT INTO data_elem_boolean_field(field_type, field_name, field_value, data_linked_elem) "
                                                                     + "VALUES (?, ?, ?, ?)";
 
+    protected static String FIND_DATA_COLL_TYPE_TABLE = "SELECT data_collection_type_impl.id AS COLL_ID, data_collection_type_impl.type AS COLL_TYPE, data_collection_type_impl.subType AS COLL_SUBTYPE, "
+                                                + "data_collection_internals.locale AS CI_LOC, data_collection_internals.created_on AS CI_CR, "
+                                                + "data_collection_internals.last_modified AS CI_LM, data_collection_internals.coll_status AS CI_STATUS, "
+                                                + "data_collection_localized_fields.id AS LF_ID, data_collection_localized_fields.data_collection_type AS LF_DCOLL, "
+                                                + "data_collection_localized_internals.locale AS CLI_LOC, data_collection_localized_internals.created_on AS CLI_CR, "
+                                                + "data_collection_localized_internals.last_modified AS CLI_LM, data_collection_localized_internals.coll_status AS CLI_STATUS, "
+                                                + "data_collection_name_field.field_type AS DCNF_FT, data_collection_name_field.field_name AS DCNF_FN, data_collection_name_field.field_value AS DCNF_FV "
+                                                + "FROM data_collection_type_impl INNER JOIN data_collection_internals ON data_collection_type_impl.id = data_collection_internals.data_collection_type "
+                                                + "INNER JOIN data_collection_localized_fields ON data_collection_localized_fields.data_collection_type = data_collection_type_impl.id "
+                                                + "INNER JOIN data_collection_localized_internals ON data_collection_localized_internals.localized_fields = data_collection_localized_fields.id "
+                                                + "INNER JOIN kiosk_locale ON data_collection_localized_internals.locale = kiosk_locale.id "
+                                                + "INNER JOIN data_collection_name_field ON data_collection_localized_fields.id = data_collection_name_field.localized_fields "
+                                                + "WHERE kiosk_locale.abbrev = ? AND data_collection_type_impl.type = ?";
+
+    protected static String FIND_DATA_COLL_TYPE_TABLE_WITH_SUB = FIND_DATA_COLL_TYPE_TABLE + " AND data_collection_type_impl.subType = ?";
+
+    protected static String FIND_LOC_TEXT_FIELD_TABLE = "SELECT data_localized_text_field.field_type AS TF_FTYPE, data_localized_text_field.field_name AS TF_FNAME, data_localized_text_field.field_value AS TF_FVALUE "
+                                                + "FROM data_localized_text_field "
+                                                + "WHERE data_localized_text_field.localized_fields = ?";
+    
+    protected static String FIND_LOC_NUMERIC_FIELD_TABLE = "SELECT data_localized_numeric_field.field_type AS NF_FTYPE, data_localized_numeric_field.field_name AS NF_FNAME, data_localized_numeric_field.field_value AS NF_FVALUE "
+                                                + "FROM data_localized_numeric_field "
+                                                + "WHERE data_localized_numeric_field.localized_fields = ?";
+
+    protected static String FIND_LOC_BOOLEAN_FIELD_TABLE = "SELECT data_localized_boolean_field.field_type AS BF_FTYPE, data_localized_boolean_field.field_name AS BF_FNAME, data_localized_boolean_field.field_value AS BF_FVALUE "
+                                                + "FROM data_localized_boolean_field "
+                                                + "WHERE data_localized_boolean_field.localized_fields = ?";
+
+    protected static String FIND_ELEMS_TABLE = "SELECT data_linked_elem.id AS ELEM_ID, data_linked_elem.data_collection_type AS ELEM_COLLID "
+                                                + "FROM data_linked_elem "
+                                                + "WHERE data_linked_elem.data_collection_type = ?";
+
+    protected static String FIND_ELEM_TEXT_FIELD_TABLE = "SELECT data_elem_text_field.field_type AS TF_FTYPE, data_elem_text_field.field_name AS TF_FNAME, data_elem_text_field.field_value AS TF_FVALUE "
+                                                + "FROM data_elem_text_field "
+                                                + "WHERE data_elem_text_field.data_linked_elem = ?";
+    
+    protected static String FIND_ELEM_NUMERIC_FIELD_TABLE = "SELECT data_elem_numeric_field.field_type AS NF_FTYPE, data_elem_numeric_field.field_name AS NF_FNAME, data_elem_numeric_field.field_value AS NF_FVALUE "
+                                                + "FROM data_elem_numeric_field "
+                                                + "WHERE data_elem_numeric_field.data_linked_elem = ?";
+
+    protected static String FIND_ELEM_BOOLEAN_FIELD_TABLE = "SELECT data_elem_boolean_field.field_type AS BF_FTYPE, data_elem_boolean_field.field_name AS BF_FNAME, data_elem_boolean_field.field_value AS BF_FVALUE "
+                                                + "FROM data_elem_boolean_field "
+                                                + "WHERE data_elem_boolean_field.data_linked_elem = ?";
 }
