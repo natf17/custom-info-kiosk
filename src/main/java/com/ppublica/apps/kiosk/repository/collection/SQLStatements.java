@@ -82,7 +82,7 @@ public class SQLStatements {
     protected static String INSERT_DATA_COLL_LOC_INTERNALS_TABLE = "INSERT INTO data_collection_localized_internals(locale, created_on, last_modified, "
                                                             + "coll_status, localized_fields) VALUES (?, ?, ?, ?, ?)";
 
-    protected static String INSERT_DATA_ELEM_TABLE = "INSERT INTO data_linked_elem(data_collection_type) VALUES (?) RETURNING id";
+    protected static String INSERT_DATA_ELEM_TABLE = "INSERT INTO data_linked_elem(type, data_collection_type) VALUES (?, ?) RETURNING id";
 
     protected static String INSERT_DATA_ELEM_TEXT_FIELD_TABLE = "INSERT INTO data_elem_text_field(field_type, field_name, field_value, data_linked_elem) "
                                                                     + "VALUES (?, ?, ?, ?)";
@@ -121,7 +121,7 @@ public class SQLStatements {
                                                 + "FROM data_localized_boolean_field "
                                                 + "WHERE data_localized_boolean_field.localized_fields = ?";
 
-    protected static String FIND_ELEMS_TABLE = "SELECT data_linked_elem.id AS ELEM_ID, data_linked_elem.data_collection_type AS ELEM_COLLID "
+    protected static String FIND_ELEMS_TABLE = "SELECT data_linked_elem.id AS ELEM_ID, data_linked_elem.type AS ELEM_TYPE, data_linked_elem.data_collection_type AS ELEM_COLLID "
                                                 + "FROM data_linked_elem "
                                                 + "WHERE data_linked_elem.data_collection_type = ?";
 

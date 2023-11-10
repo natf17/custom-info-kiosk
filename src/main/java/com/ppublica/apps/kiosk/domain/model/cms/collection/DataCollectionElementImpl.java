@@ -15,7 +15,6 @@ public class DataCollectionElementImpl implements DataCollectionElement {
 
     protected DataCollectionElementImpl(Long id, String type, List<TextField> textFields, 
                                     List<NumericField> numericFields, List<BooleanField> booleanFields, LinkedCollectionField parentCollection) {
-        
         this.id = id;
         this.type = type;
         this.textFields = textFields;
@@ -121,10 +120,10 @@ public class DataCollectionElementImpl implements DataCollectionElement {
             if(type == null) {
                 throw new RuntimeException("A collection type is required");
             }
-
+            /* is reference necessary?
             if(parentCollection == null) {
                 throw new RuntimeException("This element needs a parent collection");
-            }
+            }  */
 
             return new DataCollectionElementImpl(id, type, textFields, numericFields, booleanFields, parentCollection);
         }

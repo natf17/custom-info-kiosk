@@ -16,6 +16,7 @@ public class DataCollectionTypeQueryResults {
     public DataCollectionTypeQueryResults(Long id, String type, String subType, Long localizedFieldsId, CollectionInternals collectionInternals, CollectionNameField locCollNameField, CollectionInternals localizedCollInternals) {
         this.id = id;
         this.type = type;
+        this.subType = subType;
         this.localizedFieldsId = localizedFieldsId;
         this.collectionInternals = collectionInternals;
         this.locCollNameField = locCollNameField;

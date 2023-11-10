@@ -195,7 +195,8 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
 
         this.template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(INSERT_DATA_ELEM_TABLE, Statement.RETURN_GENERATED_KEYS);
-            ps.setLong(1, parentColl);
+            ps.setString(1, dataCollectionElement.getType());
+            ps.setLong(2, parentColl);
 
             return ps;
         }, keyHolderDataElem);
@@ -270,22 +271,23 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     }
 
     private List<DataCollectionElement> getDataElements(Long parentDataCollectionId) {
-        List<DataElemQueryResults> dataElemIds = template.query(FIND_ELEMS_TABLE, new DataElemIdRowMapper(), parentDataCollectionId);
+        List<DataElemQueryResults> dataElemResults = template.query(FIND_ELEMS_TABLE, new DataElemRowMapper(), parentDataCollectionId);
         List<DataCollectionElement> dataElements = new ArrayList<>();
 
         List<TextField> elemTextFields = null;
         List<NumericField> elemNumericFields = null;
         List<BooleanField> elemBooleanFields = null;
 
-        for (DataElemQueryResults dataElemId : dataElemIds) {
-            elemTextFields = template.query(FIND_ELEM_TEXT_FIELD_TABLE, new TextFieldRowMapper(), dataElemId.getDataElemId());
-            elemNumericFields = template.query(FIND_ELEM_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), dataElemId.getDataElemId());
-            elemBooleanFields = template.query(FIND_ELEM_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), dataElemId.getDataElemId());
+        for (DataElemQueryResults dataElemResult : dataElemResults) {
+            elemTextFields = template.query(FIND_ELEM_TEXT_FIELD_TABLE, new TextFieldRowMapper(), dataElemResult.getDataElemId());
+            elemNumericFields = template.query(FIND_ELEM_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), dataElemResult.getDataElemId());
+            elemBooleanFields = template.query(FIND_ELEM_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), dataElemResult.getDataElemId());
 
             dataElements.add(new DataCollectionElementImpl.Builder().booleanFields(elemBooleanFields)
                                                                     .numericFields(elemNumericFields)
                                                                     .textFields(elemTextFields)
-                                                                    .withId(dataElemId.getDataElemId())
+                                                                    .withId(dataElemResult.getDataElemId())
+                                                                    .type(dataElemResult.getType())
                                                                     .build()
 
                             );
