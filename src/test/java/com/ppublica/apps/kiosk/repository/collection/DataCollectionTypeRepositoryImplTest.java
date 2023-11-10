@@ -294,8 +294,25 @@ public class DataCollectionTypeRepositoryImplTest {
         
     }
 
-    //@Test
-    //public void givenNewDataCollTypeWithElems_saveAndFind_success() {
+    @Test
+    public void givenNewDataCollTypeWithoutSubType_saveAndFind_success() {
+        repo.saveCollectionInstance(newDataCollectionTypeWithElems);
+
+        List<DataCollectionType> foundDataCollectionTypes = repo.findByCollectionTypeAndLocale(newDataCollectionTypeWithElems.getType(), null, "EN");
+        Assertions.assertEquals(1, foundDataCollectionTypes.size());
+    }
+
+    @Test
+    public void givenNewDataCollTypeLocaleDoesntExist_saveAndFind_success() {
+        repo.saveCollectionInstance(newDataCollectionTypeWithElems);
+
+        List<DataCollectionType> foundDataCollectionTypesEn = repo.findByCollectionTypeAndLocale(newDataCollectionTypeWithElems.getType(), newDataCollectionTypeWithElems.getSubType(), "EN");
+        Assertions.assertEquals(1, foundDataCollectionTypesEn.size());
+
+        List<DataCollectionType> foundDataCollectionTypesSp = repo.findByCollectionTypeAndLocale(newDataCollectionTypeWithElems.getType(), newDataCollectionTypeWithElems.getSubType(), "SP");
+        Assertions.assertTrue(foundDataCollectionTypesSp.isEmpty());
+
+    }
 
 
     class IdRowMapper implements RowMapper<Long>{

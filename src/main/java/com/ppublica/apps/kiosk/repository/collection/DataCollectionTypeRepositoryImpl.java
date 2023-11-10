@@ -58,7 +58,7 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
         // 3. Insert LocalizedFields
         LocalizedFields localizedFields = savedDataCollectionType.getLocalizedFields();
 
-        saveCollectionLocalizedFields(savedDataCollectionTypeId, localizedFields);
+        updateCollectionLocalizedFields(savedDataCollectionTypeId, localizedFields);
         
         // 4. Insert DataCollectionElements
         List<DataCollectionElement> dataCollectionElements = savedDataCollectionType.getLinkedDataElements();
@@ -70,7 +70,7 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     }
 
     @Override
-    public void saveCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields) {
+    public void updateCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields) {
 
         KeyHolder keyHolderIm = new GeneratedKeyHolder();
         Long localizedFieldsId = null;
@@ -133,9 +133,9 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     }
 
     @Override
-    public void saveDataElementsToCollectionInstance(Long collectionInstanceId, List<DataCollectionElement> elements) {
+    public void updateCollectionInstanceDataElements(Long collectionInstanceId, List<DataCollectionElement> newElements) {
         
-        for (DataCollectionElement dataCollElem : elements) {
+        for (DataCollectionElement dataCollElem : newElements) {
             insertDataCollectionElement(collectionInstanceId, dataCollElem);
         };
     }
@@ -237,7 +237,9 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     }
 
     private List<DataCollectionTypeQueryResults> findShallowByCollectionTypeAndLocale(String collectionType, String collectionSubType, String localeAbbrev) {
-        List<DataCollectionTypeQueryResults> dataCollectionTypeResults = this.template.query(FIND_DATA_COLL_TYPE_TABLE_WITH_SUB, new DataCollectionTypeQueryRowMapper(), localeAbbrev, collectionType, collectionSubType);
+        List<DataCollectionTypeQueryResults> dataCollectionTypeResults = collectionSubType!= null ?
+                                                                             this.template.query(FIND_DATA_COLL_TYPE_TABLE_WITH_SUB, new DataCollectionTypeQueryRowMapper(), localeAbbrev, collectionType, collectionSubType)
+                                                                             : this.template.query(FIND_DATA_COLL_TYPE_TABLE, new DataCollectionTypeQueryRowMapper(), localeAbbrev, collectionType);
         
         return dataCollectionTypeResults;
     }

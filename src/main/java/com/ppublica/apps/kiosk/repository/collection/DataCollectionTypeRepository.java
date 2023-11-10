@@ -10,9 +10,9 @@ public interface DataCollectionTypeRepository {
 
     public DataCollectionType saveCollectionInstance(DataCollectionType collectionInstance);
 
-    public void saveCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields);
+    public void updateCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields);
 
-    public void saveDataElementsToCollectionInstance(Long collectionInstanceId, List<DataCollectionElement> elements);
+    public void updateCollectionInstanceDataElements(Long collectionInstanceId, List<DataCollectionElement> newElements);
 
     public List<DataCollectionType> findByCollectionTypeAndLocale(String collectionType, String collectionSubType, String localeAbbrev);
 
