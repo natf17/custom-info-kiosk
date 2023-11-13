@@ -136,4 +136,29 @@ public class SQLStatements {
     protected static String FIND_ELEM_BOOLEAN_FIELD_TABLE = "SELECT data_elem_boolean_field.field_type AS BF_FTYPE, data_elem_boolean_field.field_name AS BF_FNAME, data_elem_boolean_field.field_value AS BF_FVALUE "
                                                 + "FROM data_elem_boolean_field "
                                                 + "WHERE data_elem_boolean_field.data_linked_elem = ?";
+
+    protected static String FIND_LOC_FIELDS_TABLE = "SELECT data_collection_localized_fields.id AS LF_ID, data_collection_localized_fields.data_collection_type AS LF_DCOLL, "
+                                                + "data_collection_localized_internals.locale AS CLI_LOC, data_collection_localized_internals.created_on AS CLI_CR, "
+                                                + "data_collection_localized_internals.last_modified AS CLI_LM, data_collection_localized_internals.coll_status AS CLI_STATUS, "
+                                                + "data_collection_name_field.field_type AS DCNF_FT, data_collection_name_field.field_name AS DCNF_FN, data_collection_name_field.field_value AS DCNF_FV "
+                                                + "FROM data_collection_localized_fields "
+                                                + "INNER JOIN data_collection_localized_internals ON data_collection_localized_internals.localized_fields = data_collection_localized_fields.id "
+                                                + "INNER JOIN data_collection_name_field ON data_collection_localized_fields.id = data_collection_name_field.localized_fields "
+                                                + "WHERE data_collection_localized_fields.data_collection_type = ?";
+
+    protected static String FIND_LOCAL_FIELDS_ID = "SELECT data_collection_localized_fields.id AS LF_ID, data_collection_localized_fields.data_collection_type AS LF_DCOLL "
+                                                + "FROM data_collection_localized_fields INNER JOIN data_collection_localized_internals ON data_collection_localized_internals.localized_fields = data_collection_localized_fields.id "
+                                                + "INNER JOIN kiosk_locale ON data_collection_localized_internals.locale = kiosk_locale.id "
+                                                + "WHERE kiosk_locale.abbrev = ? AND data_collection_localized_fields.data_collection_type = ?";
+
+    protected static String FIND_DATA_ELEMS_ID = "SELECT data_linked_elem.id AS ELEM_ID "
+                                                + "FROM data_linked_elem "
+                                                + "WHERE data_linked_elem.data_collection_type = ?";
+
+    protected static String DELETE_LOC_FIELDS_TABLE = "DELETE FROM data_collection_localized_fields WHERE data_collection_localized_fields.id = ?";
+
+    protected static String DELETE_DATA_ELEMS_TABLE = "DELETE FROM data_linked_elem WHERE data_linked_elem.id = ?";
+
+    protected static String DELETE_COLL_TYPE_TABLE = "DELETE FROM data_collection_type_impl WHERE data_collection_type_impl.id = ?";
+
 }

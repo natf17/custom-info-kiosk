@@ -13,14 +13,14 @@ public class DataCollectionTypeQueryResults {
     private CollectionInternals localizedCollInternals;
 
 
-    public DataCollectionTypeQueryResults(Long id, String type, String subType, Long localizedFieldsId, CollectionInternals collectionInternals, CollectionNameField locCollNameField, CollectionInternals localizedCollInternals) {
+    public DataCollectionTypeQueryResults(Long id, String type, String subType, LocalizedFieldsResults localizedFieldsResults, CollectionInternals collectionInternals) {
         this.id = id;
         this.type = type;
         this.subType = subType;
-        this.localizedFieldsId = localizedFieldsId;
+        this.localizedFieldsId = localizedFieldsResults.getLocalizedFieldsId();
+        this.locCollNameField = localizedFieldsResults.getLocCollNameField();
+        this.localizedCollInternals = localizedFieldsResults.getLocalizedCollInternals();
         this.collectionInternals = collectionInternals;
-        this.locCollNameField = locCollNameField;
-        this.localizedCollInternals = localizedCollInternals;
     }
 
     public Long getCollectionId() {

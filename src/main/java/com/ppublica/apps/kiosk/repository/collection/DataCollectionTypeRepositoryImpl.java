@@ -58,7 +58,7 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
         // 3. Insert LocalizedFields
         LocalizedFields localizedFields = savedDataCollectionType.getLocalizedFields();
 
-        updateCollectionLocalizedFields(savedDataCollectionTypeId, localizedFields);
+        insertCollectionLocalizedFields(savedDataCollectionTypeId, localizedFields);
         
         // 4. Insert DataCollectionElements
         List<DataCollectionElement> dataCollectionElements = savedDataCollectionType.getLinkedDataElements();
@@ -70,7 +70,19 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     }
 
     @Override
-    public void updateCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields) {
+    public void updateCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields, String localeAbbrev) {
+
+        List<Long> localizedFieldsIds = this.template.query(FIND_LOCAL_FIELDS_ID, new LocalizedFieldsIdRowMapper(), localeAbbrev, collectionInstanceId);
+
+        if(!localizedFieldsIds.isEmpty()) {
+            this.template.update(DELETE_LOC_FIELDS_TABLE, localizedFieldsIds.get(0));
+        }
+
+        insertCollectionLocalizedFields(collectionInstanceId, localizedFields);
+        
+    }
+
+    private void insertCollectionLocalizedFields(Long collectionInstanceId, LocalizedFields localizedFields) {
 
         KeyHolder keyHolderIm = new GeneratedKeyHolder();
         Long localizedFieldsId = null;
@@ -129,12 +141,17 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
                             collectionLocalizedInternals.getCreatedOn(),
                             collectionLocalizedInternals.getLastModified(), 
                             collectionLocalizedInternals.getStatus().toString(),
-                            localizedFieldsId);;
+                            localizedFieldsId);
     }
 
     @Override
     public void updateCollectionInstanceDataElements(Long collectionInstanceId, List<DataCollectionElement> newElements) {
-        
+        List<Long> dataElemIds = this.template.query(FIND_DATA_ELEMS_ID, new DataElemIdRowMapper(), collectionInstanceId);
+
+        for (Long dataElemId : dataElemIds) {
+            this.template.update(DELETE_DATA_ELEMS_TABLE, dataElemId);
+        }
+
         for (DataCollectionElement dataCollElem : newElements) {
             insertDataCollectionElement(collectionInstanceId, dataCollElem);
         };
@@ -159,26 +176,73 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
     @Override
     public void deleteCollectionTypeInstancesWithLocale(String collectionType, String collectionSubType,
             String localeAbbrev) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCollectionTypeInstancesWithLocale'");
+
+        List<DataCollectionType> dataCollectionInstances = findByCollectionTypeAndLocale(collectionType, collectionSubType, localeAbbrev);
+        
+        for(DataCollectionType dataCollectionInstance : dataCollectionInstances) {
+            List<Long> localizedFieldsIds = this.template.query(FIND_LOCAL_FIELDS_ID, new LocalizedFieldsIdRowMapper(), localeAbbrev, dataCollectionInstance.getId());
+
+            // there should only be one...
+            if(localizedFieldsIds.isEmpty()) {
+                throw new RuntimeException("No locale fields deleted since none were found");
+            }
+
+            Long localizedFieldId = localizedFieldsIds.get(0);
+
+            this.template.update(DELETE_LOC_FIELDS_TABLE, localizedFieldId);
+        }
+
     }
 
     @Override
-    public void deleteCollectionInstance(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteCollectionInstance'");
+    public void deleteCollectionInstance(Long collectionInstanceId) {
+        this.template.update(DELETE_COLL_TYPE_TABLE, collectionInstanceId);
+
     }
 
     @Override
     public boolean doesInstanceOfCollectionExist(String collectionType, String collectionSubType, String localeAbbrev) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doesInstanceOfCollectionExist'");
+        
+        return !findByCollectionTypeAndLocale(collectionType, collectionSubType, localeAbbrev).isEmpty();
     }
 
     @Override
-    public DataCollectionType updateCollectionInstance(Long id, DataCollectionType collectionInstance) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateCollectionInstance'");
+    public DataCollectionType updateCollectionInstance(Long collectionInstanceId, DataCollectionType collectionInstance) {
+        // Get all other LocalizedFields;
+        List<LocalizedFieldsResults> localizedFieldsResults = template.query(FIND_LOC_FIELDS_TABLE, new LocalizedFieldsResultsRowMapper(), collectionInstanceId);
+        
+        Long localeIdOfNewCollection = collectionInstance.getLocalizedFields().getCollectionLocalizedInternals().getKioskLocaleId();
+
+        List<LocalizedFields> existingLocalizedFields = new ArrayList<>();
+
+        for (LocalizedFieldsResults localizedFieldsResult : localizedFieldsResults) {
+            if(!localizedFieldsResult.getLocalizedCollInternals().getKioskLocaleId().equals(localeIdOfNewCollection)) {
+                existingLocalizedFields.add(getLocalizedFields(localizedFieldsResult));
+            }
+        }
+
+        // Delete collection along with associated locales and re-insert
+        deleteCollectionInstance(collectionInstanceId);
+        
+        DataCollectionType dataCollectionInstance = saveCollectionInstance(collectionInstance);
+
+        for(LocalizedFields locFields : existingLocalizedFields) {
+            insertCollectionLocalizedFields(collectionInstanceId, locFields);
+        }
+
+        return dataCollectionInstance;
+
+    }
+
+    private LocalizedFields getLocalizedFields(LocalizedFieldsResults localizedFieldsResult) {
+
+        List<TextField> localizedTextFields = template.query(FIND_LOC_TEXT_FIELD_TABLE, new TextFieldRowMapper(), localizedFieldsResult.getLocalizedFieldsId());
+        List<NumericField> localizedNumericFields = template.query(FIND_LOC_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), localizedFieldsResult.getLocalizedFieldsId());
+        List<BooleanField> localizedBooleanFields = template.query(FIND_LOC_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), localizedFieldsResult.getLocalizedFieldsId());
+
+        return new LocalizedFields(localizedFieldsResult.getLocCollNameField(), localizedTextFields, localizedNumericFields, localizedBooleanFields, localizedFieldsResult.getLocalizedCollInternals());
+        
+        
     }
     
     private Long getKey(KeyHolder key) {
@@ -249,13 +313,13 @@ public class DataCollectionTypeRepositoryImpl implements DataCollectionTypeRepos
         Long collectionTypeId = dataCollectionTypeResult.getCollectionId();
         Long localizedFieldsContainerId = dataCollectionTypeResult.getLocalizedFieldsId();
 
-         // Prepare LocalizedFields
+        // Prepare LocalizedFields
         CollectionNameField localizedCollectionNameField = dataCollectionTypeResult.getLocalizedCollectionNameField();
         CollectionInternals localizedCollectionInternals = dataCollectionTypeResult.getLocalizedCollectionInternals();
 
         List<TextField> localizedTextFields = template.query(FIND_LOC_TEXT_FIELD_TABLE, new TextFieldRowMapper(), localizedFieldsContainerId);
-        List<NumericField> localizedNumericFields = template.query(FIND_LOC_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), collectionTypeId);
-        List<BooleanField> localizedBooleanFields = template.query(FIND_LOC_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), collectionTypeId);
+        List<NumericField> localizedNumericFields = template.query(FIND_LOC_NUMERIC_FIELD_TABLE, new NumericFieldRowMapper(), localizedFieldsContainerId);
+        List<BooleanField> localizedBooleanFields = template.query(FIND_LOC_BOOLEAN_FIELD_TABLE, new BooleanFieldRowMapper(), localizedFieldsContainerId);
 
         LocalizedFields localizedFields = new LocalizedFields(localizedCollectionNameField, localizedTextFields, localizedNumericFields, localizedBooleanFields, localizedCollectionInternals);
         
