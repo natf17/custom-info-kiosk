@@ -117,14 +117,6 @@ public class DataCollectionElementImpl implements DataCollectionElement {
 
         public DataCollectionElementImpl build() {
 
-            if(type == null) {
-                throw new RuntimeException("A collection type is required");
-            }
-            /* is reference necessary?
-            if(parentCollection == null) {
-                throw new RuntimeException("This element needs a parent collection");
-            }  */
-
             return new DataCollectionElementImpl(id, type, textFields, numericFields, booleanFields, parentCollection);
         }
     }

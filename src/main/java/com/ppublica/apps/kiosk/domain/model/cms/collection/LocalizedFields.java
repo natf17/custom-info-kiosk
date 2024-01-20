@@ -1,5 +1,6 @@
 package com.ppublica.apps.kiosk.domain.model.cms.collection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,9 +14,9 @@ public class LocalizedFields {
     public LocalizedFields(CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields, 
                             CollectionInternals collectionLocalizedInternals) {
         this.collectionNameField = collectionNameField;
-        this.textFields = textFields;
-        this.numericFields = numericFields;
-        this.booleanFields = booleanFields;
+        this.textFields = textFields != null ? textFields : new ArrayList<>();
+        this.numericFields = numericFields != null ? numericFields : new ArrayList<>();
+        this.booleanFields = booleanFields != null ? booleanFields : new ArrayList<>();
         this.collectionLocalizedInternals = collectionLocalizedInternals;
     }
 
