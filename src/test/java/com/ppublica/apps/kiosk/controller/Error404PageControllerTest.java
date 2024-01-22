@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk;
+package com.ppublica.apps.kiosk.controller;
 
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.when;
@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
+import com.ppublica.apps.kiosk.controller.Error404PageController;
 import com.ppublica.apps.kiosk.service.Error404PageService;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;

@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk;
+package com.ppublica.apps.kiosk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
