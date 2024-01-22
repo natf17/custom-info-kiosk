@@ -23,7 +23,7 @@ import com.ppublica.apps.kiosk.service.views.about.ImageView;
  * which processes schema files. We want to test a thinner slice.
  *   
  */
-@GraphQlTest(AboutPageController.class)
+@GraphQlTest(controllers=AboutPageController.class, properties={"spring.graphql.schema.locations=classpath:graphql-test/**"})
 public class AboutPageControllerTest {
 
     // It is already initialized with a configured WebTestClient bound to the A.C

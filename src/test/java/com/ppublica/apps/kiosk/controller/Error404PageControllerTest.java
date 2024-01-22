@@ -14,7 +14,7 @@ import com.ppublica.apps.kiosk.service.Error404PageService;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
 
-@GraphQlTest(Error404PageController.class)
+@GraphQlTest(controllers=Error404PageController.class, properties={"spring.graphql.schema.locations=classpath:graphql-test/**"})
 public class Error404PageControllerTest {
 
     @Autowired

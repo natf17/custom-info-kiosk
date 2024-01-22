@@ -1,6 +1,11 @@
 type Query {
     aboutPage(locale: String): AboutPage
-    error404Page(locale: String) : Error404Page
+    error404Page(locale: String): Error404Page
+    eventSeasons(locale: String): [EventSeason]
+}
+
+type Mutation {
+    createEventSeason(data: EventSeasonPayload): EventSeasonAdmin
 }
 
 type FeatureImage {
@@ -27,4 +32,42 @@ type Error404Page {
     errorDescription: String
     showRedirectLink: Boolean
     redirectLink: RedirectLink
+}
+
+type EventSeason {
+    id: Int
+    type: String
+    durationDays: Int
+    theme: String
+    serviceYear: Int
+    seasonYears: String
+    durationText: String
+}
+
+type EventSeasonAdmin {
+    id: Int
+    type: String
+    durationDays: Int
+    theme: String
+    serviceYear: Int
+    seasonYears: String
+    durationText: String
+    status: [String]
+}
+
+input LocalizedInput {
+    locale: String
+    value: String
+}
+
+input EventSeasonInput {
+    type: String
+    durationDays: Int
+    serviceYear: Int
+    theme: [LocalizedInput]
+    durationText: [LocalizedInput]
+}
+
+input EventSeasonPayload {
+    data: EventSeasonInput
 }

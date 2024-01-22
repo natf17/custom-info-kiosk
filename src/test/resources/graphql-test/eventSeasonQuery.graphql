@@ -1,0 +1,11 @@
+query EventSeasons($locale: String!) {
+    eventSeasons(locale: $locale) {
+        id
+        type
+        durationDays
+        theme
+        serviceYear
+        seasonYears
+        durationText
+    }
+}
