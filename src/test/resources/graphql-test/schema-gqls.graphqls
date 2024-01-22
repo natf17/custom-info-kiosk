@@ -1,0 +1,30 @@
+type Query {
+    aboutPage(locale: String): AboutPage
+    error404Page(locale: String) : Error404Page
+}
+
+type FeatureImage {
+    url: String
+    width: Int
+    height: Int
+    alternativeText: String
+}
+
+type AboutPage {
+    pageTitle: String
+    richDescription: String
+    featImg: FeatureImage
+}
+
+type RedirectLink {
+    url: String
+    displayText: String
+    description: String
+}
+
+type Error404Page {
+    pageTitle: String
+    errorDescription: String
+    showRedirectLink: Boolean
+    redirectLink: RedirectLink
+}

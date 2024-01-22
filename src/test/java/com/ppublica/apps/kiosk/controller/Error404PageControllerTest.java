@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
-import com.ppublica.apps.kiosk.controller.Error404PageController;
 import com.ppublica.apps.kiosk.service.Error404PageService;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
@@ -53,7 +52,7 @@ public class Error404PageControllerTest {
         graphqlTester.documentName("error404Page")
             .variable("locale", "en")
             .execute()
-            .path("aboutPage", aboutPage -> { aboutPage
+            .path("error404Page", error404Page -> { error404Page
                 .path("pageTitle").entity(String.class).isEqualTo("sampleTitle")
                 .path("errorDescription").entity(String.class).isEqualTo("Sample error description")
                 .path("showRedirectLink").entity(Boolean.class).isEqualTo(true)

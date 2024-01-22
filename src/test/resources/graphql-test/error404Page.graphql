@@ -1,0 +1,12 @@
+query Error404Page($locale: String!) {
+    error404Page(locale: $locale) {
+      pageTitle
+      errorDescription
+      showRedirectLink
+      redirectLink {
+        url
+        displayText
+        description
+      }
+    }
+}
