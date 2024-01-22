@@ -18,7 +18,7 @@ public class EventSeasonConverter {
 
     private SeasonalEventConverter eventConverter = new SeasonalEventConverter();
 
-    public static final String DATA_COLLECTION_TYPE = "SeasonalEvent";
+    public static final String DATA_COLLECTION_TYPE = "EventSeason";
     public static final String THEME_FIELD_TYPE = "Theme";
     public static final String DURATION_TEXT_FIELD_TYPE = "DurationText";
     public static final String ADD_SEASON_DATES_TEXT_FIELD_TYPE = "AddDates";

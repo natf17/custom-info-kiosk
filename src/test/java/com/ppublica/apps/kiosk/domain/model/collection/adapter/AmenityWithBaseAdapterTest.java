@@ -195,7 +195,7 @@ public class AmenityWithBaseAdapterTest {
     }
 
     @Test
-    public void givenValidLocation_correctKioskGetters() {
+    public void givenValidAmenity_correctKioskGetters() {
         AmenityWithBaseAdapter amenityAdapter = new AmenityWithBaseAdapter(kioskObj);
 
         Assertions.assertEquals(kioskObj.getKioskCollectionTypeName(), amenityAdapter.getKioskCollectionTypeName());
