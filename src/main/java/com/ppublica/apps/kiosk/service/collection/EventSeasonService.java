@@ -1,7 +1,9 @@
-package com.ppublica.apps.kiosk.service;
+package com.ppublica.apps.kiosk.service.collection;
 
 import java.util.List;
 
+import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInput;
+import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
 public class EventSeasonService {
@@ -21,5 +23,9 @@ public class EventSeasonService {
 
          return null;
 
+    }
+
+    public EventSeasonAdminView createEventSeason(EventSeasonInput data) {
+        throw new UnsupportedOperationException();
     }
 }

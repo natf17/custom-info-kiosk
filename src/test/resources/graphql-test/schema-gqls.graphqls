@@ -5,7 +5,8 @@ type Query {
 }
 
 type Mutation {
-    createEventSeason(data: EventSeasonPayload): EventSeasonAdmin
+    createEventSeason(input: EventSeasonPayload): EventSeasonAdmin
+    createLocalizedField(input: LocalizedInput) : EventSeasonAdmin
 }
 
 type FeatureImage {
@@ -35,7 +36,7 @@ type Error404Page {
 }
 
 type EventSeason {
-    id: Int
+    id: ID
     type: String
     durationDays: Int
     theme: String
@@ -45,14 +46,18 @@ type EventSeason {
 }
 
 type EventSeasonAdmin {
-    id: Int
+    id: ID
     type: String
     durationDays: Int
-    theme: String
+    theme: [LocalizedField]
     serviceYear: Int
     seasonYears: String
-    durationText: String
-    status: [String]
+    durationText: [LocalizedField]
+}
+
+type LocalizedField {
+    locale: String
+    value: String
 }
 
 input LocalizedInput {

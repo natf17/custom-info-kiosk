@@ -1,0 +1,17 @@
+mutation CreateEventSeason($input: EventSeasonPayload) {
+    createEventSeason(input: $input) {
+        id
+        type
+        durationDays
+        theme {
+            locale
+            value
+        }
+        serviceYear
+        seasonYears
+        durationText {
+            locale
+            value
+        }
+    }
+}
