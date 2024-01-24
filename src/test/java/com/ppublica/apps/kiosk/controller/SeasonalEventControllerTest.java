@@ -17,6 +17,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
 import com.ppublica.apps.kiosk.service.collection.SeasonalEventService;
+import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
@@ -87,6 +88,47 @@ public class SeasonalEventControllerTest {
                     
                 });
             }); 
+
+    }
+
+    @Test
+    public void POST_seasonalEventList_returns_seasonEventList() {
+
+        // set up input
+        Map<String,Object> seasonalEvent1 = new HashMap<>();
+        seasonalEvent1.put("startDate", "20240124");
+        seasonalEvent1.put("eventLanguage", "en");
+
+        Map<String,Object> seasonalEvent2 = new HashMap<>();
+        seasonalEvent2.put("startDate", "20240131");
+        seasonalEvent2.put("eventLanguage", "es");
+
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("data", List.of(seasonalEvent1, seasonalEvent2));
+
+        // set up mocks
+        SeasonalEventInput input1 = new SeasonalEventInput("20240124", "en");
+        SeasonalEventInput input2 = new SeasonalEventInput("20240131", "es");
+        List<SeasonalEventInput> inputList = new ArrayList<>();
+        inputList.add(input1);
+        inputList.add(input2);
+        
+        SeasonalEventView seasonalEventView1Mock = new SeasonalEventView(1L, "type", "20240124", "en", 1L);
+        SeasonalEventView seasonalEventView2Mock = new SeasonalEventView(2L, "type", "20240131", "es", 1L);
+
+        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
+        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+
+        when(seasonalEventService.createSeasonalEventsBatch(any(), any())).thenReturn(List.of(seasonalEventView1Mock, seasonalEventView2Mock));
+        when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);
+
+        graphqlTester.documentName("seasonalEventMutationPost")
+            .variable("input", payload)
+            .variable("eventSeasonId", "1")
+            .execute()
+            .path("createSeasonalEvents", seasonalEvents -> { seasonalEvents
+                .entityList(SeasonalEventView.class).hasSize(2);
+            });
 
     }
 

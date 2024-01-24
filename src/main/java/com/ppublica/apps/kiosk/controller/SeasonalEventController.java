@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import org.dataloader.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.BatchLoaderRegistry;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
 import com.ppublica.apps.kiosk.service.collection.SeasonalEventService;
+import com.ppublica.apps.kiosk.service.payloads.data.GraphQLPayload;
+import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
@@ -47,6 +50,13 @@ public class SeasonalEventController {
         SeasonalEventView seasonalEventView = service.getSeasonalEvent(id, locale).get();
 
         return seasonalEventView;
+    }
+
+    @MutationMapping
+    public List<SeasonalEventView> createSeasonalEvents(@Argument Long eventSeasonId, @Argument GraphQLPayload<List<SeasonalEventInput>> input) {
+        List<SeasonalEventView> newSeasonalEventViews = service.createSeasonalEventsBatch(eventSeasonId, input.data());
+
+        return newSeasonalEventViews;
     }
 
 
