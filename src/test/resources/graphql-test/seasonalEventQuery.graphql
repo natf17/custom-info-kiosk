@@ -1,0 +1,14 @@
+query SeasonalEvent($locale: String, $id: ID!) {
+    seasonalEvent(locale: $locale, id: $id) {
+        id
+        seasonalType
+        startDate
+        eventLanguage
+        event_season {
+            serviceYear
+            seasonYears
+            type
+            theme
+        }
+    }
+}

@@ -2,6 +2,8 @@ type Query {
     aboutPage(locale: String): AboutPage
     error404Page(locale: String): Error404Page
     eventSeasons(locale: String): [EventSeason]
+    seasonalEvents(locale: String, sort: String): [SeasonalEvent]
+    seasonalEvent(locale: String, id: ID!): SeasonalEvent
 }
 
 type Mutation {
@@ -75,4 +77,12 @@ input EventSeasonInput {
 
 input EventSeasonPayload {
     data: EventSeasonInput
+}
+
+type SeasonalEvent {
+    id: ID
+    seasonalType: String
+    startDate: String
+    eventLanguage: String
+    event_season: EventSeason
 }

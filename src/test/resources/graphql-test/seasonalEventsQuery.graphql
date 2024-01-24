@@ -1,0 +1,14 @@
+query SeasonalEvents($locale: String!, $sort: String) {
+    seasonalEvents(locale: $locale, sort: $sort) {
+        id
+        seasonalType
+        startDate
+        eventLanguage
+        event_season {
+            serviceYear
+            seasonYears
+            type
+            theme
+        }
+    }
+}
