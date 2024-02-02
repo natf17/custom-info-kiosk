@@ -1,0 +1,5 @@
+mutation DeleteEventSeason($input: DeletePayload) {
+    deleteEventSeason(input: $input) {
+        message
+    }
+}

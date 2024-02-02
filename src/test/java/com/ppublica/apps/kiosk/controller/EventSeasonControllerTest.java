@@ -131,6 +131,25 @@ public class EventSeasonControllerTest {
 
     }
 
+    @Test
+    public void DELETE_eventSeason_returns_success() {
+
+        // set up input
+        Map<String,Object> id = new HashMap<>();
+        id.put("id", "2");
+
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("where", id);
+
+
+        graphqlTester.documentName("eventSeasonMutationDelete")
+            .variable("input", payload)
+            .execute()
+            .path("deleteEventSeason", response -> { response
+                .path("message").entity(String.class).isEqualTo("Deleted the event season with id = 2");
+            });
+    }
+
     
     
 }

@@ -12,7 +12,7 @@ type Mutation {
     updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEvent
     deleteSeasonalEvent(input: DeletePayload) : MessageResponse
     updateEventSeason(eventSeasonId: ID, input: SingleEventSeasonPayload): EventSeasonAdmin
-
+    deleteEventSeason(input: DeletePayload) : MessageResponse
 }
 
 type FeatureImage {

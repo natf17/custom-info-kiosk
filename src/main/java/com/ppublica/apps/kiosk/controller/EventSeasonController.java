@@ -9,8 +9,10 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
+import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonPayload;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.SingleEventSeasonPayload;
+import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -42,17 +44,13 @@ public class EventSeasonController {
         return updatedEventSeasonAdminView;
     }
 
-    /*
-     * @MutationMapping
-    public MessageResponse deleteSeasonalEvent(@Argument DeletePayload input) {
+    
+    @MutationMapping
+    public MessageResponse deleteEventSeason(@Argument DeletePayload input) {
         Long idToDelete = Long.parseLong(input.where().id());
-        service.deleteSeasonalEvent(idToDelete);
+        service.deleteEventSeason(idToDelete);
 
-        return new MessageResponse("Deleted the seasonal event with id = " + idToDelete);
+        return new MessageResponse("Deleted the event season with id = " + idToDelete);
     }
-     */
 
-
-
-   
 }

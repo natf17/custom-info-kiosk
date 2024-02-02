@@ -42,4 +42,8 @@ public class EventSeasonService {
     public Map<Long,EventSeasonView> getBatchEventSeasons(Set<Long> eventSeasonIds) {
         throw new UnsupportedOperationException();
     }
+
+    public void deleteEventSeason(Long eventSeasonId) {
+        throw new UnsupportedOperationException();
+    }
 }
