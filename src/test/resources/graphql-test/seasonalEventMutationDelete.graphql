@@ -1,0 +1,5 @@
+mutation DeleteSeasonalEvent($input: DeletePayload) {
+    deleteSeasonalEvent(input: $input) {
+        message
+    }
+}

@@ -1,0 +1,14 @@
+mutation UpdateSeasonalEvent($seasonalEventId: ID, $input: SeasonalEventPutPayload) {
+    updateSeasonalEvent(seasonalEventId: $seasonalEventId, input: $input) {
+        id
+        seasonalType
+        startDate
+        eventLanguage
+        event_season {
+            serviceYear
+            seasonYears
+            type
+            theme
+        }
+    }
+}

@@ -19,5 +19,13 @@ public class SeasonalEventService {
     public List<SeasonalEventView> createSeasonalEventsBatch(Long eventSeasonId, List<SeasonalEventInput> data) {
         throw new UnsupportedOperationException();
     }
+
+    public SeasonalEventView updateSeasonalEvent(Long seasonalEventId, SeasonalEventInput data) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteSeasonalEvent(Long seasonalEventId) {
+        throw new UnsupportedOperationException();
+    }
     
 }

@@ -132,6 +132,64 @@ public class SeasonalEventControllerTest {
 
     }
 
+    @Test
+    public void PUT_seasonalEvent_returns_seasonEvent() {
+
+        // set up input
+        Map<String,Object> seasonalEvent1 = new HashMap<>();
+        seasonalEvent1.put("startDate", "20240124");
+        seasonalEvent1.put("eventLanguage", "en");
+
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("data", seasonalEvent1);
+
+        // set up mocks        
+        SeasonalEventView seasonalEventView1Mock = new SeasonalEventView(1L, "type", "20240124", "en", 1L);
+
+        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
+        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+
+        when(seasonalEventService.updateSeasonalEvent(any(), any())).thenReturn(seasonalEventView1Mock);
+        when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);
+
+        graphqlTester.documentName("seasonalEventMutationPut")
+            .variable("input", payload)
+            .variable("seasonalEventId", "1")
+            .execute()
+            .path("updateSeasonalEvent", seasonalEvent -> { seasonalEvent
+                .path("id").entity(String.class).isEqualTo("1")
+                .path("seasonalType").entity(String.class).isEqualTo("type")
+                .path("startDate").entity(String.class).isEqualTo("20240124")
+                .path("eventLanguage").entity(String.class).isEqualTo("en")
+                .path("event_season", eventSeason -> { eventSeason
+                    .path("serviceYear").entity(Integer.class).isEqualTo(2023)
+                    .path("seasonYears").entity(String.class).isEqualTo("")
+                    .path("type").entity(String.class).isEqualTo("type")
+                    .path("theme").entity(String.class).isEqualTo("theme");
+                });
+            });
+
+    }
+
+    @Test
+    public void DELETE_seasonalEvent_returns_success() {
+
+        // set up input
+        Map<String,Object> id = new HashMap<>();
+        id.put("id", "2");
+
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("where", id);
+
+
+        graphqlTester.documentName("seasonalEventMutationDelete")
+            .variable("input", payload)
+            .execute()
+            .path("deleteSeasonalEvent", response -> { response
+                .path("message").entity(String.class).isEqualTo("Deleted the seasonal event with id = 2");
+            });
+    }
+
 
 
     

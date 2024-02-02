@@ -10,6 +10,9 @@ type Mutation {
     createEventSeason(input: EventSeasonPayload): EventSeasonAdmin
     createLocalizedField(input: LocalizedInput) : EventSeasonAdmin
     createSeasonalEvents(eventSeasonId: ID, input: SeasonalEventPayload) : [SeasonalEvent]
+    updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEvent
+    deleteSeasonalEvent(input: DeletePayload) : MessageResponse
+
 }
 
 type FeatureImage {
@@ -92,7 +95,23 @@ input SeasonalEventPayload {
     data: [SeasonalEventInput]
 }
 
+input SeasonalEventPutPayload {
+    data: SeasonalEventInput
+}
+
 input SeasonalEventInput {
     startDate: String
     eventLanguage: String
+}
+
+input DeletePayload {
+    where: DeleteInput
+}
+
+input DeleteInput {
+    id: ID
+}
+
+type MessageResponse {
+    message: String
 }

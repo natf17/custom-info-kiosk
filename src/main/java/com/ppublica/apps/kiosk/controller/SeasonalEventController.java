@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
 import com.ppublica.apps.kiosk.service.collection.SeasonalEventService;
+import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.data.GraphQLPayload;
 import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
+import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventPayload;
+import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
@@ -59,11 +62,25 @@ public class SeasonalEventController {
         return newSeasonalEventViews;
     }
 
+    @MutationMapping
+    public SeasonalEventView updateSeasonalEvent(@Argument Long seasonalEventId, @Argument SeasonalEventPayload input) {
+        SeasonalEventView updatedSeasonalEventView = service.updateSeasonalEvent(seasonalEventId, input.data());
 
+        return updatedSeasonalEventView;
+    }
+
+    @MutationMapping
+    public MessageResponse deleteSeasonalEvent(@Argument DeletePayload input) {
+        Long idToDelete = Long.parseLong(input.where().id());
+        service.deleteSeasonalEvent(idToDelete);
+
+        return new MessageResponse("Deleted the seasonal event with id = " + idToDelete);
+    }
 
     @SchemaMapping(typeName = "SeasonalEvent")
     public CompletableFuture<EventSeasonView> event_season(SeasonalEventView seasonalEvent, DataLoader<Long, EventSeasonView> loader) {
         return loader.load(seasonalEvent.seasonId());
 
     }
+
 }
