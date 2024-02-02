@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonPayload;
+import com.ppublica.apps.kiosk.service.payloads.data.eventseason.SingleEventSeasonPayload;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -33,6 +34,25 @@ public class EventSeasonController {
 
         return eventSeasonAdminView;
     }
+
+    @MutationMapping
+    public EventSeasonAdminView updateEventSeason(@Argument Long seasonalEventId, @Argument SingleEventSeasonPayload input) {
+        EventSeasonAdminView updatedEventSeasonAdminView = service.updateEventSeason(seasonalEventId, input.data());
+
+        return updatedEventSeasonAdminView;
+    }
+
+    /*
+     * @MutationMapping
+    public MessageResponse deleteSeasonalEvent(@Argument DeletePayload input) {
+        Long idToDelete = Long.parseLong(input.where().id());
+        service.deleteSeasonalEvent(idToDelete);
+
+        return new MessageResponse("Deleted the seasonal event with id = " + idToDelete);
+    }
+     */
+
+
 
    
 }

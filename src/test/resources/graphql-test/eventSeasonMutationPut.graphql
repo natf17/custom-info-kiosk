@@ -1,5 +1,5 @@
-mutation CreateEventSeason($input: EventSeasonPayload) {
-    createEventSeason(input: $input) {
+mutation UpdateEventSeason($eventSeasonId: ID, $input: SingleEventSeasonPayload) {
+    updateEventSeason(eventSeasonId: $eventSeasonId, input: $input) {
         seasons {
             id
             type

@@ -15,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
-import com.ppublica.apps.kiosk.service.views.LocalizedField;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -82,27 +81,52 @@ public class EventSeasonControllerTest {
         payload.put("data", input);
 
         // set up mocks
-        List<LocalizedField> themesMock = new ArrayList<>();
-        themesMock.add(new LocalizedField("en", "theme"));
-        themesMock.add(new LocalizedField("es", "tema"));
-
-        List<LocalizedField> durationTextsMock = new ArrayList<>();
-        durationTextsMock.add(new LocalizedField("en", "three"));
-        durationTextsMock.add(new LocalizedField("es", "tres"));
-        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(10L, "type", 3, themesMock, 2023, durationTextsMock);
+        EventSeasonView eventSeasonEnMock = new EventSeasonView(10L, "type", 3, "theme", 2023, "", "three");
+        EventSeasonView eventSeasonEsMock = new EventSeasonView(11L, "type", 3, "tema", 2023, "", "tres");
+        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(List.of(eventSeasonEnMock, eventSeasonEsMock));
 
         when(eventSeasonService.createEventSeason(any())).thenReturn(eventSeasonAdminViewMock);
 
         graphqlTester.documentName("eventSeasonMutationPost")
             .variable("input", payload)
             .execute()
-            .path("createEventSeason", eventSeason -> { eventSeason
-                .path("id").entity(String.class).isEqualTo("10")
-                .path("type").entity(String.class).isEqualTo("type")
-                .path("durationDays").entity(Integer.class).isEqualTo(3)
-                .path("theme").entityList(LocalizedField.class).hasSize(2)
-                .path("serviceYear").entity(Integer.class).isEqualTo(2023)
-                .path("durationText").entityList(LocalizedField.class).hasSize(2);
+            .path("createEventSeason", response -> { response
+                .path("seasons", seasons -> {
+                    seasons.entityList(EventSeasonView.class).containsExactly(eventSeasonEnMock, eventSeasonEsMock);
+                });
+            });
+
+    }
+
+    @Test
+    public void PUT_eventSeasonWithLocales_returns_seasonAdmin() {
+
+        // set up input
+        Map<String,Object> input = new HashMap<>();
+        input.put("type", "type");
+        input.put("durationDays", 3);
+        input.put("theme", "newTheme");
+        input.put("serviceYear", 2023);
+        input.put("durationText", "newDurationText");
+
+        Map<String,Object> payload = new HashMap<>();
+        payload.put("data", input);
+
+        // set up mocks
+        EventSeasonView eventSeasonEnMock = new EventSeasonView(10L, "type", 3, "newTheme", 2023, "", "newDurationText");
+        EventSeasonView eventSeasonEsMock = new EventSeasonView(11L, "type", 3, "tema", 2023, "", "tres");
+        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(List.of(eventSeasonEnMock, eventSeasonEsMock));
+
+        when(eventSeasonService.updateEventSeason(any(), any())).thenReturn(eventSeasonAdminViewMock);
+
+        graphqlTester.documentName("eventSeasonMutationPut")
+            .variable("input", payload)
+            .variable("eventSeasonId", 10L)
+            .execute()
+            .path("updateEventSeason", response -> { response
+                .path("seasons", seasons -> {
+                    seasons.entityList(EventSeasonView.class).containsExactly(eventSeasonEnMock, eventSeasonEsMock);
+                });
             });
 
     }

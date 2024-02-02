@@ -8,10 +8,10 @@ type Query {
 
 type Mutation {
     createEventSeason(input: EventSeasonPayload): EventSeasonAdmin
-    createLocalizedField(input: LocalizedInput) : EventSeasonAdmin
     createSeasonalEvents(eventSeasonId: ID, input: SeasonalEventPayload) : [SeasonalEvent]
     updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEvent
     deleteSeasonalEvent(input: DeletePayload) : MessageResponse
+    updateEventSeason(eventSeasonId: ID, input: SingleEventSeasonPayload): EventSeasonAdmin
 
 }
 
@@ -52,19 +52,9 @@ type EventSeason {
 }
 
 type EventSeasonAdmin {
-    id: ID
-    type: String
-    durationDays: Int
-    theme: [LocalizedField]
-    serviceYear: Int
-    seasonYears: String
-    durationText: [LocalizedField]
+    seasons: [EventSeason]
 }
 
-type LocalizedField {
-    locale: String
-    value: String
-}
 
 input LocalizedInput {
     locale: String
@@ -114,4 +104,16 @@ input DeleteInput {
 
 type MessageResponse {
     message: String
+}
+
+input SingleEventSeasonPayload {
+    data: SingleSeasonalEventInput
+}
+
+input SingleSeasonalEventInput {
+    type: String
+    durationDays: Int
+    serviceYear: Int
+    theme: String
+    durationText: String
 }

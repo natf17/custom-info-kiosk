@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.ppublica.apps.kiosk.domain.model.collection.SeasonalEvent;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInput;
+import com.ppublica.apps.kiosk.service.payloads.data.eventseason.SingleEventSeasonInput;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
@@ -34,11 +35,11 @@ public class EventSeasonService {
         throw new UnsupportedOperationException();
     }
 
-    public Map<Long,EventSeasonView> getBatchEventSeasons(Set<Long> eventSeasonIds) {
-        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
-        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
-        eventSeasonsMock.put(2L, new EventSeasonView(2L, "type", 4, "theme2", 2023, "", "four days"));
+    public EventSeasonAdminView updateEventSeason(Long seasonalEventId, SingleEventSeasonInput data) {
+        throw new UnsupportedOperationException();
+    }
 
-        return eventSeasonsMock;
+    public Map<Long,EventSeasonView> getBatchEventSeasons(Set<Long> eventSeasonIds) {
+        throw new UnsupportedOperationException();
     }
 }
