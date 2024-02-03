@@ -16,6 +16,9 @@ type Mutation {
     createError404Page(locale: String!, input: Error404PagePayload): Error404Page
     updateError404Page(locale: String!, input: Error404PagePayload): Error404Page
     deleteError404Page(input: PageDeletePayload) : MessageResponse
+    createAboutPage(locale: String!, input: AboutPagePayload): AboutPage
+    updateAboutPage(locale: String!, input: AboutPagePayload): AboutPage
+    deleteAboutPage(input: PageDeletePayload) : MessageResponse
 
 }
 
@@ -146,3 +149,21 @@ input PageDeletePayload {
 input PageDeleteInput {
     locale: String
 }
+
+input AboutPagePayload {
+    data: AboutPageInput
+}
+
+input AboutPageInput {
+    pageTitle: String
+    richDescription: String
+    featImg: FeatureImageInput
+}
+
+input FeatureImageInput {
+    url: String
+    width: Int
+    height: Int
+    alternativeText: String
+}
+

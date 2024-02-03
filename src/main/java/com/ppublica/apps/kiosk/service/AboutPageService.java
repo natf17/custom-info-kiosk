@@ -9,6 +9,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.pages.AboutPage;
 import com.ppublica.apps.kiosk.domain.model.pages.ImageContainer;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.about.AboutPageInput;
 import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
 import com.ppublica.apps.kiosk.service.views.about.ImageView;
 
@@ -30,6 +31,18 @@ public class AboutPageService {
 
         return Optional.of(transformToView(aboutPage));
 
+    }
+
+    public AboutPageView createAboutPage(String locale, AboutPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public AboutPageView updateAboutPage(String locale, AboutPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteAboutPage(String locale) {
+        throw new UnsupportedOperationException();
     }
 
 

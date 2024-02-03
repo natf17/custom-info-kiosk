@@ -1,0 +1,12 @@
+mutation CreateAboutPage($locale: String!, $input: AboutPagePayload) {
+    createAboutPage(locale: $locale, input: $input) {
+      pageTitle
+      richDescription
+      featImg {
+        url
+        width
+        height
+        alternativeText
+      }
+    }
+}

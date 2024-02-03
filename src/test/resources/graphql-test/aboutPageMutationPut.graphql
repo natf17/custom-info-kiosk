@@ -1,0 +1,12 @@
+mutation UpdateAboutPage($locale: String!, $input: AboutPagePayload) {
+    updateAboutPage(locale: $locale, input: $input) {
+      pageTitle
+      richDescription
+      featImg {
+        url
+        width
+        height
+        alternativeText
+      }
+    }
+}
