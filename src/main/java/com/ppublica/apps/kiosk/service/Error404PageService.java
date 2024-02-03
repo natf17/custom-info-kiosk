@@ -8,6 +8,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.pages.Error404Page;
 import com.ppublica.apps.kiosk.domain.model.pages.RedirectUrlContainer;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.error.Error404PageInput;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
 
@@ -29,6 +30,18 @@ public class Error404PageService {
 
         return Optional.of(transformToView(error404Page));
 
+    }
+
+    public Error404PageView createError404Page(String locale, Error404PageInput data) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Error404PageView updateError404Page(Long error404PageId, Error404PageInput data) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteError404Page(String locale) {
+        throw new UnsupportedOperationException();
     }
     
     private Error404PageView transformToView(Error404Page page) {

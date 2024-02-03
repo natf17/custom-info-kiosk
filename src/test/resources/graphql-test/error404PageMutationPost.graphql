@@ -1,0 +1,12 @@
+mutation CreateError404Page($locale: String!, $input: Error404PagePayload) {
+    createError404Page(locale: $locale, input: $input) {
+      pageTitle
+      errorDescription
+      showRedirectLink
+      redirectLink {
+        url
+        displayText
+        description
+      }
+    }
+}

@@ -1,0 +1,5 @@
+mutation DeleteError404Page($input: PageDeletePayload) {
+    deleteError404Page(input: $input) {
+        message
+    }
+}

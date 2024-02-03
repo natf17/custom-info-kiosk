@@ -13,6 +13,10 @@ type Mutation {
     deleteSeasonalEvent(input: DeletePayload) : MessageResponse
     updateEventSeason(eventSeasonId: ID, input: SingleEventSeasonPayload): EventSeasonAdmin
     deleteEventSeason(input: DeletePayload) : MessageResponse
+    createError404Page(locale: String!, input: Error404PagePayload): Error404Page
+    updateError404Page(locale: String!, input: Error404PagePayload): Error404Page
+    deleteError404Page(input: PageDeletePayload) : MessageResponse
+
 }
 
 type FeatureImage {
@@ -116,4 +120,29 @@ input SingleSeasonalEventInput {
     serviceYear: Int
     theme: String
     durationText: String
+}
+
+input Error404PagePayload {
+    data: Error404PageInput
+}
+
+input Error404PageInput {
+    pageTitle: String
+    errorDescription: String
+    showRedirectLink: Boolean
+    redirectLink: RedirectLinkInput
+}
+
+input RedirectLinkInput {
+    url: String
+    displayText: String
+    description: String
+}
+
+input PageDeletePayload {
+    where: PageDeleteInput
+}
+
+input PageDeleteInput {
+    locale: String
 }
