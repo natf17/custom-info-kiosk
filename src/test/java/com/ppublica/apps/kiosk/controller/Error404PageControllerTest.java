@@ -15,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.Error404PageService;
+import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
+import com.ppublica.apps.kiosk.service.views.about.ImageView;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
 
@@ -44,7 +46,7 @@ public class Error404PageControllerTest {
      * }
      * 
      */
-    //@Test
+    @Test
     public void GET_errorPage_returns_page() {
 
         // set up mocks
@@ -113,20 +115,58 @@ public class Error404PageControllerTest {
         public void PUT_error404Page_returns_page() {
 
         // set up input
-        Map<String,Object> locale = new HashMap<>();
-        locale.put("locale", "en");
+        Map<String,Object> redirectLinkInput = new HashMap<>();
+        redirectLinkInput.put("url", "upd_redirect_url");
+        redirectLinkInput.put("displayText", "upd_redirectLink_displayText");
+        redirectLinkInput.put("description", "upd_redirectLink_description");
+
+        Map<String,Object> input = new HashMap<>();
+        input.put("pageTitle", "upd_sampleTitle");
+        input.put("errorDescription", "upd_Sample error description");
+        input.put("showRedirectLink", true);
+        input.put("redirectLink", redirectLinkInput);
+
 
         Map<String,Object> payload = new HashMap<>();
-        payload.put("where", locale);
+        payload.put("data", input);
 
-        graphqlTester.documentName("error404PageMutationDelete")
+        // set up mocks
+        RedirectLinkView redirectLinkView = new RedirectLinkView("upd_redirect_url", "upd_redirectLink_displayText", "upd_redirectLink_description");
+        Error404PageView errorView = new Error404PageView("upd_sampleTitle", "upd_Sample error description", true, redirectLinkView);
+
+        when(pageService.updateError404Page(any(), any())).thenReturn(errorView);
+
+        graphqlTester.documentName("error404PageMutationPut")
             .variable("input", payload)
+            .variable("locale", "en")
             .execute()
-            .path("deleteError404Page", response -> { response
-                .path("message").entity(String.class).isEqualTo("Deleted the error404page in en");
+            .path("updateError404Page", error404Page -> { error404Page
+                .path("pageTitle").entity(String.class).isEqualTo("upd_sampleTitle")
+                .path("errorDescription").entity(String.class).isEqualTo("upd_Sample error description")
+                .path("showRedirectLink").entity(Boolean.class).isEqualTo(true)
+                .path("redirectLink").entity(RedirectLinkView.class).isEqualTo(redirectLinkView);
                 });
 
         }
+
+        @Test
+        public void DELETE_error404Page_returns_page() {
+
+            // set up input
+            Map<String,Object> locale = new HashMap<>();
+            locale.put("locale", "en");
+
+            Map<String,Object> payload = new HashMap<>();
+            payload.put("where", locale);
+
+            graphqlTester.documentName("error404PageMutationDelete")
+                .variable("input", payload)
+                .execute()
+                .path("deleteError404Page", response -> { response
+                    .path("message").entity(String.class).isEqualTo("Deleted the error404page in en");
+                    });
+
+            }
 
     
 }

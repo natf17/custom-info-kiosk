@@ -35,8 +35,8 @@ public class Error404PageController {
     }
 
     @MutationMapping
-    public Error404PageView updateError404Page(@Argument Long error404PageId, @Argument Error404PagePayload input) {
-        Error404PageView error404PageView = service.updateError404Page(error404PageId, input.data());
+    public Error404PageView updateError404Page(@Argument String locale, @Argument Error404PagePayload input) {
+        Error404PageView error404PageView = service.updateError404Page(locale, input.data());
 
         return error404PageView;
     }

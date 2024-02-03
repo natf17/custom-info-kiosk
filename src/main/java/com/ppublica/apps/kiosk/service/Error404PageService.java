@@ -36,7 +36,7 @@ public class Error404PageService {
         throw new UnsupportedOperationException();
     }
 
-    public Error404PageView updateError404Page(Long error404PageId, Error404PageInput data) {
+    public Error404PageView updateError404Page(String locale, Error404PageInput data) {
         throw new UnsupportedOperationException();
     }
 
