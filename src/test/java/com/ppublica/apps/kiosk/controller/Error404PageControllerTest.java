@@ -15,8 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.Error404PageService;
-import com.ppublica.apps.kiosk.service.views.about.AboutPageView;
-import com.ppublica.apps.kiosk.service.views.about.ImageView;
 import com.ppublica.apps.kiosk.service.views.error.Error404PageView;
 import com.ppublica.apps.kiosk.service.views.error.RedirectLinkView;
 
@@ -164,9 +162,9 @@ public class Error404PageControllerTest {
                 .execute()
                 .path("deleteError404Page", response -> { response
                     .path("message").entity(String.class).isEqualTo("Deleted the error404page in en");
-                    });
+                });
 
-            }
+        }
 
     
 }
