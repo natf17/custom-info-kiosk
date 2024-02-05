@@ -1,0 +1,9 @@
+query HomePage($locale: String!) {
+    homePage(locale: $locale) {
+        id
+        pageTitle
+        tapToContinuePrompt
+        welcomeText
+        showSelectFromAvailableLocales
+    }
+}

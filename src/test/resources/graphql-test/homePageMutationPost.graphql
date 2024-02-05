@@ -1,0 +1,9 @@
+mutation CreateHomePage($locale: String!, $input: HomePagePayload) {
+    createHomePage(locale: $locale, input: $input) {
+        id
+        pageTitle
+        tapToContinuePrompt
+        welcomeText
+        showSelectFromAvailableLocales
+    }
+}

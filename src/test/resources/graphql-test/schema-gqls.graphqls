@@ -5,6 +5,7 @@ type Query {
     seasonalEvents(locale: String, sort: String): [SeasonalEvent]
     seasonalEvent(locale: String, id: ID!): SeasonalEvent
     eventsPage(locale: String): EventsPage
+    homePage(locale: String): HomePage
 
 }
 
@@ -24,6 +25,9 @@ type Mutation {
     createEventsPage(locale: String!, input: EventsPagePayload): EventsPage
     updateEventsPage(locale: String!, input: EventsPagePayload): EventsPage
     deleteEventsPage(input: PageDeletePayload) : MessageResponse
+    createHomePage(locale: String!, input: HomePagePayload): HomePage
+    updateHomePage(locale: String!, input: HomePagePayload): HomePage
+    deleteHomePage(input: PageDeletePayload) : MessageResponse
 
 }
 
@@ -226,3 +230,21 @@ input EventSectionInput {
     btn_text: String
 }
 
+type HomePage {
+    id: String
+    pageTitle: String
+    tapToContinuePrompt: String
+    welcomeText: String
+    showSelectFromAvailableLocales: Boolean
+}
+
+input HomePagePayload {
+    data: HomePageInput
+}
+
+input HomePageInput {
+    pageTitle: String
+    tapToContinuePrompt: String
+    welcomeText: String
+    showSelectFromAvailableLocales: Boolean
+}

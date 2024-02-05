@@ -1,0 +1,9 @@
+mutation UpdateHomePage($locale: String!, $input: HomePagePayload) {
+    updateHomePage(locale: $locale, input: $input) {
+        id
+        pageTitle
+        tapToContinuePrompt
+        welcomeText
+        showSelectFromAvailableLocales
+    }
+}

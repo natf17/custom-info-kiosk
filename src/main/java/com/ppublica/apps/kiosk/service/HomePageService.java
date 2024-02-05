@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Page;
 import com.ppublica.apps.kiosk.domain.model.pages.HomePage;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.home.HomePageInput;
 import com.ppublica.apps.kiosk.service.views.home.HomePageView;
 
 public class HomePageService {
@@ -26,6 +27,18 @@ public class HomePageService {
 
         return Optional.of(transformToView(homePage));
 
+    }
+
+    public HomePageView createHomePage(String locale, HomePageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public HomePageView updateHomePage(String locale, HomePageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteHomePage(String locale) {
+        throw new UnsupportedOperationException();
     }
 
     private HomePageView transformToView(HomePage homePage) {
