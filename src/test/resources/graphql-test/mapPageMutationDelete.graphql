@@ -1,0 +1,5 @@
+mutation DeleteMapPage($input: PageDeletePayload) {
+    deleteMapPage(input: $input) {
+        message
+    }
+}

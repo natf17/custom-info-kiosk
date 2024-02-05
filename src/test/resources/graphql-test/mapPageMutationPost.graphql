@@ -1,0 +1,63 @@
+mutation CreateMapPage($locale: String!, $input: MapPagePayload) {
+    createMapPage(locale: $locale, input: $input) {
+        pageTitle
+        pageDescription
+        tapWidget {
+            instructions
+            br_label
+            water_label
+            firstaid_label
+            donations_label
+            noResultsFound
+        }
+        mapViewConfig {
+            enableFsCustomMaps
+            clearResults
+            levelSelect
+            mapNotAvailable
+        }
+        bathroomAmenity {
+            widgetLabel
+            headingLabel
+        }
+        waterFountainAmenity {
+            widgetLabel
+            headingLabel
+        }
+        firstAidAmenity {
+            widgetLabel
+            headingLabel
+        }
+        donationAmenity {
+            widgetLabel
+            headingLabel
+        }
+        maps {
+            default {
+                width
+                height
+                url
+            }
+            bathrooms {
+                width
+                height
+                url
+            }
+            waterFountains {
+                width
+                height
+                url
+            }
+            firstAid {
+                width
+                height
+                url
+            }
+            donations {
+                width
+                height
+                url
+            }
+        }
+    }
+}

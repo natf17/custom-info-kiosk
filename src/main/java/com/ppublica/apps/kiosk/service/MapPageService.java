@@ -12,6 +12,7 @@ import com.ppublica.apps.kiosk.domain.model.pages.MapPage;
 import com.ppublica.apps.kiosk.domain.model.pages.MapViewConfigContainer;
 import com.ppublica.apps.kiosk.domain.model.pages.TapWidgetContainer;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.map.MapPageInput;
 import com.ppublica.apps.kiosk.service.views.map.LocationAmenityView;
 import com.ppublica.apps.kiosk.service.views.map.MapImageView;
 import com.ppublica.apps.kiosk.service.views.map.MapImagesView;
@@ -36,6 +37,18 @@ public class MapPageService {
 
         return Optional.of(transformToView(mapPage));
 
+    }
+
+    public MapPageView createMapPage(String locale, MapPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public MapPageView updateMapPage(String locale, MapPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteMapPage(String locale) {
+        throw new UnsupportedOperationException();
     }
 
     private MapPageView transformToView(MapPage mapPage) {

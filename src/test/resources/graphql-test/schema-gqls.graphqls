@@ -6,6 +6,7 @@ type Query {
     seasonalEvent(locale: String, id: ID!): SeasonalEvent
     eventsPage(locale: String): EventsPage
     homePage(locale: String): HomePage
+    mapPage(locale: String): MapPage
 
 }
 
@@ -28,6 +29,9 @@ type Mutation {
     createHomePage(locale: String!, input: HomePagePayload): HomePage
     updateHomePage(locale: String!, input: HomePagePayload): HomePage
     deleteHomePage(input: PageDeletePayload) : MessageResponse
+    createMapPage(locale: String!, input: MapPagePayload): MapPage
+    updateMapPage(locale: String!, input: MapPagePayload): MapPage
+    deleteMapPage(input: PageDeletePayload) : MessageResponse
 
 }
 
@@ -247,4 +251,104 @@ input HomePageInput {
     tapToContinuePrompt: String
     welcomeText: String
     showSelectFromAvailableLocales: Boolean
+}
+
+type MapPage {
+    pageTitle: String
+    pageDescription: String
+    tapWidget: TapWidget
+    showSelectFromAvailableLocales: Boolean
+    mapViewConfig: MapViewConfig
+    bathroomAmenity: LocationAmenity
+    waterFountainAmenity: LocationAmenity
+    firstAidAmenity: LocationAmenity
+    donationAmenity: LocationAmenity
+    maps: MapImages
+}
+
+type TapWidget {
+    instructions: String
+    br_label: String
+    water_label: String
+    firstaid_label: String
+    donations_label: String
+    noResultsFound: String
+}
+
+type MapViewConfig {
+    enableFsCustomMaps: Boolean
+    clearResults: String
+    levelSelect: String
+    mapNotAvailable: String
+}
+
+type LocationAmenity {
+    widgetLabel: String
+    headingLabel: String
+}
+
+type MapImages {
+    default: MapImage
+    bathrooms: MapImage
+    waterFountains: MapImage
+    firstAid: MapImage
+    donations: MapImage
+}
+
+type MapImage {
+    width: Int
+    height: Int
+    url: String
+}
+
+input MapPagePayload {
+    data: MapPageInput
+}
+
+input MapPageInput {
+    pageTitle: String
+    pageDescription: String
+    tapWidget: TapWidgetInput
+    showSelectFromAvailableLocales: Boolean
+    mapViewConfig: MapViewConfigInput
+    bathroomAmenity: LocationAmenityInput
+    waterFountainAmenity: LocationAmenityInput
+    firstAidAmenity: LocationAmenityInput
+    donationAmenity: LocationAmenityInput
+    maps: MapImagesInput
+}
+
+input TapWidgetInput {
+    instructions: String
+    br_label: String
+    water_label: String
+    firstaid_label: String
+    donations_label: String
+    noResultsFound: String
+}
+
+input MapViewConfigInput {
+    enableFsCustomMaps: Boolean
+    clearResults: String
+    levelSelect: String
+    mapNotAvailable: String
+}
+
+input LocationAmenityInput {
+    widgetLabel: String
+    headingLabel: String
+}
+
+input MapImagesInput {
+    defaultMap: MapImageInput
+    bathrooms: MapImageInput
+    waterFountains: MapImageInput
+    firstAid: MapImageInput
+    donations: MapImageInput
+}
+
+input MapImageInput {
+    width: Int
+    height: Int
+    url: String
 }
