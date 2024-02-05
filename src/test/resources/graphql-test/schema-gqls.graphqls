@@ -4,6 +4,8 @@ type Query {
     eventSeasons(locale: String): [EventSeason]
     seasonalEvents(locale: String, sort: String): [SeasonalEvent]
     seasonalEvent(locale: String, id: ID!): SeasonalEvent
+    eventsPage(locale: String): EventsPage
+
 }
 
 type Mutation {
@@ -19,6 +21,9 @@ type Mutation {
     createAboutPage(locale: String!, input: AboutPagePayload): AboutPage
     updateAboutPage(locale: String!, input: AboutPagePayload): AboutPage
     deleteAboutPage(input: PageDeletePayload) : MessageResponse
+    createEventsPage(locale: String!, input: EventsPagePayload): EventsPage
+    updateEventsPage(locale: String!, input: EventsPagePayload): EventsPage
+    deleteEventsPage(input: PageDeletePayload) : MessageResponse
 
 }
 
@@ -165,5 +170,59 @@ input FeatureImageInput {
     width: Int
     height: Int
     alternativeText: String
+}
+
+type EventsPage {
+    pageTitle: String
+    pageDescription: String
+    eventLangPickerLabel: String
+    general: GeneralStrings
+    sectionREG: EventSection
+    sectionCACO: EventSection
+    sectionCABR: EventSection
+    sectionOTHER: EventSection
+}
+
+type GeneralStrings {
+    eventThemeLabel: String
+    durationLabel: String
+    yearsShowingLabel: String
+    dateLabel: String
+    eventLangLabel: String
+    noEventsFound: String
+}
+
+type EventSection {
+    title: String
+    btn_text: String
+}
+
+input EventsPagePayload {
+    data: EventsPageInput
+}
+
+input EventsPageInput {
+    pageTitle: String
+    pageDescription: String
+    eventLangPickerLabel: String
+    general: GeneralStringsInput
+    sectionREG: EventSectionInput
+    sectionCACO: EventSectionInput
+    sectionCABR: EventSectionInput
+    sectionOTHER: EventSectionInput
+}
+
+input GeneralStringsInput {
+    eventThemeLabel: String
+    durationLabel: String
+    yearsShowingLabel: String
+    dateLabel: String
+    eventLangLabel: String
+    noEventsFound: String
+}
+
+input EventSectionInput {
+    title: String
+    btn_text: String
 }
 

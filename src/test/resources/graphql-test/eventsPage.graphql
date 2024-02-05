@@ -1,0 +1,31 @@
+query EventsPage($locale: String!) {
+    eventsPage(locale: $locale) {
+        pageTitle
+        pageDescription
+        eventLangPickerLabel
+        general {
+            eventThemeLabel
+            durationLabel
+            yearsShowingLabel
+            dateLabel
+            eventLangLabel
+            noEventsFound
+        }
+        sectionREG {
+            title
+            btn_text
+        }
+        sectionCACO {
+            title
+            btn_text
+        }
+        sectionCABR {
+            title
+            btn_text
+        }
+        sectionOTHER {
+            title
+            btn_text
+        }
+    }
+}

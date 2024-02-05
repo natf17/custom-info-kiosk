@@ -9,6 +9,7 @@ import com.ppublica.apps.kiosk.domain.model.pages.EventSectionContainer;
 import com.ppublica.apps.kiosk.domain.model.pages.EventsPage;
 import com.ppublica.apps.kiosk.domain.model.pages.GeneralEventStringsContainer;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.events.EventsPageInput;
 import com.ppublica.apps.kiosk.service.views.events.EventSectionView;
 import com.ppublica.apps.kiosk.service.views.events.EventsPageView;
 import com.ppublica.apps.kiosk.service.views.events.GeneralStringsView;
@@ -31,6 +32,18 @@ public class EventsPageService {
 
         return Optional.of(transformToView(eventsPage));
 
+    }
+
+    public EventsPageView createEventsPage(String locale, EventsPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public EventsPageView updateEventsPage(String locale, EventsPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteEventsPage(String locale) {
+        throw new UnsupportedOperationException();
     }
 
 
