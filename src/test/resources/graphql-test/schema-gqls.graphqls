@@ -7,6 +7,7 @@ type Query {
     eventsPage(locale: String): EventsPage
     homePage(locale: String): HomePage
     mapPage(locale: String): MapPage
+    menuPage(locale: String): MenuPage
 
 }
 
@@ -32,6 +33,9 @@ type Mutation {
     createMapPage(locale: String!, input: MapPagePayload): MapPage
     updateMapPage(locale: String!, input: MapPagePayload): MapPage
     deleteMapPage(input: PageDeletePayload) : MessageResponse
+    createMenuPage(locale: String!, input: MenuPagePayload): MenuPage
+    updateMenuPage(locale: String!, input: MenuPagePayload): MenuPage
+    deleteMenuPage(input: PageDeletePayload) : MessageResponse
 
 }
 
@@ -351,4 +355,59 @@ input MapImageInput {
     width: Int
     height: Int
     url: String
+}
+
+type MenuPage {
+    pageTitle: String
+    directory: MenuItemContainerView
+    events: MenuItemContainerView
+    about: MenuItemContainerView
+}
+
+type MenuItemContainerView {
+    title: String
+    menuItems: [MenuItem]
+}
+
+type MenuItem {
+    id: ID
+    isVisible: Boolean
+    label: String
+    url: String
+    image: MenuItemImage
+}
+
+type MenuItemImage {
+    url: String
+    width: Int
+    height: Int
+}
+
+input MenuPagePayload {
+    data: MenuPageInput
+}
+
+input MenuPageInput {
+    pageTitle: String
+    directory: MenuItemContainerInput
+    events: MenuItemContainerInput
+    about: MenuItemContainerInput
+}
+
+input MenuItemContainerInput {
+    title: String
+    menuItems: [MenuItemInput]
+}
+
+input MenuItemInput {
+    isVisible: Boolean
+    label: String
+    url: String
+    image: MenuItemImageInput
+}
+
+input MenuItemImageInput {
+    url: String
+    width: Int
+    height: Int
 }

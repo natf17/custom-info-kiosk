@@ -1,0 +1,47 @@
+mutation UpdateMenuPage($locale: String!, $input: MenuPagePayload) {
+    updateMenuPage(locale: $locale, input: $input) {
+        pageTitle
+        directory {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+        events {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+        about {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+    }
+}

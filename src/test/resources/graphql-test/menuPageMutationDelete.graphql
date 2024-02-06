@@ -1,0 +1,5 @@
+mutation DeleteMenuPage($input: PageDeletePayload) {
+    deleteMenuPage(input: $input) {
+        message
+    }
+}

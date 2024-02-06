@@ -1,0 +1,47 @@
+query MenuPage($locale: String!) {
+    menuPage(locale: $locale) {
+        pageTitle
+        directory {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+        events {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+        about {
+            title
+            menuItems {
+                id 
+                isVisible
+                label      
+                url        
+                image {
+                    url
+                    width
+                    height
+                }
+            }
+        }
+    }
+}

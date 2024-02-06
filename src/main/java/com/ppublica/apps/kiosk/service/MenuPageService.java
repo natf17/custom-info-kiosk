@@ -12,6 +12,7 @@ import com.ppublica.apps.kiosk.domain.model.pages.MenuCategoryContainer;
 import com.ppublica.apps.kiosk.domain.model.pages.MenuItem;
 import com.ppublica.apps.kiosk.domain.model.pages.MenuPage;
 import com.ppublica.apps.kiosk.repository.PageRepository;
+import com.ppublica.apps.kiosk.service.payloads.menu.MenuPageInput;
 import com.ppublica.apps.kiosk.service.views.menu.ImageView;
 import com.ppublica.apps.kiosk.service.views.menu.MenuItemContainerView;
 import com.ppublica.apps.kiosk.service.views.menu.MenuItemView;
@@ -34,6 +35,18 @@ public class MenuPageService {
 
         return Optional.of(transformToView(menuPage));
 
+    }
+
+    public MenuPageView createMenuPage(String locale, MenuPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public MenuPageView updateMenuPage(String locale, MenuPageInput input) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteMenuPage(String locale) {
+        throw new UnsupportedOperationException();
     }
 
     private MenuPageView transformToView(MenuPage menuPage) {
