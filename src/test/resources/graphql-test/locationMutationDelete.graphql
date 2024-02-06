@@ -1,0 +1,5 @@
+mutation DeleteLocation($input: DeletePayload) {
+    deleteLocation(input: $input) {
+        message
+    }
+}

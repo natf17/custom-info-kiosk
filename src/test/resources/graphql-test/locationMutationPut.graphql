@@ -1,0 +1,22 @@
+mutation UpdateLocation($locationId: ID!, $input: LocationPayload) {
+    updateLocation(locationId: $locationId, input: $input) {
+        id
+        fullname {
+            locale
+            value
+        }
+        level_num
+        level_name {
+            locale
+            value
+        }
+        map {          
+            locale
+            value {
+                width
+                height
+                url
+            }
+        }
+    }
+}

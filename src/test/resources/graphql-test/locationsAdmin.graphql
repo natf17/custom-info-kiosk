@@ -1,0 +1,22 @@
+query LocationsAdmin($sort: String) {
+    locationsAdmin(sort: $sort) {
+        id
+        fullname {
+            locale
+            value
+        }
+        level_num
+        level_name {
+            locale
+            value
+        }
+        map {          
+            locale
+            value {
+                width
+                height
+                url
+            }
+        }
+    } 
+}

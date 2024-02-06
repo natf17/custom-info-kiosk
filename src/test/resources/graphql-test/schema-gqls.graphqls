@@ -8,7 +8,9 @@ type Query {
     homePage(locale: String): HomePage
     mapPage(locale: String): MapPage
     menuPage(locale: String): MenuPage
-
+    locations(locale: String, sort: String): [Location]
+    locationsAdmin(sort: String): [LocationAdmin]
+    locationAdmin(locationId: ID): LocationAdmin
 }
 
 type Mutation {
@@ -36,6 +38,9 @@ type Mutation {
     createMenuPage(locale: String!, input: MenuPagePayload): MenuPage
     updateMenuPage(locale: String!, input: MenuPagePayload): MenuPage
     deleteMenuPage(input: PageDeletePayload) : MessageResponse
+    createLocation(input: LocationPayload): LocationAdmin
+    updateLocation(locationId: ID!, input: LocationPayload): LocationAdmin
+    deleteLocation(input: DeletePayload) : MessageResponse
 
 }
 
@@ -410,4 +415,58 @@ input MenuItemImageInput {
     url: String
     width: Int
     height: Int
+}
+
+type Location {
+    id: ID
+    fullname: String
+    level_num: Int
+    level_name: String
+    map: LocationMap
+}
+
+type LocationMap {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type LocationAdmin {
+    id: ID
+    fullname: [LocalizedField]
+    level_num: Int
+    level_name: [LocalizedField]
+    map: [LocalizedLocationMap]
+}
+
+type LocalizedLocationMap {        
+    locale: String
+    value: LocationMap
+}
+
+type LocalizedField {
+    locale: String
+    value: String
+}
+
+input LocationPayload {
+    data: LocationInput
+}
+
+input LocationInput {
+    fullname: [LocalizedInput]
+    level_num: Int
+    level_name: [LocalizedInput]
+    map: [LocalizedLocationMapInput]
+}
+
+input LocalizedLocationMapInput {        
+    locale: String
+    value: LocationMapInput
+}
+
+input LocationMapInput {        
+    width: Int
+    height: Int
+    url: String
 }

@@ -1,0 +1,22 @@
+query LocationAdmin($locationId: ID) {
+    locationAdmin(locationId: $locationId) {
+        id
+        fullname {
+            locale
+            value
+        }
+        level_num
+        level_name {
+            locale
+            value
+        }
+        map {          
+            locale
+            value {
+                width
+                height
+                url
+            }
+        }
+    } 
+}

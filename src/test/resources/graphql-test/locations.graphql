@@ -1,0 +1,13 @@
+query Locations($locale: String, $sort: String) {
+    locations(locale: $locale, sort: $sort) {
+        id
+        fullname
+        level_num
+        level_name
+        map {          
+            width
+            height
+            url
+        }
+    } 
+}
