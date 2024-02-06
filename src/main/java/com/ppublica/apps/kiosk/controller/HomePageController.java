@@ -6,13 +6,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.ppublica.apps.kiosk.service.EventsPageService;
 import com.ppublica.apps.kiosk.service.HomePageService;
 import com.ppublica.apps.kiosk.service.payloads.PageDeletePayload;
-import com.ppublica.apps.kiosk.service.payloads.events.EventsPagePayload;
 import com.ppublica.apps.kiosk.service.payloads.home.HomePagePayload;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
-import com.ppublica.apps.kiosk.service.views.events.EventsPageView;
 import com.ppublica.apps.kiosk.service.views.home.HomePageView;
 
 @Controller
