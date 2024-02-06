@@ -132,7 +132,7 @@ public class EventSeasonControllerTest {
     }
 
     @Test
-    public void DELETE_eventSeason_returns_success() {
+    public void DELETE_eventSeason_returns_message() {
 
         // set up input
         Map<String,Object> id = new HashMap<>();

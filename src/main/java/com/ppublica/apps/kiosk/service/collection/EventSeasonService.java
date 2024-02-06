@@ -1,16 +1,13 @@
 package com.ppublica.apps.kiosk.service.collection;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.ppublica.apps.kiosk.domain.model.collection.SeasonalEvent;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInput;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.SingleEventSeasonInput;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
-import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
 public class EventSeasonService {
     public List<EventSeasonView> getEventSeasons(String locale) {

@@ -15,14 +15,7 @@ import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
-import com.ppublica.apps.kiosk.service.MapPageService;
 import com.ppublica.apps.kiosk.service.MenuPageService;
-import com.ppublica.apps.kiosk.service.views.map.LocationAmenityView;
-import com.ppublica.apps.kiosk.service.views.map.MapImageView;
-import com.ppublica.apps.kiosk.service.views.map.MapImagesView;
-import com.ppublica.apps.kiosk.service.views.map.MapPageView;
-import com.ppublica.apps.kiosk.service.views.map.MapViewConfigView;
-import com.ppublica.apps.kiosk.service.views.map.TapWidgetView;
 import com.ppublica.apps.kiosk.service.views.menu.ImageView;
 import com.ppublica.apps.kiosk.service.views.menu.MenuItemContainerView;
 import com.ppublica.apps.kiosk.service.views.menu.MenuItemView;

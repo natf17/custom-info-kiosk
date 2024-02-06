@@ -72,8 +72,8 @@ public class AboutPageControllerTest {
                 .path("richDescription").entity(String.class).isEqualTo("Sample rich description")
                 .path("featImg", featImg -> { featImg
                     .path("url").entity(String.class).isEqualTo("sample_url")
-                    .path("width").entity(Integer.class).isEqualTo(Integer.valueOf(1))
-                    .path("height").entity(Integer.class).isEqualTo(Integer.valueOf(1));
+                    .path("width").entity(Integer.class).isEqualTo(1)
+                    .path("height").entity(Integer.class).isEqualTo(1);
 
                 });
 
@@ -114,8 +114,8 @@ public class AboutPageControllerTest {
                 .path("richDescription").entity(String.class).isEqualTo("Sample rich description")
                 .path("featImg", featImg -> { featImg
                     .path("url").entity(String.class).isEqualTo("sample_url")
-                    .path("width").entity(Integer.class).isEqualTo(Integer.valueOf(1))
-                    .path("height").entity(Integer.class).isEqualTo(Integer.valueOf(1));
+                    .path("width").entity(Integer.class).isEqualTo(1)
+                    .path("height").entity(Integer.class).isEqualTo(1);
 
                 });
             });
@@ -156,8 +156,8 @@ public class AboutPageControllerTest {
                 .path("richDescription").entity(String.class).isEqualTo("Sample rich description")
                 .path("featImg", featImg -> { featImg
                     .path("url").entity(String.class).isEqualTo("sample_url")
-                    .path("width").entity(Integer.class).isEqualTo(Integer.valueOf(1))
-                    .path("height").entity(Integer.class).isEqualTo(Integer.valueOf(1));
+                    .path("width").entity(Integer.class).isEqualTo(1)
+                    .path("height").entity(Integer.class).isEqualTo(1);
 
                 });
             });
@@ -165,7 +165,7 @@ public class AboutPageControllerTest {
         }
 
         @Test
-        public void DELETE_aboutPage_returns_page() {
+        public void DELETE_aboutPage_returns_message() {
 
             // set up input
             Map<String,Object> locale = new HashMap<>();

@@ -148,7 +148,7 @@ public class Error404PageControllerTest {
         }
 
         @Test
-        public void DELETE_error404Page_returns_page() {
+        public void DELETE_error404Page_returns_message() {
 
             // set up input
             Map<String,Object> locale = new HashMap<>();
