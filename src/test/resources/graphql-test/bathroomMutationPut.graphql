@@ -1,0 +1,32 @@
+mutation UpdateBathroom($bathroomId: ID!, $input: BathroomPayload!) {
+    updateBathroom(bathroomId: $bathroomId, input: $input) {
+        id
+        name {
+            locale
+            value
+        }
+        gender
+        isWheelchairAccessible
+        svgElemId {
+            locale
+            value
+        }
+        note {
+            locale
+            value
+        }
+        location {
+            fullname
+            level_name
+            level_num
+        }    
+        featImg {
+            locale
+            value {
+                url
+                width
+                height
+            }
+        }
+    } 
+}

@@ -1,0 +1,20 @@
+query Bathrooms($locale: String, $sort: String) {
+    bathrooms(locale: $locale, sort: $sort) {
+        id
+        name
+        gender
+        isWheelchairAccessible
+        svgElemId
+        note
+        location {
+            fullname
+            level_name
+            level_num
+        }    
+        featImg {
+            url
+            width
+            height
+        }
+    } 
+}

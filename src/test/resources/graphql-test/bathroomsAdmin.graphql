@@ -1,0 +1,32 @@
+query BathroomsAdmin($sort: String) {
+    bathroomsAdmin(sort: $sort) {
+        id
+        name {
+            locale
+            value
+        }
+        gender
+        isWheelchairAccessible
+        svgElemId {
+            locale
+            value
+        }
+        note {
+            locale
+            value
+        }
+        location {
+            fullname
+            level_name
+            level_num
+        }    
+        featImg {
+            locale
+            value {
+                url
+                width
+                height
+            }
+        }
+    } 
+}

@@ -11,6 +11,10 @@ type Query {
     locations(locale: String, sort: String): [Location]
     locationsAdmin(sort: String): [LocationAdmin]
     locationAdmin(locationId: ID): LocationAdmin
+    bathrooms(locale: String, sort: String): [Bathroom]
+    bathroomsAdmin(sort: String): [BathroomAdmin]
+    bathroomAdmin(bathroomId: ID!): BathroomAdmin
+
 }
 
 type Mutation {
@@ -41,6 +45,9 @@ type Mutation {
     createLocation(input: LocationPayload): LocationAdmin
     updateLocation(locationId: ID!, input: LocationPayload): LocationAdmin
     deleteLocation(input: DeletePayload) : MessageResponse
+    createBathroom(input: BathroomPayload!): BathroomAdmin
+    updateBathroom(bathroomId: ID!, input: BathroomPayload!): BathroomAdmin
+    deleteBathroom(input: DeletePayload) : MessageResponse
 
 }
 
@@ -466,6 +473,64 @@ input LocalizedLocationMapInput {
 }
 
 input LocationMapInput {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type Bathroom {
+    id: String
+    name: String
+    gender: String
+    isWheelchairAccessible: Boolean
+    svgElemId: String
+    note: String
+    location: Location  
+    featImg: BathroomImage
+}
+
+type BathroomImage {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type BathroomAdmin {
+    id: String
+    name: [LocalizedField]
+    gender: String
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedField]
+    note: [LocalizedField]
+    location: Location
+    featImg: [LocalizedBathroomImage]
+}
+
+type LocalizedBathroomImage {        
+    locale: String
+    value: BathroomImage
+}
+
+input BathroomPayload {
+    data: BathroomInput
+}
+
+input BathroomInput {
+    name: [LocalizedInput]
+    gender: String
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedInput]
+    note: [LocalizedInput]
+    locationId: ID
+    featImg: [LocalizedBathroomImageInput]
+}
+
+input LocalizedBathroomImageInput {
+    locale: String
+    value: BathroomImageInput
+}
+
+input BathroomImageInput {        
     width: Int
     height: Int
     url: String
