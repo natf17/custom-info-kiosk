@@ -148,7 +148,7 @@ public class BathroomsDataControllerTest {
     }
 
     @Test
-    public void GET_bathroomsGivenLocale_returns_locations() {
+    public void GET_bathroomsGivenLocale_returns_bathrooms() {
 
         // set up mock
         BathroomView bathroom1View = new BathroomView("1", "brName_1", "uni", true, "svgElemId", "note", 1L, new BathroomImage("url", 1, 2));
@@ -171,7 +171,7 @@ public class BathroomsDataControllerTest {
 
     
     @Test
-    public void GET_locationsAdmin_returns_locations() {
+    public void GET_bathroomAdmin_returns_bathrooms() {
 
         when(service.getBathroomsAdmin(any())).thenReturn(List.of(bathroom1AdminView, bathroom2AdminView));
         when(locationsService.getBatchLocations(any())).thenReturn(mockBatchLocations);
@@ -202,7 +202,7 @@ public class BathroomsDataControllerTest {
 
   
     @Test
-    public void GET_locationAdmin_returns_location() {
+    public void GET_bathroomAdmin_returns_bathroom() {
 
         when(service.getBathroomAdmin(2L)).thenReturn(Optional.of(bathroom2AdminView));
         when(locationsService.getBatchLocations(any())).thenReturn(mockBatchLocations);

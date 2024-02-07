@@ -223,7 +223,7 @@ public class DonationsDataControllerTest {
     }
 
     @Test
-    public void POST_bathroom_returns_bathroomAdmin() {        
+    public void POST_donation_returns_donationAdmin() {        
 
 
         Map<String,Object> payload = new HashMap<>();
@@ -251,7 +251,7 @@ public class DonationsDataControllerTest {
     }
 
     @Test
-    public void PUT_donatino_returns_donationAdmin() {        
+    public void PUT_donation_returns_donationAdmin() {        
 
 
         Map<String,Object> payload = new HashMap<>();
