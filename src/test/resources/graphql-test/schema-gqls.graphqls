@@ -17,6 +17,9 @@ type Query {
     donations(locale: String, sort: String): [Donation]
     donationsAdmin(sort: String): [DonationAdmin]
     donationAdmin(donationId: ID!): DonationAdmin
+    firstAids(locale: String, sort: String): [FirstAid]
+    firstAidsAdmin(sort: String): [FirstAidAdmin]
+    firstAidAdmin(firstAidId: ID!): FirstAidAdmin
 
 }
 
@@ -54,6 +57,9 @@ type Mutation {
     createDonation(input: DonationPayload!): DonationAdmin
     updateDonation(donationId: ID!, input: DonationPayload!): DonationAdmin
     deleteDonation(input: DeletePayload) : MessageResponse
+    createFirstAid(input: FirstAidPayload!): FirstAidAdmin
+    updateFirstAid(firstAidId: ID!, input: FirstAidPayload!): FirstAidAdmin
+    deleteFirstAid(input: DeletePayload) : MessageResponse
 
 }
 
@@ -596,6 +602,62 @@ input LocalizedDonationImageInput {
 }
 
 input DonationImageInput {
+    width: Int
+    height: Int
+    url: String
+}
+
+type FirstAid {
+    id: String
+    name: String
+    isWheelchairAccessible: Boolean
+    svgElemId: String
+    note: String
+    location: Location
+    featImg: FirstAidImage
+}
+
+type FirstAidImage {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type FirstAidAdmin {
+    id: String
+    name: [LocalizedField]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedField]
+    note: [LocalizedField]
+    location: Location
+    featImg: [LocalizedFirstAidImage]
+}
+
+type LocalizedFirstAidImage{
+    locale: String
+    value: FirstAidImage
+}
+
+input FirstAidPayload {
+    data: FirstAidInput
+}
+
+input FirstAidInput {
+    id: String
+    name: [LocalizedInput]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedInput]
+    note: [LocalizedInput]
+    locationId: ID
+    featImg: [LocalizedFirstAidImageInput]
+}
+
+input LocalizedFirstAidImageInput {
+    locale: String
+    value: FirstAidImageInput
+}
+
+input FirstAidImageInput {
     width: Int
     height: Int
     url: String

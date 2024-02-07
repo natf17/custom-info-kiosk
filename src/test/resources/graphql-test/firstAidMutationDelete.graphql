@@ -1,0 +1,5 @@
+mutation DeleteFirstAid($input: DeletePayload) {
+    deleteFirstAid(input: $input) {
+        message
+    }
+}
