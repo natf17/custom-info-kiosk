@@ -14,6 +14,9 @@ type Query {
     bathrooms(locale: String, sort: String): [Bathroom]
     bathroomsAdmin(sort: String): [BathroomAdmin]
     bathroomAdmin(bathroomId: ID!): BathroomAdmin
+    donations(locale: String, sort: String): [Donation]
+    donationsAdmin(sort: String): [DonationAdmin]
+    donationAdmin(donationId: ID!): DonationAdmin
 
 }
 
@@ -48,6 +51,9 @@ type Mutation {
     createBathroom(input: BathroomPayload!): BathroomAdmin
     updateBathroom(bathroomId: ID!, input: BathroomPayload!): BathroomAdmin
     deleteBathroom(input: DeletePayload) : MessageResponse
+    createDonation(input: DonationPayload!): DonationAdmin
+    updateDonation(donationId: ID!, input: DonationPayload!): DonationAdmin
+    deleteDonation(input: DeletePayload) : MessageResponse
 
 }
 
@@ -531,6 +537,65 @@ input LocalizedBathroomImageInput {
 }
 
 input BathroomImageInput {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type Donation {
+    id: String
+    name: String
+    isWheelchairAccessible: Boolean
+    svgElemId: String
+    note: String
+    location: Location
+    paymentTypesAccepted: String
+    featImg: DonationImage
+}
+
+type DonationImage {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type DonationAdmin {
+    id: String
+    name: [LocalizedField]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedField]
+    note: [LocalizedField]
+    location: Location
+    paymentTypesAccepted: String
+    featImg: [LocalizedDonationImage]
+}
+
+type LocalizedDonationImage{
+    locale: String
+    value: DonationImage
+}
+
+input DonationPayload {
+    data: DonationInput
+}
+
+input DonationInput {
+    id: String
+    name: [LocalizedInput]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedInput]
+    note: [LocalizedInput]
+    locationId: ID
+    paymentTypesAccepted: String
+    featImg: [LocalizedDonationImageInput]
+}
+
+input LocalizedDonationImageInput {
+    locale: String
+    value: DonationImageInput
+}
+
+input DonationImageInput {
     width: Int
     height: Int
     url: String

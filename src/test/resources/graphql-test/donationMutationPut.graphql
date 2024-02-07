@@ -1,0 +1,32 @@
+mutation UpdateDonation($donationId: ID!, $input: DonationPayload!) {
+    updateDonation(donationId: $donationId, input: $input) {
+        id
+        name {
+            locale
+            value
+        }
+        isWheelchairAccessible
+        svgElemId {
+            locale
+            value
+        }
+        note {
+            locale
+            value
+        }
+        location {
+            fullname
+            level_name
+            level_num
+        }
+        paymentTypesAccepted
+        featImg {
+            locale
+            value {
+                url
+                width
+                height
+            }
+        }
+    } 
+}

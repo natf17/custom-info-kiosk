@@ -1,0 +1,20 @@
+query Donations($locale: String, $sort: String) {
+    donations(locale: $locale, sort: $sort) {
+        id
+        name
+        isWheelchairAccessible
+        svgElemId
+        note
+        location {
+            fullname
+            level_name
+            level_num
+        }
+        paymentTypesAccepted
+        featImg {
+            url
+            width
+            height
+        }
+    } 
+}
