@@ -1,0 +1,13 @@
+query GlobalSettingsAdmin {
+    globalSettingsAdmin {
+        kioskTitle {
+            locale
+            value
+        }
+        venueName {
+            locale
+            value
+        }
+        localizations
+    } 
+}

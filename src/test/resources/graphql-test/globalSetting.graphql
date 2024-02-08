@@ -1,0 +1,11 @@
+query GlobalSetting($locale: String) {
+    globalSetting(locale: $locale) {
+        kioskTitle
+        venueName
+        locale
+        localizations {
+            id
+            locale
+        }
+    } 
+}

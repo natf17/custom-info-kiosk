@@ -23,6 +23,8 @@ type Query {
     waterFountains(locale: String, sort: String): [WaterFountain]
     waterFountainsAdmin(sort: String): [WaterFountainAdmin]
     waterFountainAdmin(waterFountainId: ID!): WaterFountainAdmin
+    globalSetting(locale: String): GlobalSettings
+    globalSettingsAdmin: GlobalSettingsAdmin
 }
 
 type Mutation {
@@ -65,7 +67,9 @@ type Mutation {
     createWaterFountain(input: WaterFountainPayload!): WaterFountainAdmin
     updateWaterFountain(waterFountainId: ID!, input: WaterFountainPayload!): WaterFountainAdmin
     deleteWaterFountain(input: DeletePayload) : MessageResponse
-
+    createGlobalSettings(input: GlobalSettingsPayload!): GlobalSettingsAdmin
+    updateGlobalSettings(input: GlobalSettingsPayload!): GlobalSettingsAdmin
+    deleteGlobalSettings: MessageResponse
 }
 
 type FeatureImage {
@@ -722,4 +726,32 @@ input WaterFountainImageInput {
     width: Int
     height: Int
     url: String
+}
+
+type GlobalSettings {
+    kioskTitle: String
+    venueName: String
+    locale: String
+    localizations: [LocalizationInfo]
+}
+
+type LocalizationInfo {
+    id: String
+    locale: String
+}
+
+type GlobalSettingsAdmin {
+    kioskTitle: [LocalizedField]
+    venueName: [LocalizedField]
+    localizations: [String]
+}
+
+input GlobalSettingsPayload {
+    data: GlobalSettingsInput
+}
+
+input GlobalSettingsInput {
+    kioskTitle: [LocalizedInput]
+    venueName: [LocalizedInput]
+    localizations: [String]
 }

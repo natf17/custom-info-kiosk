@@ -1,0 +1,13 @@
+mutation CreateGlobalSettings($input: GlobalSettingsPayload!) {
+    createGlobalSettings(input: $input) {
+        kioskTitle {
+            locale
+            value
+        }
+        venueName {
+            locale
+            value
+        }
+        localizations
+    } 
+}
