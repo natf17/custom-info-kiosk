@@ -1,0 +1,5 @@
+mutation DeleteWaterFountain($input: DeletePayload) {
+    deleteWaterFountain(input: $input) {
+        message
+    }
+}

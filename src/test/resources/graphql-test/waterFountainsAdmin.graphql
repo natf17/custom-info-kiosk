@@ -1,0 +1,31 @@
+query WaterFountainsAdmin($sort: String) {
+    waterFountainsAdmin(sort: $sort) {
+        id
+        name {
+            locale
+            value
+        }
+        isWheelchairAccessible
+        svgElemId {
+            locale
+            value
+        }
+        note {
+            locale
+            value
+        }
+        location {
+            fullname
+            level_name
+            level_num
+        }
+        featImg {
+            locale
+            value {
+                url
+                width
+                height
+            }
+        }
+    } 
+}

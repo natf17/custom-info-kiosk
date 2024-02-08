@@ -20,7 +20,9 @@ type Query {
     firstAids(locale: String, sort: String): [FirstAid]
     firstAidsAdmin(sort: String): [FirstAidAdmin]
     firstAidAdmin(firstAidId: ID!): FirstAidAdmin
-
+    waterFountains(locale: String, sort: String): [WaterFountain]
+    waterFountainsAdmin(sort: String): [WaterFountainAdmin]
+    waterFountainAdmin(waterFountainId: ID!): WaterFountainAdmin
 }
 
 type Mutation {
@@ -60,6 +62,9 @@ type Mutation {
     createFirstAid(input: FirstAidPayload!): FirstAidAdmin
     updateFirstAid(firstAidId: ID!, input: FirstAidPayload!): FirstAidAdmin
     deleteFirstAid(input: DeletePayload) : MessageResponse
+    createWaterFountain(input: WaterFountainPayload!): WaterFountainAdmin
+    updateWaterFountain(waterFountainId: ID!, input: WaterFountainPayload!): WaterFountainAdmin
+    deleteWaterFountain(input: DeletePayload) : MessageResponse
 
 }
 
@@ -658,6 +663,62 @@ input LocalizedFirstAidImageInput {
 }
 
 input FirstAidImageInput {
+    width: Int
+    height: Int
+    url: String
+}
+
+type WaterFountain {
+    id: String
+    name: String
+    isWheelchairAccessible: Boolean
+    svgElemId: String
+    note: String
+    location: Location
+    featImg: WaterFountainImage
+}
+
+type WaterFountainImage {        
+    width: Int
+    height: Int
+    url: String
+}
+
+type WaterFountainAdmin {
+    id: String
+    name: [LocalizedField]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedField]
+    note: [LocalizedField]
+    location: Location
+    featImg: [LocalizedWaterFountainImage]
+}
+
+type LocalizedWaterFountainImage{
+    locale: String
+    value: WaterFountainImage
+}
+
+input WaterFountainPayload {
+    data: WaterFountainInput
+}
+
+input WaterFountainInput {
+    id: String
+    name: [LocalizedInput]
+    isWheelchairAccessible: Boolean
+    svgElemId: [LocalizedInput]
+    note: [LocalizedInput]
+    locationId: ID
+    featImg: [LocalizedWaterFountainImageInput]
+}
+
+input LocalizedWaterFountainImageInput {
+    locale: String
+    value: WaterFountainImageInput
+}
+
+input WaterFountainImageInput {
     width: Int
     height: Int
     url: String

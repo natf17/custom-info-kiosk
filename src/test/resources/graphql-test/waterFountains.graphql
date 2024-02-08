@@ -1,0 +1,19 @@
+query WaterFountains($locale: String, $sort: String) {
+    waterFountains(locale: $locale, sort: $sort) {
+        id
+        name
+        isWheelchairAccessible
+        svgElemId
+        note
+        location {
+            fullname
+            level_name
+            level_num
+        }
+        featImg {
+            url
+            width
+            height
+        }
+    } 
+}
