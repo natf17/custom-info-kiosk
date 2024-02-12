@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
+import com.ppublica.apps.kiosk.service.views.LocalizedField;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -32,7 +33,7 @@ public class EventSeasonControllerTest {
 
 
     @Test
-    public void GET_eventSeasonInLocale_returns_season() {
+    public void GET_eventSeasonsInLocale_returns_seasons() {
 
         // set up mocks
         EventSeasonView eventSeasonView = new EventSeasonView(10L, "type", 3, "theme", 2023, "", "three days");
@@ -46,7 +47,7 @@ public class EventSeasonControllerTest {
             .execute()
             .path("eventSeasons", eventSeasons -> { eventSeasons
                 .entityList(EventSeasonView.class).hasSize(1).containsExactly(eventSeasonView);
-            });
+        });
 
     }
 
@@ -81,9 +82,13 @@ public class EventSeasonControllerTest {
         payload.put("data", input);
 
         // set up mocks
-        EventSeasonView eventSeasonEnMock = new EventSeasonView(10L, "type", 3, "theme", 2023, "", "three");
-        EventSeasonView eventSeasonEsMock = new EventSeasonView(11L, "type", 3, "tema", 2023, "", "tres");
-        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(List.of(eventSeasonEnMock, eventSeasonEsMock));
+        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(10L, 
+                                                                                "type", 
+                                                                                3, 
+                                                                                List.of(new LocalizedField("en", "theme"), new LocalizedField("es", "tema")),
+                                                                                2023,
+                                                                                "",
+                                                                                List.of(new LocalizedField("en", "three"), new LocalizedField("es", "tres")));
 
         when(eventSeasonService.createEventSeason(any())).thenReturn(eventSeasonAdminViewMock);
 
@@ -91,9 +96,7 @@ public class EventSeasonControllerTest {
             .variable("input", payload)
             .execute()
             .path("createEventSeason", response -> { response
-                .path("seasons", seasons -> {
-                    seasons.entityList(EventSeasonView.class).containsExactly(eventSeasonEnMock, eventSeasonEsMock);
-                });
+                .entity(EventSeasonAdminView.class).isEqualTo(eventSeasonAdminViewMock);
             });
 
     }
@@ -102,20 +105,40 @@ public class EventSeasonControllerTest {
     public void PUT_eventSeasonWithLocales_returns_seasonAdmin() {
 
         // set up input
+        Map<String,Object> localizedInputThemesEn = new HashMap<>();
+        localizedInputThemesEn.put("locale", "en");
+        localizedInputThemesEn.put("value", "theme");
+
+        Map<String,Object> localizedInputThemesEs = new HashMap<>();
+        localizedInputThemesEn.put("locale", "es");
+        localizedInputThemesEn.put("value", "tema");
+
+        Map<String,Object> localizedInputDurationTextEn = new HashMap<>();
+        localizedInputDurationTextEn.put("locale", "en");
+        localizedInputDurationTextEn.put("value", "three");
+
+        Map<String,Object> localizedInputDurationTextEs = new HashMap<>();
+        localizedInputDurationTextEs.put("locale", "es");
+        localizedInputDurationTextEs.put("value", "tres");
+
         Map<String,Object> input = new HashMap<>();
         input.put("type", "type");
         input.put("durationDays", 3);
-        input.put("theme", "newTheme");
+        input.put("theme", List.of(localizedInputThemesEn, localizedInputThemesEs));
         input.put("serviceYear", 2023);
-        input.put("durationText", "newDurationText");
+        input.put("durationText", List.of(localizedInputDurationTextEn, localizedInputDurationTextEs));
 
         Map<String,Object> payload = new HashMap<>();
         payload.put("data", input);
 
         // set up mocks
-        EventSeasonView eventSeasonEnMock = new EventSeasonView(10L, "type", 3, "newTheme", 2023, "", "newDurationText");
-        EventSeasonView eventSeasonEsMock = new EventSeasonView(11L, "type", 3, "tema", 2023, "", "tres");
-        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(List.of(eventSeasonEnMock, eventSeasonEsMock));
+        EventSeasonAdminView eventSeasonAdminViewMock = new EventSeasonAdminView(10L, 
+                                                                                "type", 
+                                                                                3, 
+                                                                                List.of(new LocalizedField("en", "theme"), new LocalizedField("es", "tema")),
+                                                                                2023,
+                                                                                "",
+                                                                                List.of(new LocalizedField("en", "three"), new LocalizedField("es", "tres")));
 
         when(eventSeasonService.updateEventSeason(any(), any())).thenReturn(eventSeasonAdminViewMock);
 
@@ -124,9 +147,7 @@ public class EventSeasonControllerTest {
             .variable("eventSeasonId", 10L)
             .execute()
             .path("updateEventSeason", response -> { response
-                .path("seasons", seasons -> {
-                    seasons.entityList(EventSeasonView.class).containsExactly(eventSeasonEnMock, eventSeasonEsMock);
-                });
+                .entity(EventSeasonAdminView.class).isEqualTo(eventSeasonAdminViewMock);
             });
 
     }

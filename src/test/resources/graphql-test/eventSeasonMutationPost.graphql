@@ -1,14 +1,17 @@
 mutation CreateEventSeason($input: EventSeasonPayload) {
     createEventSeason(input: $input) {
-        seasons {
-            id
-            type
-            durationDays
-            theme
-            serviceYear
-            seasonYears
-            durationText
+        id
+        type
+        durationDays
+        theme {
+            locale
+            value
         }
-       
+        serviceYear
+        seasonYears
+        durationText {
+            locale
+            value
+        }
     }
 }

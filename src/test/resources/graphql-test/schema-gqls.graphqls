@@ -32,7 +32,7 @@ type Mutation {
     createSeasonalEvents(eventSeasonId: ID, input: SeasonalEventPayload) : [SeasonalEvent]
     updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEvent
     deleteSeasonalEvent(input: DeletePayload) : MessageResponse
-    updateEventSeason(eventSeasonId: ID, input: SingleEventSeasonPayload): EventSeasonAdmin
+    updateEventSeason(eventSeasonId: ID, input: EventSeasonPayload): EventSeasonAdmin
     deleteEventSeason(input: DeletePayload) : MessageResponse
     createError404Page(locale: String!, input: Error404PagePayload): Error404Page
     updateError404Page(locale: String!, input: Error404PagePayload): Error404Page
@@ -109,7 +109,13 @@ type EventSeason {
 }
 
 type EventSeasonAdmin {
-    seasons: [EventSeason]
+    id: ID!
+    type: String
+    durationDays: Int
+    serviceYear: Int
+    theme: [LocalizedField]
+    seasonYears: String
+    durationText: [LocalizedField]
 }
 
 

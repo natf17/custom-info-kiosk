@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInput;
-import com.ppublica.apps.kiosk.service.payloads.data.eventseason.SingleEventSeasonInput;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -32,7 +31,7 @@ public class EventSeasonService {
         throw new UnsupportedOperationException();
     }
 
-    public EventSeasonAdminView updateEventSeason(Long seasonalEventId, SingleEventSeasonInput data) {
+    public EventSeasonAdminView updateEventSeason(Long seasonalEventId, EventSeasonInput data) {
         throw new UnsupportedOperationException();
     }
 
