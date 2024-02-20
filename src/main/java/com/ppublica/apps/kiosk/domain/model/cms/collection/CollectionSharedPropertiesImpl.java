@@ -25,7 +25,7 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
         private CollectionSharedInternals collectionSharedInternals;
         private List<LinkedCollectionField> linkedCollectionFields = new ArrayList<>();
 
-        Builder(String type) {
+        public Builder(String type) {
             this.type = type;
         }
 
@@ -109,7 +109,7 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
             return this;
         }
 
-        public Builder addLinkedCollectionFields(LinkedCollectionField linkedCollectionField) {
+        public Builder addLinkedCollectionField(LinkedCollectionField linkedCollectionField) {
             this.linkedCollectionFields.add(linkedCollectionField);
             return this;
         }

@@ -3,21 +3,21 @@ package com.ppublica.apps.kiosk.domain.model.cms.collection;
 import java.util.List;
 
 public interface CollectionLocalizedProperties {
-    CollectionLocalizedProperties withId(Long id);
+    CollectionLocalizedProperties locWithId(Long id);
 
-    Long id();
+    Long locId();
 
-    CollectionNameField collectionNameField();
+    CollectionNameField locCollectionNameField();
 
-    List<TextField> textFields();
+    List<TextField> locTextFields();
 
-    List<NumericField> numericFields();
+    List<NumericField> locNumericFields();
 
-    List<BooleanField> booleanFields();
+    List<BooleanField> locBooleanFields();
 
-    List<ImageField> imageFields();
+    List<ImageField> locImageFields();
 
-    CollectionInternals collectionInternals();
+    CollectionInternals locCollectionInternals();
 
     Long parentId();
 }

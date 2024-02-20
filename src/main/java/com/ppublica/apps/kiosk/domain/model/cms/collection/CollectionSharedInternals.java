@@ -28,4 +28,5 @@ public class CollectionSharedInternals {
     public LocalDateTime getLastModified() {
         return this.lastModified;
     }
+    
 }

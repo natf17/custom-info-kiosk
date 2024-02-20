@@ -7,10 +7,10 @@ import java.util.List;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
-public record CollectionLocalizedPropertiesImpl(Long id, Long parentId, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields, List<ImageField> imageFields, CollectionInternals collectionInternals) implements CollectionLocalizedProperties {
+public record CollectionLocalizedPropertiesImpl(Long locId, Long parentId, CollectionNameField locCollectionNameField, List<TextField> locTextFields, List<NumericField> locNumericFields, List<BooleanField> locBooleanFields, List<ImageField> locImageFields, CollectionInternals locCollectionInternals) implements CollectionLocalizedProperties {
     @Override
-    public CollectionLocalizedProperties withId(Long id) {
-        return new CollectionLocalizedPropertiesImpl(id, this.parentId, this.collectionNameField, this.textFields, this.numericFields, this.booleanFields, this.imageFields, this.collectionInternals);
+    public CollectionLocalizedProperties locWithId(Long id) {
+        return new CollectionLocalizedPropertiesImpl(id, this.parentId, this.locCollectionNameField, this.locTextFields, this.locNumericFields, this.locBooleanFields, this.locImageFields, this.locCollectionInternals);
     }
 
     public static class Builder {
@@ -24,7 +24,7 @@ public record CollectionLocalizedPropertiesImpl(Long id, Long parentId, Collecti
         private Long kioskLocaleId;
         private Long parentId;
 
-        Builder(Long parentId) {
+        public Builder(Long parentId) {
             this.parentId = parentId;
         }
 
