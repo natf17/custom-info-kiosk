@@ -10,6 +10,8 @@ public interface CollectionSharedPropertiesRepository {
 
     public List<CollectionSharedProperties> findByCollectionType(String type, String subType);
 
+    public CollectionSharedProperties findById(Long id);
+
     public void deleteCollectionInstance(Long id);
 
     public boolean doesInstanceOfCollectionExist(String type, String subType);

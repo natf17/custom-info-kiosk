@@ -21,49 +21,17 @@ public class BathroomKioskCollectionAdapter extends GenderAwareAmenityAdapter im
         this(genderInfo, amenity, baseKioskCollection, null, null);
     }
 
-    public static class Builder {
-        private CollectionLocalizedProperties localizedCmsPiece;
-        private CollectionSharedProperties sharedCmsPiece;
-        private BathroomType bathroomType;
+    public static class Builder extends CmsCollectionAdapterBuilder<Builder, BathroomType, BathroomKioskCollectionAdapter> {
 
-        public Builder localizedCmsPiece(CollectionLocalizedProperties localizedCmsPiece) {
-            this.bathroomType =  null;
-            this.localizedCmsPiece = localizedCmsPiece;
+        @Override
+        protected BathroomKioskCollectionAdapter buildChild() {
+            return new BathroomKioskCollectionAdapter(super.kioskCollection, super.kioskCollection, super.kioskCollection, super.localizedCmsPiece, super.sharedCmsPiece);
+        }
+
+        @Override
+        protected Builder self() {
             return this;
         }
-
-        public Builder sharedCmsPiece(CollectionSharedProperties sharedCmsPiece) {
-            this.bathroomType =  null;
-            this.sharedCmsPiece = sharedCmsPiece;
-            return this;
-        }
-
-        public Builder bathroom(BathroomType bathroomType) {
-            this.sharedCmsPiece = null;
-            this.localizedCmsPiece = null;
-            this.bathroomType = bathroomType;
-            return this;
-        }
-
-        public BathroomKioskCollectionAdapter build() {
-            if(localizedCmsPiece != null) {
-                if(sharedCmsPiece != null) {
-                    // TODO: validate the cms pieces
-
-                    return new BathroomKioskCollectionAdapter(localizedCmsPiece, sharedCmsPiece);
-                }
-
-                throw new RuntimeException("Both cms pieces must be provided.");
-            }
-
-            if(bathroomType != null) {
-                return new BathroomKioskCollectionAdapter(bathroomType, bathroomType, bathroomType);
-            }
-
-            throw new RuntimeException("The cms pieces and the bathroom type cannot both be null.");
-
-        }
-
 
     }
 }
