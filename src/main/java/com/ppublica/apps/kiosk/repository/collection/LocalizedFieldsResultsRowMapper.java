@@ -23,7 +23,7 @@ public class LocalizedFieldsResultsRowMapper implements RowMapper<LocalizedField
         LocalDate locInternalsCreatedOn = rs.getDate("CLI_CR").toLocalDate();
         LocalDateTime locInternalsLastModified = rs.getTimestamp("CLI_LM").toLocalDateTime();
         PageStatus locInternalsStatus = PageStatus.valueOf(rs.getString("CLI_STATUS"));
-        CollectionInternals localizedCollInternals = new CollectionInternals(locInternalsLocale, locInternalsStatus, locInternalsCreatedOn, locInternalsLastModified);
+        CollectionInternals localizedCollInternals = new CollectionInternals(locInternalsLocale, null, locInternalsStatus, locInternalsCreatedOn, locInternalsLastModified);
 
         String collectionNameFName = rs.getString("DCNF_FN");
         String collectionNameFValue = rs.getString("DCNF_FV");

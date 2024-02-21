@@ -25,7 +25,7 @@ public class DataCollectionTypeQueryRowMapper implements RowMapper<DataCollectio
         LocalDate collInternalsCreatedOn = rs.getDate("CI_CR").toLocalDate();
         LocalDateTime collInternalsLastModified = rs.getTimestamp("CI_LM").toLocalDateTime();
         PageStatus collInternalsStatus = PageStatus.valueOf(rs.getString("CI_STATUS"));
-        CollectionInternals collectionInternals = new CollectionInternals(collInternalsLocale, collInternalsStatus, collInternalsCreatedOn, collInternalsLastModified);
+        CollectionInternals collectionInternals = new CollectionInternals(collInternalsLocale, null, collInternalsStatus, collInternalsCreatedOn, collInternalsLastModified);
 
 
         Long localizedFieldsId = rs.getLong("LF_ID");
@@ -34,7 +34,7 @@ public class DataCollectionTypeQueryRowMapper implements RowMapper<DataCollectio
         LocalDate locInternalsCreatedOn = rs.getDate("CLI_CR").toLocalDate();
         LocalDateTime locInternalsLastModified = rs.getTimestamp("CLI_LM").toLocalDateTime();
         PageStatus locInternalsStatus = PageStatus.valueOf(rs.getString("CLI_STATUS"));
-        CollectionInternals localizedCollInternals = new CollectionInternals(locInternalsLocale, locInternalsStatus, locInternalsCreatedOn, locInternalsLastModified);
+        CollectionInternals localizedCollInternals = new CollectionInternals(locInternalsLocale, null, locInternalsStatus, locInternalsCreatedOn, locInternalsLastModified);
 
 
         String collectionNameFName = rs.getString("DCNF_FN");

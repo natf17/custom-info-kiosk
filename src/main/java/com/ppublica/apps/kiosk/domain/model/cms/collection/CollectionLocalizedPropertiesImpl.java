@@ -107,7 +107,7 @@ public record CollectionLocalizedPropertiesImpl(Long locId, Long parentId, Colle
                     throw new RuntimeException("The kioskLocaleId is required");
                 }
 
-                collectionInternals = new CollectionInternals(kioskLocaleId, PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
+                collectionInternals = new CollectionInternals(kioskLocaleId, null, PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
             }
 
             return new CollectionLocalizedPropertiesImpl(id, this.parentId, this.collectionNameField, this.textFields, this.numericFields, this.booleanFields, this.imageFields, this.collectionInternals);

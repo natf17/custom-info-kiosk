@@ -8,12 +8,14 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
 public class KioskCollectionMetadata {
     private Long localeId;
+    private String locale;
     private PageStatus status;
     private LocalDate createdOn;
     private LocalDateTime lastModified;
 
-    public KioskCollectionMetadata(Long localeId, PageStatus status, LocalDate createdOn, LocalDateTime lastModified) {
+    public KioskCollectionMetadata(Long localeId, String locale, PageStatus status, LocalDate createdOn, LocalDateTime lastModified) {
         this.localeId = localeId;
+        this.locale = locale;
         this.status = status;
         this.createdOn = createdOn;
         this.lastModified = lastModified;
@@ -21,6 +23,10 @@ public class KioskCollectionMetadata {
 
     public Long getKioskLocaleId() {
         return this.localeId;
+    }
+
+    public String getKioskLocale() {
+        return this.locale;
     }
 
     public PageStatus getStatus() {
@@ -36,11 +42,11 @@ public class KioskCollectionMetadata {
     }
 
     public CollectionInternals getCollectionInternals() {
-        return new CollectionInternals(localeId, status, createdOn, lastModified);
+        return new CollectionInternals(localeId, locale, status, createdOn, lastModified);
     }
 
     public static KioskCollectionMetadata fromCollectionInternals(CollectionInternals collectionInternals) {
-        return new KioskCollectionMetadata(collectionInternals.getKioskLocaleId(), collectionInternals.getStatus(), 
+        return new KioskCollectionMetadata(collectionInternals.getKioskLocaleId(), collectionInternals.getKioskLocale(), collectionInternals.getStatus(), 
                         collectionInternals.getCreatedOn(), collectionInternals.getLastModified());
         
     }

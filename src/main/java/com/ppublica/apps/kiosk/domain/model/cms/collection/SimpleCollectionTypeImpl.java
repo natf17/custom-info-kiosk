@@ -201,7 +201,7 @@ public class SimpleCollectionTypeImpl implements SimpleCollectionType {
                     throw new RuntimeException("The kioskLocaleId is required");
                 }
 
-                collectionInternals = new CollectionInternals(kioskLocaleId, PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
+                collectionInternals = new CollectionInternals(kioskLocaleId, null, PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
             }
 
             if(type == null) {

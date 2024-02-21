@@ -80,6 +80,7 @@ public class DefaultEventSeason implements EventSeason {
         private LocalDate createdOn;
         private LocalDateTime lastModified;
         private Long kioskLocaleId;
+        private String kioskLocale;
 
         protected KioskCollectionField<Long> seasonYear;
         protected KioskCollectionField<Long> durationDays;
@@ -115,6 +116,11 @@ public class DefaultEventSeason implements EventSeason {
 
         public Builder lastModified(LocalDateTime lastModified) {
             this.lastModified = lastModified;
+            return this;
+        }
+
+        public Builder kioskLocale(String kioskLocale) {
+            this.kioskLocale = kioskLocale;
             return this;
         }
 
@@ -180,7 +186,7 @@ public class DefaultEventSeason implements EventSeason {
                     throw new RuntimeException("Locale id is required");
                 }
 
-                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId, pageStatus, createdOn, lastModified);
+                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId,kioskLocale,  pageStatus, createdOn, lastModified);
 
             }
 

@@ -27,7 +27,7 @@ public class SimpleCollectionTypeQueryRowMapper implements RowMapper<SimpleColle
         LocalDateTime lastModified = rs.getTimestamp("CI_LM").toLocalDateTime();
         PageStatus status = PageStatus.valueOf(rs.getString("CI_STATUS"));
         
-        CollectionInternals collectionInternals = new CollectionInternals(collectionInternalsLocale, status, createdOn, lastModified);
+        CollectionInternals collectionInternals = new CollectionInternals(collectionInternalsLocale, null, status, createdOn, lastModified);
 
         return new SimpleCollectionTypeQueryResults(id, type, collectionNameField, collectionInternals);
         
