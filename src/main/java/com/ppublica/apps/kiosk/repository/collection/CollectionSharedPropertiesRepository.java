@@ -6,7 +6,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPr
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 
 public interface CollectionSharedPropertiesRepository {
-    public CollectionLocalizedProperties saveInstance(CollectionLocalizedProperties collectionInstance);
+    public CollectionSharedProperties saveInstance(CollectionLocalizedProperties collectionInstance);
 
     public List<CollectionSharedProperties> findByCollectionType(String type, String subType);
 
