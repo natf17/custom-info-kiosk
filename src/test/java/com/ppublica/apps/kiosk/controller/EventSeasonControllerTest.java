@@ -56,19 +56,19 @@ public class EventSeasonControllerTest {
 
         // set up input
         Map<String,Object> localizedInputThemesEn = new HashMap<>();
-        localizedInputThemesEn.put("locale", "en");
+        localizedInputThemesEn.put("localeId", "1");
         localizedInputThemesEn.put("value", "theme");
 
         Map<String,Object> localizedInputThemesEs = new HashMap<>();
-        localizedInputThemesEn.put("locale", "es");
-        localizedInputThemesEn.put("value", "tema");
+        localizedInputThemesEs.put("localeId", "2");
+        localizedInputThemesEs.put("value", "tema");
 
         Map<String,Object> localizedInputDurationTextEn = new HashMap<>();
-        localizedInputDurationTextEn.put("locale", "en");
+        localizedInputDurationTextEn.put("localeId", "1");
         localizedInputDurationTextEn.put("value", "three");
 
         Map<String,Object> localizedInputDurationTextEs = new HashMap<>();
-        localizedInputDurationTextEs.put("locale", "es");
+        localizedInputDurationTextEs.put("localeId", "2");
         localizedInputDurationTextEs.put("value", "tres");
 
         Map<String,Object> input = new HashMap<>();
@@ -106,19 +106,19 @@ public class EventSeasonControllerTest {
 
         // set up input
         Map<String,Object> localizedInputThemesEn = new HashMap<>();
-        localizedInputThemesEn.put("locale", "en");
+        localizedInputThemesEn.put("localeId", "1");
         localizedInputThemesEn.put("value", "theme");
 
         Map<String,Object> localizedInputThemesEs = new HashMap<>();
-        localizedInputThemesEn.put("locale", "es");
-        localizedInputThemesEn.put("value", "tema");
+        localizedInputThemesEs.put("localeId", "2");
+        localizedInputThemesEs.put("value", "tema");
 
         Map<String,Object> localizedInputDurationTextEn = new HashMap<>();
-        localizedInputDurationTextEn.put("locale", "en");
+        localizedInputDurationTextEn.put("localeId", "1");
         localizedInputDurationTextEn.put("value", "three");
 
         Map<String,Object> localizedInputDurationTextEs = new HashMap<>();
-        localizedInputDurationTextEs.put("locale", "es");
+        localizedInputDurationTextEs.put("localeId", "2");
         localizedInputDurationTextEs.put("value", "tres");
 
         Map<String,Object> input = new HashMap<>();

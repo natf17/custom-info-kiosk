@@ -57,27 +57,27 @@ public class DonationsDataControllerTest {
 
         // fields for input
         Map<String,Object> localizedFieldName_EN = new HashMap<>();
-        localizedFieldName_EN.put("locale", "en");
+        localizedFieldName_EN.put("localeId", "1");
         localizedFieldName_EN.put("value", "donName_1");
 
         Map<String,Object> localizedFieldName_ES = new HashMap<>();
-        localizedFieldName_ES.put("locale", "es");
+        localizedFieldName_ES.put("localeId", "2");
         localizedFieldName_ES.put("value", "donName_1_es");
 
         Map<String,Object> localizedFieldSVGElem_EN = new HashMap<>();
-        localizedFieldSVGElem_EN.put("locale", "en");
+        localizedFieldSVGElem_EN.put("localeId", "1");
         localizedFieldSVGElem_EN.put("value", "svgElemId");
 
         Map<String,Object> localizedFieldSVGElem_ES = new HashMap<>();
-        localizedFieldSVGElem_ES.put("locale", "es");
+        localizedFieldSVGElem_ES.put("localeId", "2");
         localizedFieldSVGElem_ES.put("value", "svgElemId_es");
 
         Map<String,Object> localizedFieldNote_EN = new HashMap<>();
-        localizedFieldNote_EN.put("locale", "en");
+        localizedFieldNote_EN.put("localeId", "1");
         localizedFieldNote_EN.put("value", "note");
 
         Map<String,Object> localizedFieldNote_ES = new HashMap<>();
-        localizedFieldNote_ES.put("locale", "es");
+        localizedFieldNote_ES.put("localeId", "2");
         localizedFieldNote_ES.put("value", "note_es");
 
         Map<String,Object> localizedDonImage_EN = new HashMap<>();
@@ -86,7 +86,7 @@ public class DonationsDataControllerTest {
         localizedDonImage_EN.put("url", "url");
 
         Map<String,Object> localizedDonImageView_EN = new HashMap<>();
-        localizedDonImageView_EN.put("locale", "en");
+        localizedDonImageView_EN.put("localeId", "1");
         localizedDonImageView_EN.put("value", localizedDonImage_EN);
 
         Map<String,Object> localizedDonImage_ES = new HashMap<>();
@@ -95,7 +95,7 @@ public class DonationsDataControllerTest {
         localizedDonImage_ES.put("url", "url_es");
 
         Map<String,Object> localizedDonImageView_ES = new HashMap<>();
-        localizedDonImageView_ES.put("locale", "es");
+        localizedDonImageView_ES.put("localeId", "2");
         localizedDonImageView_ES.put("value", localizedDonImage_ES);
 
 

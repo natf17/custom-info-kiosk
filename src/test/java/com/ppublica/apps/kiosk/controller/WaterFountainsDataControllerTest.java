@@ -58,27 +58,27 @@ public class WaterFountainsDataControllerTest {
 
         // fields for input
         Map<String,Object> localizedFieldName_EN = new HashMap<>();
-        localizedFieldName_EN.put("locale", "en");
+        localizedFieldName_EN.put("localeId", "1");
         localizedFieldName_EN.put("value", "wfName_1");
 
         Map<String,Object> localizedFieldName_ES = new HashMap<>();
-        localizedFieldName_ES.put("locale", "es");
+        localizedFieldName_ES.put("localeId", "2");
         localizedFieldName_ES.put("value", "wfName_1_es");
 
         Map<String,Object> localizedFieldSVGElem_EN = new HashMap<>();
-        localizedFieldSVGElem_EN.put("locale", "en");
+        localizedFieldSVGElem_EN.put("localeId", "1");
         localizedFieldSVGElem_EN.put("value", "svgElemId");
 
         Map<String,Object> localizedFieldSVGElem_ES = new HashMap<>();
-        localizedFieldSVGElem_ES.put("locale", "es");
+        localizedFieldSVGElem_ES.put("localeId", "2");
         localizedFieldSVGElem_ES.put("value", "svgElemId_es");
 
         Map<String,Object> localizedFieldNote_EN = new HashMap<>();
-        localizedFieldNote_EN.put("locale", "en");
+        localizedFieldNote_EN.put("localeId", "1");
         localizedFieldNote_EN.put("value", "note");
 
         Map<String,Object> localizedFieldNote_ES = new HashMap<>();
-        localizedFieldNote_ES.put("locale", "es");
+        localizedFieldNote_ES.put("localeId", "2");
         localizedFieldNote_ES.put("value", "note_es");
 
         Map<String,Object> localizedWfImage_EN = new HashMap<>();
@@ -87,7 +87,7 @@ public class WaterFountainsDataControllerTest {
         localizedWfImage_EN.put("url", "url");
 
         Map<String,Object> localizedWfImageView_EN = new HashMap<>();
-        localizedWfImageView_EN.put("locale", "en");
+        localizedWfImageView_EN.put("localeId", "1");
         localizedWfImageView_EN.put("value", localizedWfImage_EN);
 
         Map<String,Object> localizedWfImage_ES = new HashMap<>();
@@ -96,7 +96,7 @@ public class WaterFountainsDataControllerTest {
         localizedWfImage_ES.put("url", "url_es");
 
         Map<String,Object> localizedWfImageView_ES = new HashMap<>();
-        localizedWfImageView_ES.put("locale", "es");
+        localizedWfImageView_ES.put("localeId", "2");
         localizedWfImageView_ES.put("value", localizedWfImage_ES);
 
 

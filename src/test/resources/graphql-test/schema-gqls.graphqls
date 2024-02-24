@@ -120,7 +120,7 @@ type EventSeasonAdmin {
 
 
 input LocalizedInput {
-    locale: String
+    localeId: ID!
     value: String
 }
 
@@ -495,7 +495,7 @@ input LocationInput {
 }
 
 input LocalizedLocationMapInput {        
-    locale: String
+    localeId: ID!
     value: LocationMapInput
 }
 
@@ -553,7 +553,7 @@ input BathroomInput {
 }
 
 input LocalizedBathroomImageInput {
-    locale: String
+    localeId: ID!
     value: BathroomImageInput
 }
 
@@ -612,7 +612,7 @@ input DonationInput {
 }
 
 input LocalizedDonationImageInput {
-    locale: String
+    localeId: ID!
     value: DonationImageInput
 }
 
@@ -668,7 +668,7 @@ input FirstAidInput {
 }
 
 input LocalizedFirstAidImageInput {
-    locale: String
+    localeId: ID!
     value: FirstAidImageInput
 }
 
@@ -724,7 +724,7 @@ input WaterFountainInput {
 }
 
 input LocalizedWaterFountainImageInput {
-    locale: String
+    localeId: ID!
     value: WaterFountainImageInput
 }
 

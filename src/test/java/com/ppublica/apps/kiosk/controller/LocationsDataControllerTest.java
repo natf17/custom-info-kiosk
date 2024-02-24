@@ -52,19 +52,19 @@ public class LocationsDataControllerTest {
 
         //input corresponding to location1AdminView
         Map<String,Object> localizedFieldName_EN = new HashMap<>();
-        localizedFieldName_EN.put("locale", "en");
+        localizedFieldName_EN.put("localeId", "1");
         localizedFieldName_EN.put("value", "fullName1");
 
         Map<String,Object> localizedFieldName_ES = new HashMap<>();
-        localizedFieldName_ES.put("locale", "es");
+        localizedFieldName_ES.put("localeId", "2");
         localizedFieldName_ES.put("value", "nombre1");
 
         Map<String,Object> localizedFieldLevelName_EN = new HashMap<>();
-        localizedFieldLevelName_EN.put("locale", "en");
+        localizedFieldLevelName_EN.put("localeId", "1");
         localizedFieldLevelName_EN.put("value", "levelName1");
 
         Map<String,Object> localizedFieldLevelName_ES = new HashMap<>();
-        localizedFieldLevelName_ES.put("locale", "es");
+        localizedFieldLevelName_ES.put("localeId", "2");
         localizedFieldLevelName_ES.put("value", "nombreDeNivel1");
 
 
@@ -75,7 +75,7 @@ public class LocationsDataControllerTest {
         localizedMapImage_EN.put("url", "url");
 
         Map<String,Object> localizedMapImageView_EN = new HashMap<>();
-        localizedMapImageView_EN.put("locale", "en");
+        localizedMapImageView_EN.put("localeId", "1");
         localizedMapImageView_EN.put("value", localizedMapImage_EN);
 
         Map<String,Object> localizedMapImage_ES = new HashMap<>();
@@ -84,7 +84,7 @@ public class LocationsDataControllerTest {
         localizedMapImage_ES.put("url", "url_es");
 
         Map<String,Object> localizedMapImageView_ES = new HashMap<>();
-        localizedMapImageView_ES.put("locale", "es");
+        localizedMapImageView_ES.put("localeId", "2");
         localizedMapImageView_ES.put("value", localizedMapImage_ES);
 
 

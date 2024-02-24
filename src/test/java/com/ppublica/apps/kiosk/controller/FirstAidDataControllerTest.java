@@ -58,27 +58,27 @@ public class FirstAidDataControllerTest {
 
         // fields for input
         Map<String,Object> localizedFieldName_EN = new HashMap<>();
-        localizedFieldName_EN.put("locale", "en");
+        localizedFieldName_EN.put("localeId", "1");
         localizedFieldName_EN.put("value", "faName_1");
 
         Map<String,Object> localizedFieldName_ES = new HashMap<>();
-        localizedFieldName_ES.put("locale", "es");
+        localizedFieldName_ES.put("localeId", "2");
         localizedFieldName_ES.put("value", "faName_1_es");
 
         Map<String,Object> localizedFieldSVGElem_EN = new HashMap<>();
-        localizedFieldSVGElem_EN.put("locale", "en");
+        localizedFieldSVGElem_EN.put("localeId", "1");
         localizedFieldSVGElem_EN.put("value", "svgElemId");
 
         Map<String,Object> localizedFieldSVGElem_ES = new HashMap<>();
-        localizedFieldSVGElem_ES.put("locale", "es");
+        localizedFieldSVGElem_ES.put("localeId", "2");
         localizedFieldSVGElem_ES.put("value", "svgElemId_es");
 
         Map<String,Object> localizedFieldNote_EN = new HashMap<>();
-        localizedFieldNote_EN.put("locale", "en");
+        localizedFieldNote_EN.put("localeId", "1");
         localizedFieldNote_EN.put("value", "note");
 
         Map<String,Object> localizedFieldNote_ES = new HashMap<>();
-        localizedFieldNote_ES.put("locale", "es");
+        localizedFieldNote_ES.put("localeId", "2");
         localizedFieldNote_ES.put("value", "note_es");
 
         Map<String,Object> localizedFaImage_EN = new HashMap<>();
@@ -87,7 +87,7 @@ public class FirstAidDataControllerTest {
         localizedFaImage_EN.put("url", "url");
 
         Map<String,Object> localizedFaImageView_EN = new HashMap<>();
-        localizedFaImageView_EN.put("locale", "en");
+        localizedFaImageView_EN.put("localeId", "1");
         localizedFaImageView_EN.put("value", localizedFaImage_EN);
 
         Map<String,Object> localizedFaImage_ES = new HashMap<>();
@@ -96,7 +96,7 @@ public class FirstAidDataControllerTest {
         localizedFaImage_ES.put("url", "url_es");
 
         Map<String,Object> localizedFaImageView_ES = new HashMap<>();
-        localizedFaImageView_ES.put("locale", "es");
+        localizedFaImageView_ES.put("localeId", "2");
         localizedFaImageView_ES.put("value", localizedFaImage_ES);
 
 
