@@ -4,12 +4,12 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPr
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
-import com.ppublica.apps.kiosk.domain.model.collection.LinkedCollectionReference;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Amenity;
 import com.ppublica.apps.kiosk.domain.model.kiosk.AmenityType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
+import com.ppublica.apps.kiosk.domain.model.kiosk.LinkedCollectionReference;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.AmenityConverter;
 
 public class AmenityKioskCollectionAdapter extends KioskCollectionTypeBaseAdapter implements AmenityType {
@@ -34,7 +34,7 @@ public class AmenityKioskCollectionAdapter extends KioskCollectionTypeBaseAdapte
     }
 
     @Override
-    public KioskCollectionField<Image> featImg() {
+    public KioskCollectionField<KioskImage> featImg() {
         return getAmenity().featImg();
     }
 

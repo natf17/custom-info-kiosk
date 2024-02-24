@@ -6,15 +6,15 @@ import java.util.stream.Collectors;
 
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
-import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.CmsCollectionAdapterBuilder;
 import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.KioskCollectionTypeBaseAdapter;
 import com.ppublica.apps.kiosk.repository.collection.CollectionLocalizedPropertiesRepository;
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
 
 public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTypeBaseAdapter, U extends KioskCollectionType, B extends CmsCollectionAdapterBuilder<B, U, T>> {
-    private List<CmsLocalizedEntityHolder> getLocalizedCmsObjects(CollectionTypeName type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+    private List<CmsLocalizedEntityHolder> getLocalizedCmsObjects(CollectionType type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
         // get CollectionSharedProperties
         List<CollectionSharedProperties> matchingCollSharedProps = collSharedPropsRepo.findByCollectionType(type.toString(), null);
         
@@ -46,8 +46,8 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
         return cmsLocalizedEntityHolders;
     }
 
-    protected List<T> loadAdapters(CollectionTypeName type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
-        List<CmsLocalizedEntityHolder> cmsLocalizedEntityHolders = getLocalizedCmsObjects(CollectionTypeName.BATHROOM, locale, collSharedPropsRepo, collLocalizedPropsRepo);
+    protected List<T> loadAdapters(CollectionType type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+        List<CmsLocalizedEntityHolder> cmsLocalizedEntityHolders = getLocalizedCmsObjects(CollectionType.BATHROOM, locale, collSharedPropsRepo, collLocalizedPropsRepo);
         List<T> adapters = cmsLocalizedEntityHolders
                                 .stream()
                                 .map(localizedCmsHolder -> createAdapter(localizedCmsHolder, getAdapterBuilder()))
@@ -79,7 +79,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
         return new CmsEntityHolder(matchingCollSharedProps, matchingCollProps);
     }
 
-    private List<CmsEntityHolder> getCmsObjects(CollectionTypeName type, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+    private List<CmsEntityHolder> getCmsObjects(CollectionType type, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
         // get CollectionSharedProperties
         List<CollectionSharedProperties> matchingCollSharedProps = collSharedPropsRepo.findByCollectionType(type.toString(), null);
         
@@ -97,8 +97,8 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
         return cmsLocalizedEntityHolders;
     }
 
-    protected List<List<T>> loadListOfAdaptersList(CollectionTypeName type, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
-        List<CmsEntityHolder> cmsEntityHolders = getCmsObjects(CollectionTypeName.BATHROOM, collSharedPropsRepo, collLocalizedPropsRepo);
+    protected List<List<T>> loadListOfAdaptersList(CollectionType type, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+        List<CmsEntityHolder> cmsEntityHolders = getCmsObjects(CollectionType.BATHROOM, collSharedPropsRepo, collLocalizedPropsRepo);
 
         return cmsEntityHolders
                 .stream()
@@ -117,7 +117,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
                 .build();
     }
 
-    protected List<T> createAdapters(List<U> kioskCollectionTypeList) {
+    protected List<T> createAdapters(List<? extends U> kioskCollectionTypeList) {
         return kioskCollectionTypeList.stream()
                                     .map(kioskCollection -> {
                                                 return getAdapterBuilder()
@@ -128,7 +128,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
         
     }
 
-    protected List<T> save(List<U> kioskCollectionTypeList, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+    protected List<T> save(List<? extends U> kioskCollectionTypeList, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
         List<T> adapters = createAdapters(kioskCollectionTypeList);
 
         CmsEntityHolder cmsEntityHolder = saveInternal(adapters, collSharedPropsRepo, collLocalizedPropsRepo);
@@ -152,7 +152,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
         return new CmsEntityHolder(newSharedProps, newLocalizedPropsList);
     }
 
-    protected List<T> update(List<U> kioskCollectionTypeList, Long collId, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
+    protected List<T> update(List<? extends U> kioskCollectionTypeList, Long collId, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
         List<T> adapters = createAdapters(kioskCollectionTypeList);
         collLocalizedPropsRepo.deleteLocalizedCollectionInstances(collId);
 

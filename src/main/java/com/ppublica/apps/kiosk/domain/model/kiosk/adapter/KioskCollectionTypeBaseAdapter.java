@@ -14,10 +14,10 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
-import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionMetadata;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.KioskCollectionTypeConverter;
 
 public class KioskCollectionTypeBaseAdapter implements KioskCollectionType, CollectionLocalizedProperties, CollectionSharedProperties {
@@ -129,23 +129,23 @@ public class KioskCollectionTypeBaseAdapter implements KioskCollectionType, Coll
     }
 
     @Override
-    public Long getId() {
-        return getBaseKioskCollection().getId();
+    public Long collectionId() {
+        return getBaseKioskCollection().collectionId();
     }
 
     @Override
-    public CollectionTypeName getKioskCollectionTypeName() {
-        return getBaseKioskCollection().getKioskCollectionTypeName();
+    public CollectionType kioskCollectionType() {
+        return getBaseKioskCollection().kioskCollectionType();
     }
 
     @Override
-    public KioskCollectionField<String> getKioskCollectionNameField() {
-        return getBaseKioskCollection().getKioskCollectionNameField();
+    public KioskCollectionField<String> kioskCollectionNameField() {
+        return getBaseKioskCollection().kioskCollectionNameField();
     }
 
     @Override
-    public KioskCollectionMetadata getKioskCollectionMetadata() {
-        return getBaseKioskCollection().getKioskCollectionMetadata();
+    public KioskCollectionMetadata kioskCollectionMetadata() {
+        return getBaseKioskCollection().kioskCollectionMetadata();
     }
 
     public final KioskCollectionType getBaseKioskCollection() {
@@ -183,8 +183,8 @@ public class KioskCollectionTypeBaseAdapter implements KioskCollectionType, Coll
     }
 
     protected final void buildAndSetCmsPieces() {
-        CollectionSharedPropertiesImpl.Builder sharedCmsPieceBuilder = new CollectionSharedPropertiesImpl.Builder(this.baseKioskCollection.getKioskCollectionTypeName().toString());
-        CollectionLocalizedPropertiesImpl.Builder localizedCollectionBuilder = new CollectionLocalizedPropertiesImpl.Builder(this.baseKioskCollection.getId());
+        CollectionSharedPropertiesImpl.Builder sharedCmsPieceBuilder = new CollectionSharedPropertiesImpl.Builder(this.baseKioskCollection.kioskCollectionType().toString());
+        CollectionLocalizedPropertiesImpl.Builder localizedCollectionBuilder = new CollectionLocalizedPropertiesImpl.Builder(this.baseKioskCollection.collectionId());
 
         baseConverter.transferKioskRepToCmsBuilders(sharedCmsPieceBuilder, localizedCollectionBuilder, baseKioskCollection);
     

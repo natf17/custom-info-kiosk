@@ -11,13 +11,11 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
-import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.collection.LinkedCollectionReference;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToCmsCollectionConverter;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToKioskCollectionConverter;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Amenity;
-import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenity;
+import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityPiece;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
+import com.ppublica.apps.kiosk.domain.model.kiosk.LinkedCollectionReference;
 
 public class AmenityConverter {
     protected ToCmsCollectionConverter toCmsCollectionConverter = new ToCmsCollectionConverter();
@@ -43,7 +41,7 @@ public class AmenityConverter {
         List<BooleanField> sharedBooleanFields = sharedCmsPiece.booleanFields();
 
 
-        KioskCollectionField<Image> featImg = null;
+        KioskCollectionField<KioskImage> featImg = null;
         for(ImageField imageField : locImageFields) {
             if(imageField.getFieldType().equals(FEATIMG_FIELD_TYPE)) {
                 featImg = toKioskCollectionConverter.toImageField(imageField);
@@ -84,7 +82,7 @@ public class AmenityConverter {
             }
         }
 
-        return new DefaultAmenity.Builder()
+        return new DefaultAmenityPiece.Builder()
                                     .featImg(featImg)
                                     .svgElemId(svgElemId)
                                     .isWheelChairAccessible(isWheelChairAccessible)

@@ -7,8 +7,6 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPr
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToCmsCollectionConverter;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToKioskCollectionConverter;
 import com.ppublica.apps.kiosk.domain.model.kiosk.GenderInfo;
 
 public class GenderConverter {

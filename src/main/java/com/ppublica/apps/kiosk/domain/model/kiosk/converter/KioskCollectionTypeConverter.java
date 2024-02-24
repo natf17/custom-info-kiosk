@@ -6,12 +6,10 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPr
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
-import com.ppublica.apps.kiosk.domain.model.collection.CollectionTypeName;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionMetadata;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToCmsCollectionConverter;
-import com.ppublica.apps.kiosk.domain.model.collection.adapter.ToKioskCollectionConverter;
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 
 public class KioskCollectionTypeConverter {
     protected ToCmsCollectionConverter toCmsCollectionConverter = new ToCmsCollectionConverter();
@@ -21,7 +19,7 @@ public class KioskCollectionTypeConverter {
 
         Long id = sharedCmsPiece.id();
 
-        CollectionTypeName type = toKioskCollectionConverter.toCollectionTypeName(sharedCmsPiece.type());
+        CollectionType type = toKioskCollectionConverter.toCollectionTypeName(sharedCmsPiece.type());
 
         KioskCollectionField<String> collectionNameField = toKioskCollectionConverter.toStringField(localizedCmsPiece.locCollectionNameField());
         KioskCollectionMetadata kioskCollectionMetadata = KioskCollectionMetadata.fromCollectionInternals(localizedCmsPiece.locCollectionInternals());
@@ -32,13 +30,13 @@ public class KioskCollectionTypeConverter {
 
 
     public void transferKioskRepToCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, CollectionLocalizedPropertiesImpl.Builder localizedCmsBuilder, KioskCollectionType kioskCollection) {
-        CollectionInternals collInternals = kioskCollection.getKioskCollectionMetadata().getCollectionInternals();
+        CollectionInternals collInternals = kioskCollection.kioskCollectionMetadata().getCollectionInternals();
 
         sharedCmsBuilder.collectionSharedInternals(new CollectionSharedInternals(collInternals.getStatus(), collInternals.getCreatedOn(), collInternals.getLastModified()));
-        sharedCmsBuilder.withId(kioskCollection.getId());
+        sharedCmsBuilder.withId(kioskCollection.collectionId());
 
-        localizedCmsBuilder.collectionInternals(kioskCollection.getKioskCollectionMetadata().getCollectionInternals());
-        localizedCmsBuilder.collectionNameField(toCmsCollectionConverter.toCollectionNameField(kioskCollection.getKioskCollectionNameField()));
+        localizedCmsBuilder.collectionInternals(kioskCollection.kioskCollectionMetadata().getCollectionInternals());
+        localizedCmsBuilder.collectionNameField(toCmsCollectionConverter.toCollectionNameField(kioskCollection.kioskCollectionNameField()));
         
         
     }
@@ -46,11 +44,11 @@ public class KioskCollectionTypeConverter {
     class DefaultKioskCollectionType implements KioskCollectionType {
 
         private Long id;
-        private CollectionTypeName type;
+        private CollectionType type;
         private KioskCollectionField<String> collectionNameField;
         private KioskCollectionMetadata kioskCollectionMetadata;
 
-        DefaultKioskCollectionType(Long id, CollectionTypeName type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata) {
+        DefaultKioskCollectionType(Long id, CollectionType type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata) {
             this.id = id;
             this.type = type;
             this.collectionNameField = collectionNameField;
@@ -58,22 +56,22 @@ public class KioskCollectionTypeConverter {
         }
 
         @Override
-        public Long getId() {
+        public Long collectionId() {
             return this.id;
         }
 
         @Override
-        public CollectionTypeName getKioskCollectionTypeName() {
+        public CollectionType kioskCollectionType() {
             return this.type;
         }
 
         @Override
-        public KioskCollectionField<String> getKioskCollectionNameField() {
+        public KioskCollectionField<String> kioskCollectionNameField() {
             return this.collectionNameField;
         }
 
         @Override
-        public KioskCollectionMetadata getKioskCollectionMetadata() {
+        public KioskCollectionMetadata kioskCollectionMetadata() {
             return this.kioskCollectionMetadata;
         }
     }

@@ -2,10 +2,10 @@ package com.ppublica.apps.kiosk.domain.model.kiosk.adapter;
 
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Amenity;
 import com.ppublica.apps.kiosk.domain.model.kiosk.GenderAware;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
+import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 
 public class GenderAwareAmenityAdapter extends AmenityKioskCollectionAdapter implements GenderAware {
     private GenderAware genderInfo;
