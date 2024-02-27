@@ -32,6 +32,9 @@ public class BathroomsDataService extends LocalizedCollectionServiceBase<Bathroo
     @Autowired
     private BathroomInputConverter bathroomInputConverter;
 
+    @Autowired
+    private AdapterBuilderGenerator<BathroomKioskCollectionAdapter.Builder> adapterBuilderGenerator;
+
 
     public List<BathroomView> getBathrooms(String locale, String sort) {
         List<BathroomView> bathroomViews = loadAdapters(CollectionType.BATHROOM, locale, collSharedPropsRepo, collLocalizedPropsRepo)
@@ -84,7 +87,7 @@ public class BathroomsDataService extends LocalizedCollectionServiceBase<Bathroo
     public BathroomAdminView updateBathroom(Long bathroomId, BathroomInput data) {
         List<? extends BathroomType> bathrooms = bathroomInputConverter.toLocalizedBathrooms(data);
 
-        List<BathroomKioskCollectionAdapter> updatedBathroomAdapters = update(bathrooms, bathroomId, collSharedPropsRepo, collLocalizedPropsRepo);
+        List<? extends BathroomType> updatedBathroomAdapters = update(bathrooms, bathroomId, collSharedPropsRepo, collLocalizedPropsRepo);
 
         return bathroomsViewsConverter.buildAdminView(updatedBathroomAdapters);
     }
@@ -96,7 +99,7 @@ public class BathroomsDataService extends LocalizedCollectionServiceBase<Bathroo
     
     @Override
     protected BathroomKioskCollectionAdapter.Builder getAdapterBuilder() {
-        return new BathroomKioskCollectionAdapter.Builder();
+        return adapterBuilderGenerator.newAdapterBuilder();
     }
 
     

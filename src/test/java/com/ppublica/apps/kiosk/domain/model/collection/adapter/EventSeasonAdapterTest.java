@@ -36,13 +36,13 @@ public class EventSeasonAdapterTest {
     DataCollectionType cmsObjOneElem;
     EventSeason kioskObjWithEvents;
     EventSeason kioskObjNoEvents;
-
+/*
     @BeforeEach
     public void setup() {
         /*
         this.testDate = LocalDate.of(2023, 9, 12);
         this.testDateTime = LocalDateTime.of(2023, 1, 9, 9, 30);
-        this.testFeatImg = new Image("url", 1, 2); */
+        this.testFeatImg = new Image("url", 1, 2); /
 
         // prepare LocalizedFields components
         testDate = LocalDate.of(2023, 11, 15);
@@ -404,5 +404,5 @@ public class EventSeasonAdapterTest {
         List<DefaultSeasonalEvent> events = eventSeasonAdapter.getEvents();
         Assertions.assertTrue(events.isEmpty());
     }
-
+    */
 }

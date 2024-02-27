@@ -33,7 +33,7 @@ public class BathroomInputConverter {
     // will return list with >= 1 elements
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
     // grabs name from first localized field and sets is as the collection name
-    public List<? extends BathroomType> toLocalizedBathrooms(BathroomInput adminInput) {
+    public List<BathroomType> toLocalizedBathrooms(BathroomInput adminInput) {
         Map<Long, DefaultAmenityType.Builder> amenityBuilders = new HashMap<>();
 
         localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.name(), (builder, field) -> builder.name(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
@@ -44,7 +44,7 @@ public class BathroomInputConverter {
         localizedFieldsProcessor.processParentFieldWithBuilder(amenityBuilders, adminInput.isWheelchairAccessible(), (builder, field) -> builder.isWheelChairAccessible(field), new SameTypeConverter<Boolean>(), new BooleanKioskFieldCreator());
         localizedFieldsProcessor.processParentFieldWithBuilder(amenityBuilders, adminInput.locationId(), (builder, field) -> builder.location(field), new LongToLinkedCollectionRefTypeConverter(), new LinkedCollectionReferenceKioskFieldCreator());
 
-        List<DefaultBathroomType> bathrooms = new ArrayList<>();
+        List<BathroomType> bathrooms = new ArrayList<>();
         for(DefaultAmenityType.Builder builder : amenityBuilders.values()) {
             bathrooms.add(new DefaultBathroomType(builder.build(), genderInfoProcessor.createGenderPiece(adminInput.gender(), new SameTypeConverter<String>(), new StringKioskFieldCreator())));
         }

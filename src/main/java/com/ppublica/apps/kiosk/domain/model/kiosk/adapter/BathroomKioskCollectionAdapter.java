@@ -9,15 +9,15 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 
 public class BathroomKioskCollectionAdapter extends GenderAwareAmenityAdapter implements BathroomType {
     
-    private BathroomKioskCollectionAdapter(GenderAware genderInfo, Amenity amenity, KioskCollectionType baseKioskCollection, CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
+    protected BathroomKioskCollectionAdapter(GenderAware genderInfo, Amenity amenity, KioskCollectionType baseKioskCollection, CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
         super(genderInfo, amenity, baseKioskCollection, localizedCmsPiece, sharedCmsPiece);
     }
 
-    private BathroomKioskCollectionAdapter(CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
+    protected BathroomKioskCollectionAdapter(CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
         this(null, null, null, localizedCmsPiece, sharedCmsPiece);
     }
 
-    private BathroomKioskCollectionAdapter(GenderAware genderInfo, Amenity amenity, KioskCollectionType baseKioskCollection) {
+    protected BathroomKioskCollectionAdapter(GenderAware genderInfo, Amenity amenity, KioskCollectionType baseKioskCollection) {
         this(genderInfo, amenity, baseKioskCollection, null, null);
     }
 

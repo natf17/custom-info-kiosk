@@ -14,6 +14,10 @@ import com.ppublica.apps.kiosk.repository.collection.CollectionLocalizedProperti
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
 
 public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTypeBaseAdapter, U extends KioskCollectionType, B extends CmsCollectionAdapterBuilder<B, U, T>> {
+    /*
+     * Requires CollectionSharedProperties to have an id, and CollectionLocalizedProperties to have a parentId
+     */
+    
     private List<CmsLocalizedEntityHolder> getLocalizedCmsObjects(CollectionType type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
         // get CollectionSharedProperties
         List<CollectionSharedProperties> matchingCollSharedProps = collSharedPropsRepo.findByCollectionType(type.toString(), null);
@@ -24,12 +28,13 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
                                                 .collect(Collectors.toList());
 
         if(ids.isEmpty()) {
-            return List.of();
+            throw new RuntimeException("ids empty");
+            //return List.of();
         }
 
         // get CollectionLocalizedProperties
         List<CollectionLocalizedProperties> matchingCollLocalizedProps = collLocalizedPropsRepo.findByParentCollectionIdAndLocaleBatch(ids, locale);
-       
+
         HashMap<Long, CollectionLocalizedProperties> matchingCollLocPropsMap = new HashMap<>();
 
         // put CollectionLocalizedProperties in a hash map
@@ -42,7 +47,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
                                                                                                 })
                                                                                             .collect(Collectors.toList());
 
-        
+
         return cmsLocalizedEntityHolders;
     }
 
@@ -112,6 +117,14 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
     }
 
     private T createAdapter(CmsLocalizedEntityHolder cmsLocalizedEntityHolder, B builder) {
+        if(cmsLocalizedEntityHolder.parentProps() == null) {
+            throw new RuntimeException("parentProps null");
+        }
+
+        if(cmsLocalizedEntityHolder.localizedProps() == null) {
+            throw new RuntimeException("localizedProps null");
+        }
+
         return builder.sharedCmsPiece(cmsLocalizedEntityHolder.parentProps())
                     .localizedCmsPiece(cmsLocalizedEntityHolder.localizedProps())
                 .build();
@@ -120,6 +133,11 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
     protected List<T> createAdapters(List<? extends U> kioskCollectionTypeList) {
         return kioskCollectionTypeList.stream()
                                     .map(kioskCollection -> {
+                                        if(kioskCollection == null) {
+                                            throw new RuntimeException("kioskCollection null");
+                                        } else if(kioskCollection != null){
+                                            //throw new RuntimeException("eee..." + kioskCollection);
+                                        }
                                                 return getAdapterBuilder()
                                                             .kioskCollection(kioskCollection)
                                                             .build();
@@ -160,8 +178,16 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
 
 
         List<T> newAdapters = adapters.stream()
-                                    .map(adapter -> collLocalizedPropsRepo.saveLocalizedInstance(collId, adapter))
-                                    .map(newLocalizedProps -> new CmsLocalizedEntityHolder(updatedSharedProps, newLocalizedProps))
+                                    .map(adapter -> {
+                                        if(collLocalizedPropsRepo.saveLocalizedInstance(collId, adapter) == null) {
+                                            throw new RuntimeException("saveLocalizedInstance: ");
+                                        }
+                                        return collLocalizedPropsRepo.saveLocalizedInstance(collId, adapter);})
+                                    .map(newLocalizedProps -> {
+                                        if(newLocalizedProps == null) {
+                                            throw new RuntimeException("newLocalizedProps stream null");
+                                        }
+                                        return new CmsLocalizedEntityHolder(updatedSharedProps, newLocalizedProps);})
                                     .map(newLocalizedEntityHolder -> createAdapter(newLocalizedEntityHolder, getAdapterBuilder()))
                                     .collect(Collectors.toList());
 

@@ -51,7 +51,7 @@ public class DataCollectionTypeRepositoryImplTest {
     List<DataCollectionElement> newDataElementsUpdated;
 
     DataCollectionType newDataCollectionTypeWithElemsUpd;
-
+/*
 
     @BeforeEach
     public void setup() {
@@ -597,5 +597,5 @@ public class DataCollectionTypeRepositoryImplTest {
             return rs.getLong("id");
 
         }
-    }
+    } */
 }

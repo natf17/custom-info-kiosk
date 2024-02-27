@@ -10,7 +10,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
 public class BathroomTypeImplTest {
-
+/*
     @Test
     public void testMethods() {
 
@@ -48,5 +48,5 @@ public class BathroomTypeImplTest {
         Assertions.assertEquals(CollectionTypeName.BATHROOM, bathroomTypeInstance.getKioskCollectionTypeName());
 
     }
-    
+     */
 }

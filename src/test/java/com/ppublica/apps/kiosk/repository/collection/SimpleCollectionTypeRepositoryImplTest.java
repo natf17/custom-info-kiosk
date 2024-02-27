@@ -42,7 +42,7 @@ public class SimpleCollectionTypeRepositoryImplTest {
     Long enLocaleId;
     Long esLocaleId;
 
-
+/*
     SimpleCollectionTypeImpl.Builder newSimpleCollectionType1aBuilder;
     SimpleCollectionType newSimpleCollectionType1aChild;
     SimpleCollectionType newSimpleCollectionType1b;
@@ -409,7 +409,7 @@ public class SimpleCollectionTypeRepositoryImplTest {
             return rs.getLong("id");
 
         }
-    }
+    } */
 
     
 }

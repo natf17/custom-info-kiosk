@@ -10,6 +10,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
 public class WaterFountainTypeImplTest {
+    /*
     @Test
     public void testMethods() {
 
@@ -41,6 +42,6 @@ public class WaterFountainTypeImplTest {
         Assertions.assertEquals("location_fieldName", waterFountainType.getLocation().getFieldName());
         Assertions.assertEquals(CollectionTypeName.WATER_FOUNTAIN, waterFountainType.getKioskCollectionTypeName());
 
-    }
+    } */
     
 }

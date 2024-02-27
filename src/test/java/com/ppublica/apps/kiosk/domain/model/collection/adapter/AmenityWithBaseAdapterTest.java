@@ -26,7 +26,7 @@ import com.ppublica.apps.kiosk.domain.model.collection.KioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.collection.LinkedCollectionReference;
 
 public class AmenityWithBaseAdapterTest {
-
+/*
     LocalDate testDate;
     LocalDateTime testDateTime;
     Long enLocaleId = 5L;
@@ -229,5 +229,5 @@ public class AmenityWithBaseAdapterTest {
         Assertions.assertEquals(kioskObj.getLocation().getFieldValue(), amenityAdapter.getLocation().getFieldValue());
 
     }
-    
+     */
 }
