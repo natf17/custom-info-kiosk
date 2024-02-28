@@ -74,3 +74,5 @@ Kiosk Collections -> CMS `SimpleCollectionType`s/`DataCollectionType`s
 - LocationType/LocationWithBaseAdapter
 - WaterFountainType/WaterFountainAdapter
 
+TODOS:
+- determine usefulness of the isLocalizable prop
