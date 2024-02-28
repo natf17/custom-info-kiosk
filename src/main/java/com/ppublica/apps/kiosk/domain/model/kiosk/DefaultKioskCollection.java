@@ -54,6 +54,7 @@ public class DefaultKioskCollection implements KioskCollectionType {
         private LocalDate createdOn;
         private LocalDateTime lastModified;
         private Long kioskLocaleId;
+        private String kioskLocale;
 
         protected Builder(CollectionType type) {
             this.type = type;
@@ -92,6 +93,11 @@ public class DefaultKioskCollection implements KioskCollectionType {
 
         public Builder withLocaleId(Long kioskLocaleId) {
             this.kioskLocaleId = kioskLocaleId;
+            return this;
+        }
+
+        public Builder locale(String kioskLocale) {
+            this.kioskLocale = kioskLocale;
             return this;
         }
 
@@ -139,7 +145,7 @@ public class DefaultKioskCollection implements KioskCollectionType {
                     throw new RuntimeException("Locale id is required");
                 }
 
-                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId, status, createdOn, lastModified);
+                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId, kioskLocale, status, createdOn, lastModified);
 
             }
 

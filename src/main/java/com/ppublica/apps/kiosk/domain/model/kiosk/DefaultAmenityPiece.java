@@ -1,6 +1,6 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk;
 
-public record DefaultAmenityPiece(KioskCollectionField<KioskImage> featImg, KioskCollectionField<Long> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
+public record DefaultAmenityPiece(KioskCollectionField<KioskImage> featImg, KioskCollectionField<String> svgElemId, KioskCollectionField<Boolean> isWheelChairAccessible,
 KioskCollectionField<String> name, KioskCollectionField<String> note, KioskCollectionField<LinkedCollectionReference> location) implements Amenity {
 
 
@@ -8,7 +8,7 @@ KioskCollectionField<String> name, KioskCollectionField<String> note, KioskColle
 
     public static class Builder {
         protected KioskCollectionField<KioskImage> featImg;
-        protected KioskCollectionField<Long> svgElemId;
+        protected KioskCollectionField<String> svgElemId;
         protected KioskCollectionField<Boolean> isWheelChairAccessible;
         protected KioskCollectionField<String> name;
         protected KioskCollectionField<String> note;
@@ -19,7 +19,7 @@ KioskCollectionField<String> name, KioskCollectionField<String> note, KioskColle
             return this;
         }
 
-        public Builder svgElemId(KioskCollectionField<Long> editedSvgElemId) {
+        public Builder svgElemId(KioskCollectionField<String> editedSvgElemId) {
             this.svgElemId = editedSvgElemId;
             return this;
         }
@@ -57,7 +57,7 @@ KioskCollectionField<String> name, KioskCollectionField<String> note, KioskColle
             }
                 
             if(svgElemId == null) {   
-                svgElemId = new KioskCollectionField<Long>(null, true);
+                svgElemId = new KioskCollectionField<String>(null, true);
             }
 
             if(isWheelChairAccessible == null) {   

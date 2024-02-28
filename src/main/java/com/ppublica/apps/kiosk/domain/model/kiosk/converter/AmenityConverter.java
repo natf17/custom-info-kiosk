@@ -9,7 +9,6 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPrope
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Amenity;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityPiece;
@@ -33,7 +32,6 @@ public class AmenityConverter {
 
     public Amenity convert(CollectionSharedProperties sharedCmsPiece, CollectionLocalizedProperties localizedCmsPiece) {
         List<ImageField> locImageFields = localizedCmsPiece.locImageFields();
-        List<NumericField> locNumericFields = localizedCmsPiece.locNumericFields();
         List<TextField> locTextFields = localizedCmsPiece.locTextFields();
 
 
@@ -48,12 +46,6 @@ public class AmenityConverter {
             }
         }
 
-        KioskCollectionField<Long> svgElemId = null;
-        for(NumericField numericField : locNumericFields) {
-            if(numericField.getFieldType().equals(SVGELEM_FIELD_TYPE)) {
-                svgElemId = toKioskCollectionConverter.toLongField(numericField);
-            }
-        }
 
         KioskCollectionField<Boolean> isWheelChairAccessible = null;
         for(BooleanField booleanField : sharedBooleanFields) {
@@ -64,6 +56,8 @@ public class AmenityConverter {
 
         KioskCollectionField<String> name = null;
         KioskCollectionField<String> note = null;
+        KioskCollectionField<String> svgElemId = null;
+
 
         for(TextField textField : locTextFields) {
             if(textField.getFieldType().equals(NAME_FIELD_TYPE)) {
@@ -72,6 +66,10 @@ public class AmenityConverter {
 
             if(textField.getFieldType().equals(NOTE_FIELD_TYPE)) {
                 note = toKioskCollectionConverter.toStringField(textField);
+            }
+
+            if(textField.getFieldType().equals(SVGELEM_FIELD_TYPE)) {
+                svgElemId = toKioskCollectionConverter.toStringField(textField);
             }
         }
 
@@ -95,7 +93,7 @@ public class AmenityConverter {
 
     public void transferKioskRepToCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, CollectionLocalizedPropertiesImpl.Builder localizedCmsBuilder, Amenity amenity) {
         localizedCmsBuilder.addImageField(toCmsCollectionConverter.toImageField(amenity.featImg(), FEATIMG_FIELD_TYPE))
-            .addNumericField(toCmsCollectionConverter.toNumericField(amenity.svgElemId(), SVGELEM_FIELD_TYPE))
+            .addTextField(toCmsCollectionConverter.toTextField(amenity.svgElemId(), SVGELEM_FIELD_TYPE))
             .addTextField(toCmsCollectionConverter.toTextField(amenity.name(), NAME_FIELD_TYPE))
             .addTextField(toCmsCollectionConverter.toTextField(amenity.note(), NOTE_FIELD_TYPE));
 

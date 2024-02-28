@@ -29,6 +29,11 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
             this.type = type;
         }
 
+        public Builder type (String type) {
+            this.type = type;
+            return this;
+        }
+
         public Builder withId(Long id) {
             this.id = id;
             return this;

@@ -21,7 +21,7 @@ public class KioskCollectionTypeConverter {
 
         CollectionType type = toKioskCollectionConverter.toCollectionTypeName(sharedCmsPiece.type());
 
-        KioskCollectionField<String> collectionNameField = toKioskCollectionConverter.toStringField(localizedCmsPiece.locCollectionNameField());
+        KioskCollectionField<String> collectionNameField = toKioskCollectionConverter.toStringField(sharedCmsPiece.collectionNameField());
         KioskCollectionMetadata kioskCollectionMetadata = KioskCollectionMetadata.fromCollectionInternals(localizedCmsPiece.locCollectionInternals());
         
         return new DefaultKioskCollectionType(id, type, collectionNameField, kioskCollectionMetadata);
@@ -34,9 +34,11 @@ public class KioskCollectionTypeConverter {
 
         sharedCmsBuilder.collectionSharedInternals(new CollectionSharedInternals(collInternals.getStatus(), collInternals.getCreatedOn(), collInternals.getLastModified()));
         sharedCmsBuilder.withId(kioskCollection.collectionId());
+        sharedCmsBuilder.type(kioskCollection.kioskCollectionType().toString());
+        sharedCmsBuilder.collectionNameField(toCmsCollectionConverter.toCollectionNameField(kioskCollection.kioskCollectionNameField()));
 
         localizedCmsBuilder.collectionInternals(kioskCollection.kioskCollectionMetadata().getCollectionInternals());
-        localizedCmsBuilder.collectionNameField(toCmsCollectionConverter.toCollectionNameField(kioskCollection.kioskCollectionNameField()));
+        //localizedCmsBuilder.collectionNameField(toCmsCollectionConverter.toCollectionNameField(kioskCollection.kioskCollectionNameField()));
         
         
     }

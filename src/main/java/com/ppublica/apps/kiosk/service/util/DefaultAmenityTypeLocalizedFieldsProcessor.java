@@ -27,7 +27,7 @@ public class DefaultAmenityTypeLocalizedFieldsProcessor {
 
             if(matchingBuilder == null) {
                 matchingBuilder = new DefaultAmenityType.Builder(CollectionType.BATHROOM);
-                matchingBuilder.kioskCollectionMetadata(new KioskCollectionMetadata(localeId, Status.PUBLISHED, LocalDate.now(), LocalDateTime.now()));
+                matchingBuilder.kioskCollectionMetadata(new KioskCollectionMetadata(localeId, null ,Status.PUBLISHED, LocalDate.now(), LocalDateTime.now()));
                 matchingBuilder.collectionNameField(new KioskCollectionField<>(CollectionType.BATHROOM.toString(), false));
                 builders.put(localeId, matchingBuilder);
             }

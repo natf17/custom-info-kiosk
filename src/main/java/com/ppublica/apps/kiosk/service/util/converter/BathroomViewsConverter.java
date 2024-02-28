@@ -16,13 +16,11 @@ public class BathroomViewsConverter {
         KioskImage featureImage = bathroom.featImg().fieldValue();
         BathroomImage image = featureImage != null ? new BathroomImage(featureImage.location(), featureImage.width(), featureImage.height()): null;
 
-        Long svgElemId = bathroom.svgElemId().fieldValue();
-
         return new BathroomView(Long.toString(bathroom.collectionId()), 
                                 bathroom.name().fieldValue(), 
                                 bathroom.gender().fieldValue(),
                                 bathroom.isWheelChairAccessible().fieldValue(),
-                                svgElemId != null ? Long.toString(svgElemId) : null,
+                                bathroom.svgElemId().fieldValue(),
                                 bathroom.note().fieldValue(),
                                 bathroom.location().fieldValue().linkedCollectionId(),
                                 image);
@@ -48,10 +46,10 @@ public class BathroomViewsConverter {
                 nameLoc.add(new LocalizedField(locale, name));
             }
 
-            Long svgElem = bathroom.svgElemId().fieldValue();
+            String svgElem = bathroom.svgElemId().fieldValue();
 
             if(svgElem != null) {
-                svgElemIdLoc.add(new LocalizedField(locale, Long.toString(svgElem)));
+                svgElemIdLoc.add(new LocalizedField(locale, svgElem));
             }
 
             String note = bathroom.note().fieldValue();

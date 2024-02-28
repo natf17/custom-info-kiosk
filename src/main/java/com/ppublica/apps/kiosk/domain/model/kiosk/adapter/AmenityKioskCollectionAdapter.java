@@ -39,7 +39,7 @@ public class AmenityKioskCollectionAdapter extends KioskCollectionTypeBaseAdapte
     }
 
     @Override
-    public KioskCollectionField<Long> svgElemId() {
+    public KioskCollectionField<String> svgElemId() {
         return getAmenity().svgElemId();
     }
 

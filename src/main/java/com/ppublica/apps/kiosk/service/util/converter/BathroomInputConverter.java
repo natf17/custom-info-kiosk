@@ -17,11 +17,9 @@ import com.ppublica.apps.kiosk.service.util.DefaultAmenityTypeLocalizedFieldsPro
 import com.ppublica.apps.kiosk.service.util.GenderInfoProcessor;
 import com.ppublica.apps.kiosk.service.util.ImageKioskFieldCreator;
 import com.ppublica.apps.kiosk.service.util.LinkedCollectionReferenceKioskFieldCreator;
-import com.ppublica.apps.kiosk.service.util.LongKioskFieldCreator;
 import com.ppublica.apps.kiosk.service.util.LongToLinkedCollectionRefTypeConverter;
 import com.ppublica.apps.kiosk.service.util.SameTypeConverter;
 import com.ppublica.apps.kiosk.service.util.StringKioskFieldCreator;
-import com.ppublica.apps.kiosk.service.util.StringToLongTypeConverter;
 
 public class BathroomInputConverter {
     @Autowired
@@ -37,7 +35,7 @@ public class BathroomInputConverter {
         Map<Long, DefaultAmenityType.Builder> amenityBuilders = new HashMap<>();
 
         localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.name(), (builder, field) -> builder.name(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
-        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.svgElemId(), (builder, field) -> builder.svgElemId(field), new StringToLongTypeConverter(), new LongKioskFieldCreator());
+        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.svgElemId(), (builder, field) -> builder.svgElemId(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
         localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.note(), (builder, field) -> builder.note(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
         localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.featImg(), (builder, field) -> builder.featImg(field), new BathroomImageToKioskImageTypeConverter(), new ImageKioskFieldCreator());
 

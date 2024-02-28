@@ -18,7 +18,7 @@ public abstract class AmenityTypeBase extends KioskCollectionTypeBase implements
     }
 
     @Override
-    public KioskCollectionField<Long> svgElemId() {
+    public KioskCollectionField<String> svgElemId() {
         return this.amenity.svgElemId();
     }
 
@@ -47,7 +47,7 @@ public abstract class AmenityTypeBase extends KioskCollectionTypeBase implements
      */
     public static abstract class Builder<B extends Builder<B,M>, M extends AmenityTypeBase> extends KioskCollectionTypeBase.Builder<Builder<B,M>, M> {
         protected KioskCollectionField<KioskImage> featImg;
-        protected KioskCollectionField<Long> svgElemId;
+        protected KioskCollectionField<String> svgElemId;
         protected KioskCollectionField<Boolean> isWheelChairAccessible;
         protected KioskCollectionField<String> name;
         protected KioskCollectionField<String> note;
@@ -65,7 +65,7 @@ public abstract class AmenityTypeBase extends KioskCollectionTypeBase implements
             return self();
         }
 
-        public B svgElemId(KioskCollectionField<Long> editedSvgElemId) {
+        public B svgElemId(KioskCollectionField<String> editedSvgElemId) {
             this.svgElemId = editedSvgElemId;
             return self();
         }

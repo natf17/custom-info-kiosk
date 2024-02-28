@@ -16,7 +16,7 @@ public class DefaultBathroomType extends DefaultAmenityType implements BathroomT
 
     @Override
     public CollectionType kioskCollectionType() {
-        return KIOSK_COLLECTION_TYPE_NAME;
+        return KIOSK_COLLECTION_TYPE;
     }
 
     @Override
