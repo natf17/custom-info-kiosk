@@ -12,9 +12,9 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
 import com.ppublica.apps.kiosk.domain.model.kiosk.LinkedCollectionReference;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
+import com.ppublica.apps.kiosk.service.payloads.ImageInput;
 import com.ppublica.apps.kiosk.service.payloads.LocalizedInputField;
 import com.ppublica.apps.kiosk.service.payloads.bathrooms.BathroomInput;
-import com.ppublica.apps.kiosk.service.views.bathrooms.BathroomImage;
 
 public class BathroomInputConverterTest {
 
@@ -34,8 +34,8 @@ public class BathroomInputConverterTest {
                                         List.of(new LocalizedInputField<>("1", "note_fieldValue"),
                                                 new LocalizedInputField<>("2", "note_fieldValue_es")),
                                         5L,
-                                        List.of(new LocalizedInputField<>("1", new BathroomImage("url", 1, 2)),
-                                                new LocalizedInputField<>("2", new BathroomImage("url_es", 1, 2)))
+                                        List.of(new LocalizedInputField<>("1", new ImageInput("url", 1, 2)),
+                                                new LocalizedInputField<>("2", new ImageInput("url_es", 1, 2)))
                                         );
 
         this.converter = new BathroomInputConverter();

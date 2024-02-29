@@ -24,6 +24,7 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.BathroomType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.BathroomKioskCollectionAdapter;
 import com.ppublica.apps.kiosk.repository.collection.CollectionLocalizedPropertiesRepository;
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
+import com.ppublica.apps.kiosk.service.payloads.ImageInput;
 import com.ppublica.apps.kiosk.service.payloads.LocalizedInputField;
 import com.ppublica.apps.kiosk.service.payloads.bathrooms.BathroomInput;
 import com.ppublica.apps.kiosk.service.util.converter.BathroomInputConverter;
@@ -185,7 +186,7 @@ public class BathroomsDataServiceTest {
                                                 List.of(new LocalizedInputField<>("1", ""), new LocalizedInputField<>("2", "")),
                                                 List.of(new LocalizedInputField<>("1", ""), new LocalizedInputField<>("2", "")),
                                                 10L,
-                                                List.of(new LocalizedInputField<>("1", new BathroomImage(null, null, null)), new LocalizedInputField<>("2", new BathroomImage(null, null, null)))
+                                                List.of(new LocalizedInputField<>("1", new ImageInput(null, null, null)), new LocalizedInputField<>("2", new ImageInput(null, null, null)))
                                                 );
 
         // set an id only to differentiate between the objs 
@@ -229,7 +230,7 @@ public class BathroomsDataServiceTest {
                                                 List.of(new LocalizedInputField<>("1", ""), new LocalizedInputField<>("2", "")),
                                                 List.of(new LocalizedInputField<>("1", ""), new LocalizedInputField<>("2", "")),
                                                 10L,
-                                                List.of(new LocalizedInputField<>("1", new BathroomImage(null, null, null)), new LocalizedInputField<>("2", new BathroomImage(null, null, null)))
+                                                List.of(new LocalizedInputField<>("1", new ImageInput(null, null, null)), new LocalizedInputField<>("2", new ImageInput(null, null, null)))
                                                 );
 
         List<BathroomType> bathrooms = new ArrayList<>();

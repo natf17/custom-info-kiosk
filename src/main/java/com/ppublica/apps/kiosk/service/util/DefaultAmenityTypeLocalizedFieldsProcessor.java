@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
 import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
@@ -14,7 +12,6 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.service.payloads.LocalizedInputField;
 
-@Component
 public class DefaultAmenityTypeLocalizedFieldsProcessor {
     /*
      * S: type of input field 
