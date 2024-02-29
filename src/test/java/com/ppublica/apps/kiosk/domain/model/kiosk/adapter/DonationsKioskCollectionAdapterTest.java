@@ -21,13 +21,10 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.Image;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 import com.ppublica.apps.kiosk.domain.model.kiosk.AmenityType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.BathroomType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultBathroomType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultDonationsPiece;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultDonationsType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DonationsType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.GenderInfo;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
@@ -35,7 +32,6 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.LinkedCollectionReference;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.AmenityConverter;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.DonationsInfoConverter;
-import com.ppublica.apps.kiosk.domain.model.kiosk.converter.GenderConverter;
 
 public class DonationsKioskCollectionAdapterTest {
     LocalDate testDate;
@@ -181,22 +177,22 @@ public class DonationsKioskCollectionAdapterTest {
         Assertions.assertEquals(kioskObj.kioskCollectionMetadata(), donAdapter.kioskCollectionMetadata());
 
     }
-/*
+
     @Test
     public void givenValidKiosk_correctKioskGetters() {
-        BathroomKioskCollectionAdapter brAdapter = new BathroomKioskCollectionAdapter.Builder().kioskCollection(kioskObj).build();
+        DonationsKioskCollectionAdapter donAdapter = new DonationsKioskCollectionAdapter.Builder().kioskCollection(kioskObj).build();
 
-        Assertions.assertEquals(kioskObj.gender(), brAdapter.gender());
-        Assertions.assertEquals(kioskObj.featImg(), brAdapter.featImg());
-        Assertions.assertEquals(kioskObj.svgElemId(), brAdapter.svgElemId());
-        Assertions.assertEquals(kioskObj.isWheelChairAccessible(), brAdapter.isWheelChairAccessible());
-        Assertions.assertEquals(kioskObj.name(), brAdapter.name());
-        Assertions.assertEquals(kioskObj.note(), brAdapter.note());
-        Assertions.assertEquals(kioskObj.location(), brAdapter.location());
-        Assertions.assertEquals(kioskObj.collectionId(), brAdapter.collectionId());
-        Assertions.assertEquals(kioskObj.kioskCollectionType(), brAdapter.kioskCollectionType());
-        Assertions.assertEquals(kioskObj.kioskCollectionNameField(), brAdapter.kioskCollectionNameField());
-        Assertions.assertEquals(kioskObj.kioskCollectionMetadata(), brAdapter.kioskCollectionMetadata());
-    } */
+        Assertions.assertEquals(kioskObj.paymentTypesAccepted(), donAdapter.paymentTypesAccepted());
+        Assertions.assertEquals(kioskObj.featImg(), donAdapter.featImg());
+        Assertions.assertEquals(kioskObj.svgElemId(), donAdapter.svgElemId());
+        Assertions.assertEquals(kioskObj.isWheelChairAccessible(), donAdapter.isWheelChairAccessible());
+        Assertions.assertEquals(kioskObj.name(), donAdapter.name());
+        Assertions.assertEquals(kioskObj.note(), donAdapter.note());
+        Assertions.assertEquals(kioskObj.location(), donAdapter.location());
+        Assertions.assertEquals(kioskObj.collectionId(), donAdapter.collectionId());
+        Assertions.assertEquals(kioskObj.kioskCollectionType(), donAdapter.kioskCollectionType());
+        Assertions.assertEquals(kioskObj.kioskCollectionNameField(), donAdapter.kioskCollectionNameField());
+        Assertions.assertEquals(kioskObj.kioskCollectionMetadata(), donAdapter.kioskCollectionMetadata());
+    }
     
 }
