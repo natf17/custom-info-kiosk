@@ -17,15 +17,15 @@ public class DefaultAmenityTypeLocalizedFieldsProcessor {
      * S: type of input field 
      * T: type of kiosk field that will be added to the builder
      */
-    public <S,T> void processLocalizedFieldsWithBuilder(Map<Long, DefaultAmenityType.Builder> builders, List<LocalizedInputField<S>> localizedFields, KioskFieldBuilderProcessor<T> processor, ValueConverter<S,T> fieldConverter, KioskFieldCreator<T> fieldCreator) {
+    public <S,T> void processLocalizedFieldsWithBuilder(Map<Long, DefaultAmenityType.Builder> builders, List<LocalizedInputField<S>> localizedFields, KioskFieldBuilderProcessor<T> processor, ValueConverter<S,T> fieldConverter, KioskFieldCreator<T> fieldCreator, CollectionType collType) {
         for (LocalizedInputField<S> locField : localizedFields) {
             Long localeId = Long.valueOf(locField.localeId());
             DefaultAmenityType.Builder matchingBuilder = builders.get(localeId);
 
             if(matchingBuilder == null) {
-                matchingBuilder = new DefaultAmenityType.Builder(CollectionType.BATHROOM);
+                matchingBuilder = new DefaultAmenityType.Builder(collType);
                 matchingBuilder.kioskCollectionMetadata(new KioskCollectionMetadata(localeId, null ,Status.PUBLISHED, LocalDate.now(), LocalDateTime.now()));
-                matchingBuilder.collectionNameField(new KioskCollectionField<>(CollectionType.BATHROOM.toString(), false));
+                matchingBuilder.collectionNameField(new KioskCollectionField<>(collType.toString(), false));
                 builders.put(localeId, matchingBuilder);
             }
 

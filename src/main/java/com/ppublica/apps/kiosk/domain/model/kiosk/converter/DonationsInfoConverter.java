@@ -23,7 +23,7 @@ public class DonationsInfoConverter {
 
         for (TextField textField : textFields) {
             if(textField.getFieldType().equals(PAYMENT_TYPES_FIELD_TYPE)) {
-                return new DefaultDonationsPiece(toKioskCollectionConverter.toStringField(textField));
+                return new DefaultDonationsPiece(toKioskCollectionConverter.toStringField(textField, false));
             }
         }
 

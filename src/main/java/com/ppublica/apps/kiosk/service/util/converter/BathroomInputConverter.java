@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ppublica.apps.kiosk.domain.model.kiosk.BathroomType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultBathroomType;
 import com.ppublica.apps.kiosk.service.payloads.bathrooms.BathroomInput;
@@ -22,7 +23,7 @@ public class BathroomInputConverter {
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
     // grabs name from first localized field and sets is as the collection name
     public List<BathroomType> toLocalizedBathrooms(BathroomInput adminInput) {
-        Map<Long, DefaultAmenityType.Builder> amenityBuilders = amenityTypeConverter.toAmenityTypeBuilders(adminInput);
+        Map<Long, DefaultAmenityType.Builder> amenityBuilders = amenityTypeConverter.toAmenityTypeBuilders(adminInput, CollectionType.BATHROOM);
         
         List<BathroomType> bathrooms = new ArrayList<>();
         for(DefaultAmenityType.Builder builder : amenityBuilders.values()) {

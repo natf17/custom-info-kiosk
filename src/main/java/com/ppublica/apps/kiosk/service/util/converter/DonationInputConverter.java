@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultDonationsType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DonationsType;
@@ -21,7 +22,7 @@ public class DonationInputConverter {
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
     // grabs name from first localized field and sets is as the collection name
     public List<DonationsType> toLocalizedDonations(DonationInput adminInput) {
-        Map<Long, DefaultAmenityType.Builder> amenityBuilders = amenityTypeConverter.toAmenityTypeBuilders(adminInput);
+        Map<Long, DefaultAmenityType.Builder> amenityBuilders = amenityTypeConverter.toAmenityTypeBuilders(adminInput, CollectionType.DONATIONS);
 
         List<DonationsType> donations = new ArrayList<>();
         for(DefaultAmenityType.Builder builder : amenityBuilders.values()) {

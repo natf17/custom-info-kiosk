@@ -78,6 +78,23 @@ public class BathroomInputConverterTest {
         Assertions.assertNotNull(bathroomTypeEn.kioskCollectionMetadata().createdOn());
         Assertions.assertNotNull(bathroomTypeEn.kioskCollectionMetadata().lastModified());
 
+        Assertions.assertEquals(new KioskCollectionField<>("gender_field_value", false), bathroomTypeEs.gender());
+        Assertions.assertEquals(new KioskCollectionField<>(new KioskImage("url_es", 1, 2), true), bathroomTypeEs.featImg());
+        Assertions.assertEquals(new KioskCollectionField<>("6_es", true), bathroomTypeEs.svgElemId());
+        Assertions.assertEquals(new KioskCollectionField<>(true, false), bathroomTypeEs.isWheelChairAccessible());
+        Assertions.assertEquals(new KioskCollectionField<>("name_fieldValue_es", true), bathroomTypeEs.name());
+        Assertions.assertEquals(new KioskCollectionField<>("note_fieldValue_es", true), bathroomTypeEs.note());
+        Assertions.assertEquals(new KioskCollectionField<>(new LinkedCollectionReference(5L), false), bathroomTypeEs.location());
+        Assertions.assertEquals(null, bathroomTypeEs.collectionId());
+        Assertions.assertEquals(CollectionType.BATHROOM, bathroomTypeEs.kioskCollectionType());
+        Assertions.assertEquals(new KioskCollectionField<>("BATHROOM", false), bathroomTypeEs.kioskCollectionNameField());
+        Assertions.assertNotNull(bathroomTypeEs.kioskCollectionMetadata());
+        Assertions.assertEquals(2L, bathroomTypeEs.kioskCollectionMetadata().localeId());
+        Assertions.assertEquals(null, bathroomTypeEs.kioskCollectionMetadata().kioskLocale());
+        Assertions.assertEquals(Status.PUBLISHED, bathroomTypeEs.kioskCollectionMetadata().status());
+        Assertions.assertNotNull(bathroomTypeEs.kioskCollectionMetadata().createdOn());
+        Assertions.assertNotNull(bathroomTypeEs.kioskCollectionMetadata().lastModified());
+
 
     }
     

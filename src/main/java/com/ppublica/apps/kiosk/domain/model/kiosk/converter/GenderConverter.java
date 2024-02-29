@@ -23,7 +23,7 @@ public class GenderConverter {
 
         for (TextField textField : textFields) {
             if(textField.getFieldType().equals(GENDER_FIELD_TYPE)) {
-                return new GenderInfo(toKioskCollectionConverter.toStringField(textField));
+                return new GenderInfo(toKioskCollectionConverter.toStringField(textField, false));
             }
         }
 

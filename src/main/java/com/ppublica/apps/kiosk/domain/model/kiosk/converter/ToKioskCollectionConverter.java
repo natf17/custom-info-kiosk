@@ -14,16 +14,24 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
 
 
 public class ToKioskCollectionConverter {
+    public KioskCollectionField<String> toStringField(CollectionNameField collNameField, boolean isLocalizable) {
+        return new KioskCollectionField<String>(collNameField.getFieldValue(), isLocalizable);
+    }
+
     public KioskCollectionField<String> toStringField(CollectionNameField collNameField) {
-        return new KioskCollectionField<String>(collNameField.getFieldValue(), true);
+        return toStringField(collNameField, true);
     }
 
     public KioskCollectionField<KioskImage> toImageField(ImageField imageField) {
         return new KioskCollectionField<KioskImage>(toKioskImage(imageField.getFieldValue()), true);
     }
 
+    public KioskCollectionField<String> toStringField(TextField textField, boolean isLocalizable) {
+        return new KioskCollectionField<String>(textField.getFieldValue(), isLocalizable);
+    }
+    
     public KioskCollectionField<String> toStringField(TextField textField) {
-        return new KioskCollectionField<String>(textField.getFieldValue(), true);
+        return toStringField(textField, true);
     }
 
     public KioskCollectionField<Long> toLongField(NumericField numericField) {

@@ -3,6 +3,7 @@ package com.ppublica.apps.kiosk.service.util.converter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.service.payloads.AmenityInput;
 import com.ppublica.apps.kiosk.service.util.BooleanKioskFieldCreator;
@@ -21,13 +22,13 @@ public class AmenityTypeInputConverter {
     // will return list with >= 1 elements
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
     // grabs name from first localized field and sets is as the collection name
-    public Map<Long, DefaultAmenityType.Builder> toAmenityTypeBuilders(AmenityInput adminInput) {
+    public Map<Long, DefaultAmenityType.Builder> toAmenityTypeBuilders(AmenityInput adminInput, CollectionType collType) {
         Map<Long, DefaultAmenityType.Builder> amenityBuilders = new HashMap<>();
 
-        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.name(), (builder, field) -> builder.name(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
-        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.svgElemId(), (builder, field) -> builder.svgElemId(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
-        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.note(), (builder, field) -> builder.note(field), new SameTypeConverter<String>(), new StringKioskFieldCreator());
-        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.featImg(), (builder, field) -> builder.featImg(field), new ImageInputToKioskImageTypeConverter(), new ImageKioskFieldCreator());
+        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.name(), (builder, field) -> builder.name(field), new SameTypeConverter<String>(), new StringKioskFieldCreator(), collType);
+        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.svgElemId(), (builder, field) -> builder.svgElemId(field), new SameTypeConverter<String>(), new StringKioskFieldCreator(), collType);
+        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.note(), (builder, field) -> builder.note(field), new SameTypeConverter<String>(), new StringKioskFieldCreator(), collType);
+        localizedFieldsProcessor.processLocalizedFieldsWithBuilder(amenityBuilders, adminInput.featImg(), (builder, field) -> builder.featImg(field), new ImageInputToKioskImageTypeConverter(), new ImageKioskFieldCreator(), collType);
 
         localizedFieldsProcessor.processParentFieldWithBuilder(amenityBuilders, adminInput.isWheelchairAccessible(), (builder, field) -> builder.isWheelChairAccessible(field), new SameTypeConverter<Boolean>(), new BooleanKioskFieldCreator());
         localizedFieldsProcessor.processParentFieldWithBuilder(amenityBuilders, adminInput.locationId(), (builder, field) -> builder.location(field), new LongToLinkedCollectionRefTypeConverter(), new LinkedCollectionReferenceKioskFieldCreator());

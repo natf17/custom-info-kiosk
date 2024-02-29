@@ -84,7 +84,7 @@ public class BathroomKioskCollectionAdapterTest {
                                             .location(new KioskCollectionField<LinkedCollectionReference>(new LinkedCollectionReference(5L), true))
                                             .build();
 
-        this.kioskObj = new DefaultBathroomType(amenityType, new GenderInfo(new KioskCollectionField<String>("gender_field_value", true)));
+        this.kioskObj = new DefaultBathroomType(amenityType, new GenderInfo(new KioskCollectionField<String>("gender_field_value", false)));
 
     }
 
