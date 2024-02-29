@@ -32,7 +32,7 @@ public class DefaultAmenityTypeLocalizedFieldsProcessor {
                 builders.put(localeId, matchingBuilder);
             }
 
-            processor.processBuilder(matchingBuilder, fieldCreator.create(fieldConverter.convert(locField.value()), false));
+            processor.processBuilder(matchingBuilder, fieldCreator.create(fieldConverter.convert(locField.value()), true));
             
         }
         

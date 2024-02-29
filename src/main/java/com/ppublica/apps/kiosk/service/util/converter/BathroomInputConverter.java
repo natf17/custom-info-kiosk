@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ppublica.apps.kiosk.domain.model.kiosk.BathroomType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultBathroomType;
@@ -22,11 +20,11 @@ import com.ppublica.apps.kiosk.service.util.SameTypeConverter;
 import com.ppublica.apps.kiosk.service.util.StringKioskFieldCreator;
 
 public class BathroomInputConverter {
-    @Autowired
-    private DefaultAmenityTypeLocalizedFieldsProcessor localizedFieldsProcessor;
 
-    @Autowired
-    private GenderInfoProcessor genderInfoProcessor;
+    private DefaultAmenityTypeLocalizedFieldsProcessor localizedFieldsProcessor = new DefaultAmenityTypeLocalizedFieldsProcessor();
+
+    private GenderInfoProcessor genderInfoProcessor = new GenderInfoProcessor();
+
 
     // will return list with >= 1 elements
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
