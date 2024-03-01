@@ -1,7 +1,7 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk;
 
 /*
- * Represents a full donations type that can be instantiated.
+ * Represents a full first aid type that can be instantiated.
  */
 public class DefaultFirstAidType extends DefaultAmenityType implements FirstAidType {
 
