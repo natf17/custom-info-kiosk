@@ -2,9 +2,9 @@ package com.ppublica.apps.kiosk.service.payloads.firstaid;
 
 import java.util.List;
 
-import com.ppublica.apps.kiosk.service.payloads.LocalizedInput;
+import com.ppublica.apps.kiosk.service.payloads.AmenityInput;
+import com.ppublica.apps.kiosk.service.payloads.ImageInput;
 import com.ppublica.apps.kiosk.service.payloads.LocalizedInputField;
-import com.ppublica.apps.kiosk.service.views.firstaid.FirstAidImage;
 
-public record FirstAidInput(List<LocalizedInput> name, Boolean isWheelchairAccessible, List<LocalizedInput> svgElemId, List<LocalizedInput> note, Long locationId, List<LocalizedInputField<FirstAidImage>> featImg) {}
+public record FirstAidInput(List<LocalizedInputField<String>> name, Boolean isWheelchairAccessible, List<LocalizedInputField<String>> svgElemId, List<LocalizedInputField<String>> note, Long locationId, List<LocalizedInputField<ImageInput>> featImg) implements AmenityInput{}
 

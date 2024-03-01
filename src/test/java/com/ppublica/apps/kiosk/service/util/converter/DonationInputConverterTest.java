@@ -22,7 +22,6 @@ public class DonationInputConverterTest {
     
     @BeforeEach
     public void setup() {
-        ///BathroomInput(List<LocalizedInputField<String>> name, String gender, Boolean isWheelchairAccessible, List<LocalizedInputField<String>> svgElemId, List<LocalizedInputField<String>> note, Long locationId, List<LocalizedInputField<BathroomImage>> featImg) 
 
         this.input = new DonationInput(List.of(new LocalizedInputField<>("1", "name_fieldValue"),
                                                 new LocalizedInputField<>("2", "name_fieldValue_es")),
@@ -41,7 +40,7 @@ public class DonationInputConverterTest {
     }
     
     /*
-     * NOTE the following about the output BathroomType:
+     * NOTE the following about the output donation type:
      *  - kioskLocale is always null
      *  -  the Status is always Published
      *  - the lastModified and createdOn values are always "now"
