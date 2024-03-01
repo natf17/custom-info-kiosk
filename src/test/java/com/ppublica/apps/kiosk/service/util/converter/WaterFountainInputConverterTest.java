@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.FirstAidType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
 import com.ppublica.apps.kiosk.domain.model.kiosk.LinkedCollectionReference;
@@ -15,7 +14,6 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.domain.model.kiosk.WaterFountainType;
 import com.ppublica.apps.kiosk.service.payloads.ImageInput;
 import com.ppublica.apps.kiosk.service.payloads.LocalizedInputField;
-import com.ppublica.apps.kiosk.service.payloads.firstaid.FirstAidInput;
 import com.ppublica.apps.kiosk.service.payloads.waterfountains.WaterFountainInput;
 
 public class WaterFountainInputConverterTest {

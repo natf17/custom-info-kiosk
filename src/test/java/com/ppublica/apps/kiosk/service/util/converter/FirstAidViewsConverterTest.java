@@ -92,14 +92,14 @@ public class FirstAidViewsConverterTest {
     }
     
     @Test
-    public void givenDonationsType_buildView_returnsDonationView() {
+    public void givenFirstAidType_buildView_returnsFirstAidView() {
         FirstAidView viewActual = converter.buildView(firstAidTypeEn);
 
         Assertions.assertEquals(firstAidViewEn, viewActual);
     }
 
     @Test
-    public void givenDonationsTypeList_buildAdminView_returnsDonationAdminView() {
+    public void givenFirstAidTypeList_buildAdminView_returnsFirstAidAdminView() {
         FirstAidAdminView adminViewActual = converter.buildAdminView(List.of(firstAidTypeEn, firstAidTypeEs));
 
         Assertions.assertEquals(firstAidAdminView, adminViewActual);

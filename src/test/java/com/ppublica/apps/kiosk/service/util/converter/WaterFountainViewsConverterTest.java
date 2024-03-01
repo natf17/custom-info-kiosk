@@ -92,14 +92,14 @@ public class WaterFountainViewsConverterTest {
     }
     
     @Test
-    public void givenDonationsType_buildView_returnsDonationView() {
+    public void givenWaterFountainType_buildView_returnsWaterFountainView() {
         WaterFountainView viewActual = converter.buildView(waterFountainTypeEn);
 
         Assertions.assertEquals(waterFountainViewEn, viewActual);
     }
 
     @Test
-    public void givenDonationsTypeList_buildAdminView_returnsDonationAdminView() {
+    public void givenWaterFountainTypeList_buildAdminView_returnsWaterFountainAdminView() {
         WaterFountainAdminView adminViewActual = converter.buildAdminView(List.of(waterFountainTypeEn, waterFountainTypeEs));
 
         Assertions.assertEquals(waterFountainAdminView, adminViewActual);

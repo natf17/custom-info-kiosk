@@ -45,7 +45,7 @@ public class FirstAidInputConverterTest {
      *  - the collection id is always null
      */
     @Test
-    public void givenDonationInput_toLocalizedDonations_returnsDonationsTypeList() {
+    public void givenFirstAidInput_toLocalizedFirstAids_returnsFirstAidTypeList() {
         List<FirstAidType> firstAidTypes = converter.toLocalizedFirstAids(input);
 
         Assertions.assertEquals(2, firstAidTypes.size());
