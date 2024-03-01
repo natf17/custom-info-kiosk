@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultDonationsType;
@@ -13,6 +15,7 @@ import com.ppublica.apps.kiosk.service.util.DonationsInfoProcessor;
 import com.ppublica.apps.kiosk.service.util.SameTypeConverter;
 import com.ppublica.apps.kiosk.service.util.StringKioskFieldCreator;
 
+@Component
 public class DonationInputConverter {
     private DonationsInfoProcessor donationsInfoProcessor = new DonationsInfoProcessor();
     private AmenityTypeInputConverter amenityTypeConverter = new AmenityTypeInputConverter();

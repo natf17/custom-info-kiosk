@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultAmenityType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultFirstAidType;
@@ -14,6 +16,7 @@ import com.ppublica.apps.kiosk.service.payloads.firstaid.FirstAidInput;
 /*
  * This converter only processes fields in the AmenityType
  */
+@Component
 public class FirstAidInputConverter {
     private AmenityTypeInputConverter amenityTypeConverter = new AmenityTypeInputConverter();
 

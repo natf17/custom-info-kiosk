@@ -3,6 +3,8 @@ package com.ppublica.apps.kiosk.service.util.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ppublica.apps.kiosk.domain.model.kiosk.FirstAidType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
 import com.ppublica.apps.kiosk.service.views.LocalizedField;
@@ -11,6 +13,7 @@ import com.ppublica.apps.kiosk.service.views.firstaid.FirstAidAdminView;
 import com.ppublica.apps.kiosk.service.views.firstaid.FirstAidImage;
 import com.ppublica.apps.kiosk.service.views.firstaid.FirstAidView;
 
+@Component
 public class FirstAidViewsConverter {
     public FirstAidView buildView(FirstAidType firstAid) {
         KioskImage featureImage = firstAid.featImg().fieldValue();

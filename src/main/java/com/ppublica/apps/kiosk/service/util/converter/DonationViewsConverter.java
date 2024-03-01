@@ -3,6 +3,8 @@ package com.ppublica.apps.kiosk.service.util.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ppublica.apps.kiosk.domain.model.kiosk.DonationsType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskImage;
 import com.ppublica.apps.kiosk.service.views.LocalizedField;
@@ -11,6 +13,7 @@ import com.ppublica.apps.kiosk.service.views.donations.DonationAdminView;
 import com.ppublica.apps.kiosk.service.views.donations.DonationImage;
 import com.ppublica.apps.kiosk.service.views.donations.DonationView;
 
+@Component
 public class DonationViewsConverter {
     public DonationView buildView(DonationsType donation) {
         KioskImage featureImage = donation.featImg().fieldValue();
