@@ -38,6 +38,12 @@ public class ToKioskCollectionConverter {
         return new KioskCollectionField<Long>(numericField.getFieldValue(), true);
     }
 
+    public KioskCollectionField<Integer> toIntField(NumericField numericField, boolean isLocalizable) {
+        Long value = numericField.getFieldValue();
+    
+        return new KioskCollectionField<Integer>(value != null ? value.intValue() : null, isLocalizable);
+    }
+
     public KioskCollectionField<Boolean> toBooleanField(BooleanField booleanField) {
         return new KioskCollectionField<Boolean>(booleanField.getFieldValue(), true);
     }
