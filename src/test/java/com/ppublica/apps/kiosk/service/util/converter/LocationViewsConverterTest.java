@@ -76,14 +76,14 @@ public class LocationViewsConverterTest {
     }
     
     @Test
-    public void givenFirstAidType_buildView_returnsFirstAidView() {
+    public void givenLocationType_buildView_returnsLocationView() {
         LocationView viewActual = converter.buildView(locationTypeEn);
 
         Assertions.assertEquals(locationViewEn, viewActual);
     }
 
     @Test
-    public void givenFirstAidTypeList_buildAdminView_returnsFirstAidAdminView() {
+    public void givenLocationTypeList_buildAdminView_returnsLocationAdminView() {
         LocationAdminView adminViewActual = converter.buildAdminView(List.of(locationTypeEn, locationTypeEs));
 
         Assertions.assertEquals(locationAdminView, adminViewActual);
