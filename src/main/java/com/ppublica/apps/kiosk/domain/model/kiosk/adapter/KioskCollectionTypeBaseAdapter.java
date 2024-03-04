@@ -20,6 +20,17 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.KioskCollectionTypeConverter;
 
+/*
+ * An adapter class between the CMS collection type (CollectionLocalizedProperties and CollectionSharedProperties) and the Kiosk collection type (KioskCollectionType)
+ * that keeps an instance of each.
+ * 
+ * The adapter will always contain either a CMS or Kiosk collection object, using a converter to build the other.
+ * 
+ * Uses the template pattern when building the CMS collection objects by delegating to extending classes to allow for each to
+ * process the builders using its own kiosk collection type "piece".
+ * 
+ * The Kiosk collection object is built in a layered approach: one piece at a time, each kept in its own class "layer".
+ */
 public class KioskCollectionTypeBaseAdapter implements KioskCollectionType, CollectionLocalizedProperties, CollectionSharedProperties {
 
     private KioskCollectionType baseKioskCollection;
