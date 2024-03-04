@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.service.collection;
+package com.ppublica.apps.kiosk.service;
 
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,7 @@ import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInpu
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
-public class EventSeasonService {
+public class EventSeasonDataService {
     public List<EventSeasonView> getEventSeasons(String locale) {
         /*
         Optional<Page> errorPageOpt = repo.findByPageTypeAndKioskLocale(Error404Page.PAGE_TYPE, locale);

@@ -23,7 +23,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPrope
 import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.LocationKioskCollectionAdapter;
 import com.ppublica.apps.kiosk.repository.collection.CollectionLocalizedPropertiesRepository;
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
-import com.ppublica.apps.kiosk.service.collection.LocationKey;
+import com.ppublica.apps.kiosk.service.util.LocationKey;
 import com.ppublica.apps.kiosk.service.util.converter.LocationInputConverter;
 import com.ppublica.apps.kiosk.service.util.converter.LocationViewsConverter;
 import com.ppublica.apps.kiosk.service.views.LocalizedField;

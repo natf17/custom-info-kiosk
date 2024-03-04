@@ -12,8 +12,8 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.execution.BatchLoaderRegistry;
 import org.springframework.stereotype.Controller;
 
-import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
-import com.ppublica.apps.kiosk.service.collection.SeasonalEventService;
+import com.ppublica.apps.kiosk.service.EventSeasonDataService;
+import com.ppublica.apps.kiosk.service.SeasonalEventDataService;
 import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.data.GraphQLPayload;
 import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
@@ -27,10 +27,10 @@ import reactor.core.publisher.Mono;
 @Controller
 public class SeasonalEventController {
     @Autowired
-    private SeasonalEventService service;
+    private SeasonalEventDataService service;
 
     @Autowired
-    private EventSeasonService seasonService;
+    private EventSeasonDataService seasonService;
 
     public SeasonalEventController(BatchLoaderRegistry registry) {
         registry.forTypePair(Long.class, EventSeasonView.class).registerMappedBatchLoader((eventSeasonIds, batchLoaderEnvironment) -> {

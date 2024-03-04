@@ -1,4 +1,4 @@
-package com.ppublica.apps.kiosk.service.collection;
+package com.ppublica.apps.kiosk.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
-public class SeasonalEventService {
+public class SeasonalEventDataService {
 
     public List<SeasonalEventView> getSeasonalEvents(String locale, String sort) {
         throw new UnsupportedOperationException();

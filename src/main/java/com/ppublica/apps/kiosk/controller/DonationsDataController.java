@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.DonationsDataService;
 import com.ppublica.apps.kiosk.service.LocationsDataService;
-import com.ppublica.apps.kiosk.service.collection.LocationKey;
 import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.donations.DonationPayload;
+import com.ppublica.apps.kiosk.service.util.LocationKey;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.donations.DonationAdminView;
 import com.ppublica.apps.kiosk.service.views.donations.DonationView;

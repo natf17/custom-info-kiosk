@@ -17,7 +17,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 
 import com.ppublica.apps.kiosk.service.LocationsDataService;
 import com.ppublica.apps.kiosk.service.WaterFountainsDataService;
-import com.ppublica.apps.kiosk.service.collection.LocationKey;
+import com.ppublica.apps.kiosk.service.util.LocationKey;
 import com.ppublica.apps.kiosk.service.views.LocalizedField;
 import com.ppublica.apps.kiosk.service.views.LocalizedView;
 import com.ppublica.apps.kiosk.service.views.locations.LocationView;

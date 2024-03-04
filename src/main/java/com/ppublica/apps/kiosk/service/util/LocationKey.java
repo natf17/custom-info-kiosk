@@ -1,3 +1,3 @@
-package com.ppublica.apps.kiosk.service.collection;
+package com.ppublica.apps.kiosk.service.util;
 
 public record LocationKey(Long locationId, String locale) {}

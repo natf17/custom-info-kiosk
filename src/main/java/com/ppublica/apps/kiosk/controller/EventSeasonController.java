@@ -8,7 +8,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
+import com.ppublica.apps.kiosk.service.EventSeasonDataService;
 import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonPayload;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
@@ -19,7 +19,7 @@ import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 public class EventSeasonController {
 
     @Autowired
-    private EventSeasonService service;
+    private EventSeasonDataService service;
     
     @QueryMapping
     public List<EventSeasonView> eventSeasons(@Argument String locale) {

@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.BathroomsDataService;
 import com.ppublica.apps.kiosk.service.LocationsDataService;
-import com.ppublica.apps.kiosk.service.collection.LocationKey;
 import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.bathrooms.BathroomPayload;
+import com.ppublica.apps.kiosk.service.util.LocationKey;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.bathrooms.BathroomAdminView;
 import com.ppublica.apps.kiosk.service.views.bathrooms.BathroomView;

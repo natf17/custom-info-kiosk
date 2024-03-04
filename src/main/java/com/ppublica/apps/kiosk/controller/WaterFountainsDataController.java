@@ -14,9 +14,9 @@ import org.springframework.stereotype.Controller;
 
 import com.ppublica.apps.kiosk.service.LocationsDataService;
 import com.ppublica.apps.kiosk.service.WaterFountainsDataService;
-import com.ppublica.apps.kiosk.service.collection.LocationKey;
 import com.ppublica.apps.kiosk.service.payloads.DeletePayload;
 import com.ppublica.apps.kiosk.service.payloads.waterfountains.WaterFountainPayload;
+import com.ppublica.apps.kiosk.service.util.LocationKey;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.locations.LocationView;
 import com.ppublica.apps.kiosk.service.views.waterfountains.WaterFountainAdminView;

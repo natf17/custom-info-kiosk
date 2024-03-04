@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
-import com.ppublica.apps.kiosk.service.collection.EventSeasonService;
+import com.ppublica.apps.kiosk.service.EventSeasonDataService;
 import com.ppublica.apps.kiosk.service.views.LocalizedField;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
@@ -29,7 +29,7 @@ public class EventSeasonControllerTest {
     private GraphQlTester graphqlTester;
 
     @MockBean
-    private EventSeasonService eventSeasonService;
+    private EventSeasonDataService eventSeasonService;
 
 
     @Test
