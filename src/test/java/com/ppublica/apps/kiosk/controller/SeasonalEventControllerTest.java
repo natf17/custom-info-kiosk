@@ -18,6 +18,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 import com.ppublica.apps.kiosk.service.EventSeasonDataService;
 import com.ppublica.apps.kiosk.service.SeasonalEventDataService;
 import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
+import com.ppublica.apps.kiosk.service.util.LocalizedViewKey;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
@@ -42,9 +43,9 @@ public class SeasonalEventControllerTest {
         seasonalEventsMock.add(new SeasonalEventView(2L, "type", "20240125", "en", 1L));
         seasonalEventsMock.add(new SeasonalEventView(3L, "type", "20240126", "en", 2L));
 
-        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
-        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
-        eventSeasonsMock.put(2L, new EventSeasonView(2L, "type", 4, "theme2", 2023, "", "four days"));
+        Map<LocalizedViewKey,EventSeasonView> eventSeasonsMock = new HashMap<LocalizedViewKey,EventSeasonView>();
+        eventSeasonsMock.put(new LocalizedViewKey(1L, "en"), new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+        eventSeasonsMock.put(new LocalizedViewKey(2L, "en"), new EventSeasonView(2L, "type", 4, "theme2", 2023, "", "four days"));
 
         when(seasonalEventService.getSeasonalEvents("en", "startDate:asc")).thenReturn(seasonalEventsMock);
         when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);
@@ -65,8 +66,8 @@ public class SeasonalEventControllerTest {
         // set up mocks
         Optional<SeasonalEventView> seasonalEventMock = Optional.of(new SeasonalEventView(1L, "type", "20240124", "en", 1L));
     
-        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
-        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+        Map<LocalizedViewKey,EventSeasonView> eventSeasonsMock = new HashMap<>();
+        eventSeasonsMock.put(new LocalizedViewKey(1L, "en"), new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
 
         when(seasonalEventService.getSeasonalEvent(1L, "en")).thenReturn(seasonalEventMock);
         when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);
@@ -116,8 +117,8 @@ public class SeasonalEventControllerTest {
         SeasonalEventView seasonalEventView1Mock = new SeasonalEventView(1L, "type", "20240124", "en", 1L);
         SeasonalEventView seasonalEventView2Mock = new SeasonalEventView(2L, "type", "20240131", "es", 1L);
 
-        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
-        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+        Map<LocalizedViewKey,EventSeasonView> eventSeasonsMock = new HashMap<>();
+        eventSeasonsMock.put(new LocalizedViewKey(1L, "en"), new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
 
         when(seasonalEventService.createSeasonalEventsBatch(any(), any())).thenReturn(List.of(seasonalEventView1Mock, seasonalEventView2Mock));
         when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);
@@ -146,8 +147,8 @@ public class SeasonalEventControllerTest {
         // set up mocks        
         SeasonalEventView seasonalEventView1Mock = new SeasonalEventView(1L, "type", "20240124", "en", 1L);
 
-        Map<Long,EventSeasonView> eventSeasonsMock = new HashMap<Long,EventSeasonView>();
-        eventSeasonsMock.put(1L, new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
+        Map<LocalizedViewKey,EventSeasonView> eventSeasonsMock = new HashMap<>();
+        eventSeasonsMock.put(new LocalizedViewKey(1L, "en"), new EventSeasonView(1L, "type", 3, "theme", 2023, "", "three days"));
 
         when(seasonalEventService.updateSeasonalEvent(any(), any())).thenReturn(seasonalEventView1Mock);
         when(eventSeasonService.getBatchEventSeasons(any())).thenReturn(eventSeasonsMock);

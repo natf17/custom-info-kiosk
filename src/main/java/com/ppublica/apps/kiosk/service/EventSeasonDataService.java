@@ -84,12 +84,8 @@ public class EventSeasonDataService extends LocalizedCollectionServiceBase<Event
         return eventSeasonViewsConverter.buildAdminView(updatedEventSeasonAdapters);
     }
 
-    public Map<Long,EventSeasonView> getBatchEventSeasons(Set<Long> eventSeasonIds) {
-        throw new UnsupportedOperationException();
-    }
-
     // maybe could be optimized?
-    public Map<LocalizedViewKey,EventSeasonView> getBatchLocations(Set<LocalizedViewKey> keys) {
+    public Map<LocalizedViewKey,EventSeasonView> getBatchEventSeasons(Set<LocalizedViewKey> keys) {
         Map<LocalizedViewKey,EventSeasonView> eventSeasonsMap = new HashMap<>();
         for(LocalizedViewKey key : keys) {
             Optional<EventSeasonAdminView> adminViewOpt = getEventSeasonAdmin(key.viewId());
