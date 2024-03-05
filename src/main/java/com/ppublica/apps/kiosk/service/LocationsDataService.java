@@ -99,9 +99,9 @@ public class LocationsDataService extends LocalizedCollectionServiceBase<Locatio
         // locaiton input to location type
         List<? extends LocationType> locations = locationInputConverter.toLocalizedLocations(data);
 
-        List<LocationKioskCollectionAdapter> newBathroomAdapters = save(locations, collSharedPropsRepo, collLocalizedPropsRepo);
+        List<LocationKioskCollectionAdapter> newlocationAdapters = save(locations, collSharedPropsRepo, collLocalizedPropsRepo);
         
-        return locationViewsConverter.buildAdminView(newBathroomAdapters);
+        return locationViewsConverter.buildAdminView(newlocationAdapters);
     }
 
     /*
