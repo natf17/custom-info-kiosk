@@ -1,5 +1,6 @@
 package com.ppublica.apps.kiosk.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,8 +16,10 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.EventSeasonKioskCollec
 import com.ppublica.apps.kiosk.repository.collection.CollectionLocalizedPropertiesRepository;
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
 import com.ppublica.apps.kiosk.service.payloads.data.eventseason.EventSeasonInput;
+import com.ppublica.apps.kiosk.service.util.LocalizedViewKey;
 import com.ppublica.apps.kiosk.service.util.converter.EventSeasonInputConverter;
 import com.ppublica.apps.kiosk.service.util.converter.EventSeasonViewsConverter;
+import com.ppublica.apps.kiosk.service.views.LocalizedField;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonAdminView;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
 
@@ -85,6 +88,26 @@ public class EventSeasonDataService extends LocalizedCollectionServiceBase<Event
         throw new UnsupportedOperationException();
     }
 
+    // maybe could be optimized?
+    public Map<LocalizedViewKey,EventSeasonView> getBatchLocations(Set<LocalizedViewKey> keys) {
+        Map<LocalizedViewKey,EventSeasonView> eventSeasonsMap = new HashMap<>();
+        for(LocalizedViewKey key : keys) {
+            Optional<EventSeasonAdminView> adminViewOpt = getEventSeasonAdmin(key.viewId());
+            
+            if(adminViewOpt.isEmpty()) {
+                eventSeasonsMap.put(key, null);
+                continue;
+            }
+            EventSeasonAdminView adminView = adminViewOpt.get();
+            
+            EventSeasonView view = new EventSeasonView(adminView.id(), adminView.type(), adminView.durationDays(), fieldMatchingLocale(adminView.theme(), key.locale()), adminView.serviceYear(), adminView.seasonYears(), fieldMatchingLocale(adminView.durationText(), key.locale()));
+
+            eventSeasonsMap.put(key, view);
+        }
+
+        return eventSeasonsMap;
+    }
+
     public void deleteEventSeason(Long eventSeasonId) {
         delete(eventSeasonId, collSharedPropsRepo, collLocalizedPropsRepo);
     }
@@ -92,5 +115,14 @@ public class EventSeasonDataService extends LocalizedCollectionServiceBase<Event
     @Override
     protected EventSeasonKioskCollectionAdapter.Builder getAdapterBuilder() {
         return adapterBuilderGenerator.newAdapterBuilder();
+    }
+
+    private String fieldMatchingLocale(List<LocalizedField> fields, String locale) {
+        LocalizedField matchingField =  fields.stream()
+                                                .filter(field -> field.locale().equals(locale))
+                                                .findFirst()
+                                            .get();
+
+        return matchingField != null ? matchingField.value() : null;
     }
 }

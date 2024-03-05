@@ -79,3 +79,4 @@ TODOS:
 - verify that when not provided, the builder will generate a kiosk field with the correct isLocalizable value
 - imporove ugly conversion in event season and location converters (Integer to Long numeric types)
 - add validation for event season types
+- handle batch llocations and event seasons more efficiently
