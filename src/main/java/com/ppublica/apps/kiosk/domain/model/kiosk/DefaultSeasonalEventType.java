@@ -13,11 +13,6 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
     }
 
     @Override
-    public KioskCollectionField<String> seasonType() {
-        return this.seasonalEventInfo.seasonType();
-    }
-
-    @Override
     public KioskCollectionField<LocalDate> startDate() {
         return this.seasonalEventInfo.startDate();
     }
@@ -33,16 +28,10 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
     }
 
     public static class Builder extends KioskCollectionTypeBase.Builder<Builder, DefaultSeasonalEventType> {
-        protected KioskCollectionField<String> seasonType;
         protected KioskCollectionField<LocalDate> startDate;
         protected KioskCollectionField<String> eventLanguage;
         protected KioskCollectionField<Long> seasonId;
             
-        public Builder seasonType(KioskCollectionField<String> seasonType) {
-            this.seasonType = seasonType;
-            return this;
-        }
-
         public Builder startDate(KioskCollectionField<LocalDate> startDate) {
             this.startDate = startDate;
             return this;
@@ -73,7 +62,6 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
         @Override
         protected DefaultSeasonalEventType buildChild(KioskCollectionType kioskCollectionType) {
             SeasonalEvent eventSeasonInfo = new DefaultSeasonalEventPiece.Builder()
-                                                        .seasonType(seasonType)
                                                         .startDate(startDate)
                                                         .eventLanguage(eventLanguage)
                                                         .seasonId(seasonId)

@@ -36,11 +36,6 @@ public class SeasonalEventKioskCollectionAdapter extends KioskCollectionTypeBase
     }
 
     @Override
-    public KioskCollectionField<String> seasonType() {
-        return getSeasonalEventInfo().seasonType();
-    }
-
-    @Override
     public KioskCollectionField<LocalDate> startDate() {
         return getSeasonalEventInfo().startDate();
     }

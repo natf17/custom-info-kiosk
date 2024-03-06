@@ -48,7 +48,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
 
         this.cmsSharedObj = new CollectionSharedPropertiesImpl.Builder("SEASONAL_EVENT")
                                 .collectionNameField(new CollectionNameField("", "Seasonal event"))
-                                .addTextField(new TextField(SeasonalEventInfoConverter.SEASON_TYPE_FIELD_TYPE, "", "type_fieldValue"))
                                 .addTextField(new TextField(SeasonalEventInfoConverter.EVENT_LANG_FIELD_TYPE, "", "eventLang_fieldValue"))
                                 .addNumericField(new NumericField(SeasonalEventInfoConverter.START_DATE_FIELD_TYPE, "", seasonalLong))
                                 .addCollectionRelationship(new CollectionRelationship(seasonId, SeasonalEventInfoConverter.SEASON_TO_EVENT_REL_FIELD_TYPE))
@@ -66,7 +65,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
                                             .id(1L)
                                             .collectionNameField(new KioskCollectionField<String>("Seasonal event", true))
                                             .kioskCollectionMetadata(new KioskCollectionMetadata(enLocaleId, "en", Status.PUBLISHED, testDate, testDateTime))
-                                            .seasonType(new KioskCollectionField<String>("type_fieldValue", false))
                                             .eventLanguage(new KioskCollectionField<String>("eventLang_fieldValue", false))
                                             .startDate(new KioskCollectionField<LocalDate>(seasonalEventDate, false))
                                             .seasonId(new KioskCollectionField<Long>(seasonId, false))
@@ -152,7 +150,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
 
         SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().sharedCmsPiece(cmsSharedObj).localizedCmsPiece(cmsLocObj).build();
 
-        Assertions.assertEquals(kioskObj.seasonType(), seasonalEventAdapter.seasonType());
         Assertions.assertEquals(kioskObj.eventLanguage(), seasonalEventAdapter.eventLanguage());
         Assertions.assertEquals(kioskObj.startDate(), seasonalEventAdapter.startDate());
         Assertions.assertEquals(kioskObj.seasonId(), seasonalEventAdapter.seasonId());
@@ -167,7 +164,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
     public void givenValidKiosk_correctKioskGetters() {
         SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().kioskCollection(kioskObj).build();
 
-        Assertions.assertEquals(kioskObj.seasonType(), seasonalEventAdapter.seasonType());
         Assertions.assertEquals(kioskObj.eventLanguage(), seasonalEventAdapter.eventLanguage());
         Assertions.assertEquals(kioskObj.startDate(), seasonalEventAdapter.startDate());
         Assertions.assertEquals(kioskObj.seasonId(), seasonalEventAdapter.seasonId());

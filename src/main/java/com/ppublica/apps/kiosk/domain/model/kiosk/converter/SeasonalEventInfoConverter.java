@@ -19,7 +19,6 @@ public class SeasonalEventInfoConverter {
     protected ToKioskCollectionConverter toKioskCollectionConverter = new ToKioskCollectionConverter();
 
     // non-localized fields
-    public static final String SEASON_TYPE_FIELD_TYPE = "SeasonType";
     public static final String START_DATE_FIELD_TYPE = "Start_Date";
     public static final String EVENT_LANG_FIELD_TYPE = "EventLanguage";
     public static final String SEASON_TO_EVENT_REL_FIELD_TYPE = "Season:Event";
@@ -44,12 +43,8 @@ public class SeasonalEventInfoConverter {
             }
         }
 
-        KioskCollectionField<String> eventSeasonType = null;
         KioskCollectionField<String> eventLaguange = null;
         for(TextField textField : sharedTextFields) {
-            if(textField.getFieldType().equals(SEASON_TYPE_FIELD_TYPE)) {
-                eventSeasonType = toKioskCollectionConverter.toStringField(textField, false);
-            }
 
             if(textField.getFieldType().equals(EVENT_LANG_FIELD_TYPE)) {
                 eventLaguange = toKioskCollectionConverter.toStringField(textField, false);
@@ -57,7 +52,6 @@ public class SeasonalEventInfoConverter {
         }
 
         return new DefaultSeasonalEventPiece.Builder()
-                                    .seasonType(eventSeasonType)
                                     .startDate(startDate)
                                     .eventLanguage(eventLaguange)
                                     .seasonId(eventSeasonId)
@@ -68,7 +62,6 @@ public class SeasonalEventInfoConverter {
     public void transferKioskRepToCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, CollectionLocalizedPropertiesImpl.Builder localizedCmsBuilder, SeasonalEvent seasonalEventInfo) {
 
         sharedCmsBuilder.addNumericField(toCmsCollectionConverter.toNumericFieldFromDate(seasonalEventInfo.startDate(), START_DATE_FIELD_TYPE))
-                        .addTextField(toCmsCollectionConverter.toTextField(seasonalEventInfo.seasonType(), SEASON_TYPE_FIELD_TYPE))
                         .addTextField(toCmsCollectionConverter.toTextField(seasonalEventInfo.eventLanguage(), EVENT_LANG_FIELD_TYPE))
                         .addCollectionRelationship(toCmsCollectionConverter.toCollectionRelationship(seasonalEventInfo.seasonId(), SEASON_TO_EVENT_REL_FIELD_TYPE))
                         ;
