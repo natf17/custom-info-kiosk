@@ -7,6 +7,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
+import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionRelationship;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedInternals;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
@@ -46,6 +47,12 @@ public class KioskCollectionTypeBaseAdapter implements KioskCollectionType, Coll
             this.cmsPieces = new CmsPieces(sharedCmsPiece, localizedCmsPiece);
         }
     }
+
+    @Override
+    public List<CollectionRelationship> collectionRelationships() {
+        return getSharedCmsPiece().collectionRelationships();
+    }
+
     @Override
     public CollectionSharedProperties withId(Long id) {
         return getSharedCmsPiece().withId(id);

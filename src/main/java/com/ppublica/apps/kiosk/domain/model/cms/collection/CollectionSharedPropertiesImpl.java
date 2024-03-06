@@ -7,10 +7,15 @@ import java.util.List;
 
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 
-public record CollectionSharedPropertiesImpl(Long id, String type, String subType, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields, List<ImageField> imageFields, CollectionSharedInternals collectionSharedInternals, List<LinkedCollectionField> linkedCollectionFields) implements CollectionSharedProperties {
+public record CollectionSharedPropertiesImpl(Long id, String type, String subType, CollectionNameField collectionNameField, List<TextField> textFields, List<NumericField> numericFields, List<BooleanField> booleanFields, List<ImageField> imageFields, CollectionSharedInternals collectionSharedInternals, List<LinkedCollectionField> linkedCollectionFields, List<CollectionRelationship> collectionRelationships) implements CollectionSharedProperties {
     @Override
     public CollectionSharedProperties withId(Long id) {
-        return new CollectionSharedPropertiesImpl(id, this.type, this.subType, this.collectionNameField, this.textFields, this.numericFields, this.booleanFields, this.imageFields, this.collectionSharedInternals, this.linkedCollectionFields);
+        return new CollectionSharedPropertiesImpl(id, this.type, this.subType, this.collectionNameField, this.textFields, this.numericFields, this.booleanFields, this.imageFields, this.collectionSharedInternals, this.linkedCollectionFields, this.collectionRelationships);
+    }
+
+    @Override
+    public List<CollectionRelationship> collectionRelationships() {
+        return List.of();
     }
     
     public static class Builder {
@@ -24,6 +29,7 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
         private List<ImageField> imageFields = new ArrayList<>();
         private CollectionSharedInternals collectionSharedInternals;
         private List<LinkedCollectionField> linkedCollectionFields = new ArrayList<>();
+        private List<CollectionRelationship> collectionRelationships = new ArrayList<>();
 
         public Builder(String type) {
             this.type = type;
@@ -119,6 +125,19 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
             return this;
         }
 
+        public Builder collectionRelationships(List<CollectionRelationship> collectionRelationships) {
+            if(collectionRelationships == null) {
+                throw new RuntimeException("A non-null argument is required");
+            }
+            this.collectionRelationships = collectionRelationships;
+            return this;
+        }
+
+        public Builder addCollectionRelationships(CollectionRelationship collectionRelationship) {
+            this.collectionRelationships.add(collectionRelationship);
+            return this;
+        }
+
         
 
         public CollectionSharedProperties build() {
@@ -128,7 +147,7 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
                 collectionSharedInternals = new CollectionSharedInternals(PageStatus.DRAFT, LocalDate.now(), LocalDateTime.now());
             }
 
-            return new CollectionSharedPropertiesImpl(id, type, subType, collectionNameField, textFields, numericFields, booleanFields, imageFields, collectionSharedInternals, linkedCollectionFields);
+            return new CollectionSharedPropertiesImpl(id, type, subType, collectionNameField, textFields, numericFields, booleanFields, imageFields, collectionSharedInternals, linkedCollectionFields, collectionRelationships);
         }
     }
 

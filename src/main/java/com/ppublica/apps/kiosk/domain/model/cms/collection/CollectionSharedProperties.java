@@ -24,4 +24,6 @@ public interface CollectionSharedProperties {
     CollectionSharedInternals collectionSharedInternals();
 
     List<LinkedCollectionField> linkedCollectionFields();
+
+    List<CollectionRelationship> collectionRelationships();
 }
