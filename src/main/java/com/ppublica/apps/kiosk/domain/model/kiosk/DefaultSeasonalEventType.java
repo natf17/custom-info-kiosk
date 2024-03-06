@@ -1,5 +1,7 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk;
 
+import java.time.LocalDate;
+
 public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements SeasonalEventType{
     public static final CollectionType KIOSK_COLLECTION_TYPE_NAME = CollectionType.SEASONAL_EVENT;
 
@@ -16,7 +18,7 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
     }
 
     @Override
-    public KioskCollectionField<Long> startDate() {
+    public KioskCollectionField<LocalDate> startDate() {
         return this.seasonalEventInfo.startDate();
     }
 
@@ -32,7 +34,7 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
 
     public static class Builder extends KioskCollectionTypeBase.Builder<Builder, DefaultSeasonalEventType> {
         protected KioskCollectionField<String> seasonType;
-        protected KioskCollectionField<Long> startDate;
+        protected KioskCollectionField<LocalDate> startDate;
         protected KioskCollectionField<String> eventLanguage;
         protected KioskCollectionField<Long> seasonId;
             
@@ -41,7 +43,7 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
             return this;
         }
 
-        public Builder startDate(KioskCollectionField<Long> startDate) {
+        public Builder startDate(KioskCollectionField<LocalDate> startDate) {
             this.startDate = startDate;
             return this;
         }

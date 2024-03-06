@@ -1,7 +1,10 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk.converter;
 
+import java.time.LocalDate;
+
 import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
+import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionRelationship;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
@@ -25,12 +28,21 @@ public class ToCmsCollectionConverter {
         return new NumericField(fieldType, fieldType, field.fieldValue());
     }
 
+    public NumericField toNumericFieldFromDate(KioskCollectionField<LocalDate> field, String fieldType) {
+        Long dateValue = field.fieldValue() != null ? field.fieldValue().toEpochDay() : null;
+        return new NumericField(fieldType, fieldType, dateValue);
+    }
+
     public ImageField toImageField(KioskCollectionField<KioskImage> field, String fieldType) {
         return new ImageField(fieldType, fieldType, toCmsImage(field.fieldValue()));
     }
 
     public BooleanField toBooleanField(KioskCollectionField<Boolean> field, String fieldType) {
         return new BooleanField(fieldType, fieldType, field.fieldValue());
+    }
+
+    public CollectionRelationship toCollectionRelationship(KioskCollectionField<Long> field, String relationshipType) {
+        return new CollectionRelationship(field.fieldValue(), relationshipType);
     }
 
     public LinkedCollectionField toLinkedCollectionField(KioskCollectionField<LinkedCollectionReference> field, String fieldType) {

@@ -1,9 +1,11 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk;
 
-public record DefaultSeasonalEventPiece(KioskCollectionField<String> seasonType, KioskCollectionField<Long> startDate, KioskCollectionField<String> eventLanguage, KioskCollectionField<Long> seasonId) implements SeasonalEvent {
+import java.time.LocalDate;
+
+public record DefaultSeasonalEventPiece(KioskCollectionField<String> seasonType, KioskCollectionField<LocalDate> startDate, KioskCollectionField<String> eventLanguage, KioskCollectionField<Long> seasonId) implements SeasonalEvent {
     public static class Builder {
         protected KioskCollectionField<String> seasonType;
-        protected KioskCollectionField<Long> startDate;
+        protected KioskCollectionField<LocalDate> startDate;
         protected KioskCollectionField<String> eventLanguage;
         protected KioskCollectionField<Long> seasonId;
             
@@ -12,7 +14,7 @@ public record DefaultSeasonalEventPiece(KioskCollectionField<String> seasonType,
             return this;
         }
 
-        public Builder startDate(KioskCollectionField<Long> startDate) {
+        public Builder startDate(KioskCollectionField<LocalDate> startDate) {
             this.startDate = startDate;
             return this;
         }
@@ -41,7 +43,7 @@ public record DefaultSeasonalEventPiece(KioskCollectionField<String> seasonType,
             }
                 
             if(startDate == null) {   
-                startDate = new KioskCollectionField<Long>(null, true);
+                startDate = new KioskCollectionField<LocalDate>(null, true);
             }
 
             if(eventLanguage == null) {   

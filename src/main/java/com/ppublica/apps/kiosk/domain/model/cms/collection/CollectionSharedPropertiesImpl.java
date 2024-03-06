@@ -12,11 +12,6 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
     public CollectionSharedProperties withId(Long id) {
         return new CollectionSharedPropertiesImpl(id, this.type, this.subType, this.collectionNameField, this.textFields, this.numericFields, this.booleanFields, this.imageFields, this.collectionSharedInternals, this.linkedCollectionFields, this.collectionRelationships);
     }
-
-    @Override
-    public List<CollectionRelationship> collectionRelationships() {
-        return List.of();
-    }
     
     public static class Builder {
         private Long id;
@@ -133,7 +128,7 @@ public record CollectionSharedPropertiesImpl(Long id, String type, String subTyp
             return this;
         }
 
-        public Builder addCollectionRelationships(CollectionRelationship collectionRelationship) {
+        public Builder addCollectionRelationship(CollectionRelationship collectionRelationship) {
             this.collectionRelationships.add(collectionRelationship);
             return this;
         }

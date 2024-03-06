@@ -1,7 +1,10 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk.converter;
 
+import java.time.LocalDate;
+
 import com.ppublica.apps.kiosk.domain.model.cms.collection.BooleanField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
+import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionRelationship;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.ImageField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.LinkedCollectionField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.NumericField;
@@ -34,8 +37,18 @@ public class ToKioskCollectionConverter {
         return toStringField(textField, true);
     }
 
+    public KioskCollectionField<LocalDate> toLocalDateField(NumericField numericField, boolean isLocalizable) {
+        Long date = numericField.getFieldValue();
+        LocalDate localDate = date != null ? LocalDate.ofEpochDay(date) : null;
+        return new KioskCollectionField<LocalDate>(localDate, isLocalizable);
+    }
+
     public KioskCollectionField<Long> toLongField(NumericField numericField) {
         return new KioskCollectionField<Long>(numericField.getFieldValue(), true);
+    }
+
+    public KioskCollectionField<Long> toLongField(CollectionRelationship collectionRelationship) {
+        return new KioskCollectionField<Long>(collectionRelationship.relatedEntityId(), false);
     }
 
     public KioskCollectionField<Integer> toIntField(NumericField numericField, boolean isLocalizable) {

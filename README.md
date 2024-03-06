@@ -80,3 +80,4 @@ TODOS:
 - imporove ugly conversion in event season and location converters (Integer to Long numeric types)
 - add validation for event season types
 - handle batch llocations and event seasons more efficiently
+- add test for new cms shared props method (adapter tests)
