@@ -81,3 +81,7 @@ TODOS:
 - add validation for event season types
 - handle batch llocations and event seasons more efficiently
 - add test for new cms shared props method (adapter tests)
+- LocalizedFieldsProcessor processParent method should not expect list of builders to be empty
+- the app should have a default locale and locale id for use by for example SeasonalEventInputConverter
+since collection metadata requires a localeId even fir non-localizable types
+- transition converters to LocalizedFieldsProcessor
