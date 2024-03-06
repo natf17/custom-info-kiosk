@@ -135,12 +135,10 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
                                     .map(kioskCollection -> {
                                         if(kioskCollection == null) {
                                             throw new RuntimeException("kioskCollection null");
-                                        } else if(kioskCollection != null){
-                                            //throw new RuntimeException("eee..." + kioskCollection);
                                         }
-                                                return getAdapterBuilder()
-                                                            .kioskCollection(kioskCollection)
-                                                            .build();
+                                        return getAdapterBuilder()
+                                                    .kioskCollection(kioskCollection)
+                                                    .build();
                                     })
                                     .collect(Collectors.toList());
         

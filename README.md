@@ -83,5 +83,11 @@ TODOS:
 - add test for new cms shared props method (adapter tests)
 - LocalizedFieldsProcessor processParent method should not expect list of builders to be empty
 - the app should have a default locale and locale id for use by for example SeasonalEventInputConverter
-since collection metadata requires a localeId even fir non-localizable types
+since collection metadata requires a localeId even for non-localizable types
 - transition converters to LocalizedFieldsProcessor
+- NonLocalizedCollectionServiceBase doesn't use the localized props; seasonal event type shouldnt either!
+We shouldn't have to use an empty collection localized props instance to use adapters
+- on same note as above, fix seasonalEventViewsConverter methods to assume no locale
+- fix localized service base -> collection type should not be set to bathroom
+- incorporate SeasonalEventAdminView into controller class
+- test NonLocalizedCollectionServiceBase
