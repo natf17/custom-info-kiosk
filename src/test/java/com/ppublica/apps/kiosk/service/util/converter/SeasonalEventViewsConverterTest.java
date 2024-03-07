@@ -2,7 +2,6 @@ package com.ppublica.apps.kiosk.service.util.converter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,10 +44,10 @@ public class SeasonalEventViewsConverterTest {
                                             .seasonId(new KioskCollectionField<>(10L, false))
                                             .build();
 
-        this.seasonalEventView = new SeasonalEventView(1L, null, eventDate.toString(), "eventLang", 10L);
+        this.seasonalEventView = new SeasonalEventView(1L, eventDate.toString(), "eventLang", 10L);
 
 
-        this.seasonalEventAdminView = new SeasonalEventAdminView(1L, null, eventDate.toString(),"eventLang", 10L);
+        this.seasonalEventAdminView = new SeasonalEventAdminView(1L, eventDate.toString(),"eventLang", 10L);
 
     }
     
@@ -62,7 +61,7 @@ public class SeasonalEventViewsConverterTest {
     // only testing with one vew
     @Test
     public void givenSeasonalEventTypeList_buildAdminView_returnsSeasonalEventAdminView() {
-        SeasonalEventAdminView adminViewActual = converter.buildAdminView(List.of(seasonalEventType));
+        SeasonalEventAdminView adminViewActual = converter.buildAdminView(seasonalEventType);
 
         Assertions.assertEquals(seasonalEventAdminView, adminViewActual);
 

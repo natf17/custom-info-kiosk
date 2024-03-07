@@ -32,8 +32,7 @@ public class SeasonalEventDataService extends NonLocalizedCollectionServiceBase<
     @Autowired
     private AdapterBuilderGenerator<SeasonalEventKioskCollectionAdapter.Builder> adapterBuilderGenerator;
 
-    // TODO: remove locale
-    public List<SeasonalEventView> getSeasonalEvents(String locale, String sort) {
+    public List<SeasonalEventView> getSeasonalEvents(String sort) {
         List<SeasonalEventView> seasonalEventViews = loadAdapters(CollectionType.SEASONAL_EVENT, collSharedPropsRepo)
                                                 .stream()
                                                 .map(seasonalevent -> seasonalEventViewsConverter.buildView(seasonalevent))
@@ -43,8 +42,7 @@ public class SeasonalEventDataService extends NonLocalizedCollectionServiceBase<
         return seasonalEventViews;
     }
 
-    //TODO: remove seasonLocale
-    public Optional<SeasonalEventView> getSeasonalEvent(Long seasonalEventId, String seasonLocale) {
+    public Optional<SeasonalEventView> getSeasonalEvent(Long seasonalEventId) {
         SeasonalEventKioskCollectionAdapter adapter = loadAdapter(seasonalEventId, collSharedPropsRepo);
 
         if(adapter == null) {
@@ -54,8 +52,21 @@ public class SeasonalEventDataService extends NonLocalizedCollectionServiceBase<
         return Optional.of(seasonalEventViewsConverter.buildView(adapter));
     }
 
-    public List<SeasonalEventView> createSeasonalEventsBatch(Long eventSeasonId, List<SeasonalEventInput> data) {
-        throw new UnsupportedOperationException();
+    public Optional<SeasonalEventAdminView> getSeasonalEventAdmin(Long seasonalEventId) {
+        SeasonalEventKioskCollectionAdapter adapter = loadAdapter(seasonalEventId, collSharedPropsRepo);
+
+        if(adapter == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(seasonalEventViewsConverter.buildAdminView(adapter));
+    }
+
+    // TODO: optimize by passing directly to repo
+    public List<SeasonalEventAdminView> createSeasonalEventsBatch(Long eventSeasonId, List<SeasonalEventInput> data) {
+        return data.stream()
+                    .map(input -> createSeasonalEvent(eventSeasonId, input))
+                    .collect(Collectors.toList());
     }
 
     public SeasonalEventAdminView createSeasonalEvent(Long eventSeasonId, SeasonalEventInput data) {
@@ -64,7 +75,7 @@ public class SeasonalEventDataService extends NonLocalizedCollectionServiceBase<
 
         SeasonalEventKioskCollectionAdapter newSeasonalEventAdapter = save(seasonalEvent, collSharedPropsRepo);
         
-        return seasonalEventViewsConverter.buildAdminView(List.of(newSeasonalEventAdapter));
+        return seasonalEventViewsConverter.buildAdminView(newSeasonalEventAdapter);
     }
 
     public SeasonalEventAdminView updateSeasonalEvent(Long seasonalEventId, SeasonalEventInput data) {
@@ -72,7 +83,7 @@ public class SeasonalEventDataService extends NonLocalizedCollectionServiceBase<
 
         SeasonalEventKioskCollectionAdapter updatedSeasonalEventAdapter = update(seasonalEvent, seasonalEventId, collSharedPropsRepo);
 
-        return seasonalEventViewsConverter.buildAdminView(List.of(updatedSeasonalEventAdapter));
+        return seasonalEventViewsConverter.buildAdminView(updatedSeasonalEventAdapter);
     }
 
     public void deleteSeasonalEvent(Long seasonalEventId) {

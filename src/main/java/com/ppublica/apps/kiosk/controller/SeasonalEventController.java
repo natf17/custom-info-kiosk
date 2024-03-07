@@ -21,6 +21,7 @@ import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEvent
 import com.ppublica.apps.kiosk.service.util.LocalizedViewKey;
 import com.ppublica.apps.kiosk.service.views.MessageResponse;
 import com.ppublica.apps.kiosk.service.views.data.eventseason.EventSeasonView;
+import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventAdminView;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventView;
 
 import graphql.schema.DataFetchingEnvironment;
@@ -45,7 +46,7 @@ public class SeasonalEventController {
     public List<SeasonalEventView> seasonalEvents(@Argument String locale, @Argument String sort, DataFetchingEnvironment env) {
         env.getGraphQlContext().put("locale", locale);
 
-        List<SeasonalEventView> seasonalEventsView = service.getSeasonalEvents(locale, sort);
+        List<SeasonalEventView> seasonalEventsView = service.getSeasonalEvents(sort);
 
         return seasonalEventsView;
     }
@@ -54,23 +55,32 @@ public class SeasonalEventController {
     public SeasonalEventView seasonalEvent(@Argument String locale, @Argument Long id, DataFetchingEnvironment env) {
         env.getGraphQlContext().put("locale", locale);
 
-        SeasonalEventView seasonalEventView = service.getSeasonalEvent(id, locale).get();
+        SeasonalEventView seasonalEventView = service.getSeasonalEvent(id).get();
 
         return seasonalEventView;
     }
 
+    @QueryMapping
+    public SeasonalEventAdminView seasonalEventAdmin(@Argument String locale, @Argument Long id, DataFetchingEnvironment env) {
+        env.getGraphQlContext().put("locale", locale);
+
+        SeasonalEventAdminView seasonalEventAdminView = service.getSeasonalEventAdmin(id).get();
+
+        return seasonalEventAdminView;
+    }
+
     @MutationMapping
-    public List<SeasonalEventView> createSeasonalEvents(@Argument Long eventSeasonId, @Argument GraphQLPayload<List<SeasonalEventInput>> input, DataFetchingEnvironment env) {
+    public List<SeasonalEventAdminView> createSeasonalEvents(@Argument Long eventSeasonId, @Argument GraphQLPayload<List<SeasonalEventInput>> input, DataFetchingEnvironment env) {
         env.getGraphQlContext().put("locale", "en");
-        List<SeasonalEventView> newSeasonalEventViews = service.createSeasonalEventsBatch(eventSeasonId, input.data());
+        List<SeasonalEventAdminView> newSeasonalEventViews = service.createSeasonalEventsBatch(eventSeasonId, input.data());
 
         return newSeasonalEventViews;
     }
 
     @MutationMapping
-    public SeasonalEventView updateSeasonalEvent(@Argument Long seasonalEventId, @Argument SeasonalEventPayload input, DataFetchingEnvironment env) {
+    public SeasonalEventAdminView updateSeasonalEvent(@Argument Long seasonalEventId, @Argument SeasonalEventPayload input, DataFetchingEnvironment env) {
         env.getGraphQlContext().put("locale", "en");
-        SeasonalEventView updatedSeasonalEventView = service.updateSeasonalEvent(seasonalEventId, input.data());
+        SeasonalEventAdminView updatedSeasonalEventView = service.updateSeasonalEvent(seasonalEventId, input.data());
 
         return updatedSeasonalEventView;
     }
@@ -87,6 +97,27 @@ public class SeasonalEventController {
     public CompletableFuture<EventSeasonView> event_season(DataFetchingEnvironment env, SeasonalEventView seasonalEvent, DataLoader<LocalizedViewKey, EventSeasonView> loader) {
         String locale = env.getGraphQlContext().get("locale");
         return loader.load(new LocalizedViewKey(seasonalEvent.seasonId(), locale));
+
+    }
+
+    @SchemaMapping(typeName = "SeasonalEventAdmin", field="event_season")
+    public CompletableFuture<EventSeasonView> event_seasonAdmin(DataFetchingEnvironment env, SeasonalEventAdminView seasonalEventAdmin, DataLoader<LocalizedViewKey, EventSeasonView> loader) {
+        String locale = env.getGraphQlContext().get("locale");
+        return loader.load(new LocalizedViewKey(seasonalEventAdmin.seasonId(), locale));
+
+    }
+
+    @SchemaMapping(typeName = "SeasonalEvent")
+    public CompletableFuture<String> seasonalType(DataFetchingEnvironment env, SeasonalEventView seasonalEvent, DataLoader<LocalizedViewKey, EventSeasonView> loader) {
+        String locale = env.getGraphQlContext().get("locale");
+        return loader.load(new LocalizedViewKey(seasonalEvent.seasonId(), locale)).thenApply(event -> event.type());
+
+    }
+
+    @SchemaMapping(typeName = "SeasonalEventAdmin", field = "seasonalType")
+    public CompletableFuture<String> seasonalTypeAdmin(DataFetchingEnvironment env, SeasonalEventAdminView seasonalEventAdmin, DataLoader<LocalizedViewKey, EventSeasonView> loader) {
+        String locale = env.getGraphQlContext().get("locale");
+        return loader.load(new LocalizedViewKey(seasonalEventAdmin.seasonId(), locale)).thenApply(event -> event.type());
 
     }
 

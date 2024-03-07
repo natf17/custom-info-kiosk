@@ -4,6 +4,7 @@ type Query {
     eventSeasons(locale: String): [EventSeason]
     seasonalEvents(locale: String, sort: String): [SeasonalEvent]
     seasonalEvent(locale: String, id: ID!): SeasonalEvent
+    seasonalEventAdmin(locale: String, id: ID!): SeasonalEventAdmin
     eventsPage(locale: String): EventsPage
     homePage(locale: String): HomePage
     mapPage(locale: String): MapPage
@@ -29,8 +30,8 @@ type Query {
 
 type Mutation {
     createEventSeason(input: EventSeasonPayload): EventSeasonAdmin
-    createSeasonalEvents(eventSeasonId: ID, input: SeasonalEventPayload) : [SeasonalEvent]
-    updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEvent
+    createSeasonalEvents(eventSeasonId: ID, input: SeasonalEventPayload) : [SeasonalEventAdmin]
+    updateSeasonalEvent(seasonalEventId: ID, input: SeasonalEventPutPayload) : SeasonalEventAdmin
     deleteSeasonalEvent(input: DeletePayload) : MessageResponse
     updateEventSeason(eventSeasonId: ID, input: EventSeasonPayload): EventSeasonAdmin
     deleteEventSeason(input: DeletePayload) : MessageResponse
@@ -137,6 +138,14 @@ input EventSeasonPayload {
 }
 
 type SeasonalEvent {
+    id: ID
+    seasonalType: String
+    startDate: String
+    eventLanguage: String
+    event_season: EventSeason
+}
+
+type SeasonalEventAdmin {
     id: ID
     seasonalType: String
     startDate: String

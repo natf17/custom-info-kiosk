@@ -1,7 +1,5 @@
 package com.ppublica.apps.kiosk.service.util.converter;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEventType;
@@ -13,20 +11,17 @@ public class SeasonalEventViewsConverter {
     public SeasonalEventView buildView(SeasonalEventType seasonalEvent) {
 
         return new SeasonalEventView(seasonalEvent.collectionId(), 
-                                null, 
                                 seasonalEvent.startDate().fieldValue() != null ? seasonalEvent.startDate().fieldValue().toString(): null,
                                 seasonalEvent.eventLanguage().fieldValue(),
                                 seasonalEvent.seasonId().fieldValue()
                                 );
     }
 
-    // expects at least one element in the list
-    public SeasonalEventAdminView buildAdminView(List<? extends SeasonalEventType> seasonalEvents) {
-        SeasonalEventType arbitarySeasonEvent = seasonalEvents.get(0);
+    public SeasonalEventAdminView buildAdminView(SeasonalEventType seasonalEvent) {
 
-        SeasonalEventView seasonalEventView = buildView(arbitarySeasonEvent);
+        SeasonalEventView seasonalEventView = buildView(seasonalEvent);
         
 
-        return new SeasonalEventAdminView(seasonalEventView.id(), null, seasonalEventView.startDate(), seasonalEventView.eventLanguage(), seasonalEventView.seasonId());
+        return new SeasonalEventAdminView(seasonalEventView.id(), seasonalEventView.startDate(), seasonalEventView.eventLanguage(), seasonalEventView.seasonId());
     }
 }
