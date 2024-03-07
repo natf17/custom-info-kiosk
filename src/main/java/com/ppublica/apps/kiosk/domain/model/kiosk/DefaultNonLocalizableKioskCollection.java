@@ -3,19 +3,15 @@ package com.ppublica.apps.kiosk.domain.model.kiosk;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/*
- * Represents a full base kiosk collection that can be instantiated.
- */
-public class DefaultKioskCollection implements KioskCollectionType {
-
+public class DefaultNonLocalizableKioskCollection implements NonLocalizableKioskCollectionType {
     private Long collectionId;
     private CollectionType type;
     private KioskCollectionField<String> collectionNameField;
-    private KioskCollectionMetadata kioskCollectionMetadata;
+    private NonLocalizableKioskCollectionMetadata kioskCollectionMetadata;
 
     public static String COLLECTION_NAME_FIELD_NAME_DEFAULT = "Collection Name";
 
-    private DefaultKioskCollection(CollectionType type, KioskCollectionField<String> collectionNameField, KioskCollectionMetadata kioskCollectionMetadata, Long collectionId) {
+    private DefaultNonLocalizableKioskCollection(CollectionType type, KioskCollectionField<String> collectionNameField, NonLocalizableKioskCollectionMetadata kioskCollectionMetadata, Long collectionId) {
         this.collectionId = collectionId;
         this.type = type;
         this.collectionNameField = collectionNameField;
@@ -38,7 +34,7 @@ public class DefaultKioskCollection implements KioskCollectionType {
     }
 
     @Override
-    public KioskCollectionMetadata kioskCollectionMetadata() {
+    public NonLocalizableKioskCollectionMetadata kioskCollectionMetadata() {
         return this.kioskCollectionMetadata;
     }
 
@@ -49,12 +45,11 @@ public class DefaultKioskCollection implements KioskCollectionType {
 
         protected KioskCollectionField<String> collectionNameField;
 
-        protected KioskCollectionMetadata kioskCollectionMetadata;
+        protected NonLocalizableKioskCollectionMetadata kioskCollectionMetadata;
         private Status status;
         private LocalDate createdOn;
         private LocalDateTime lastModified;
-        private Long kioskLocaleId;
-        private String kioskLocale;
+
 
         protected Builder(CollectionType type) {
             this.type = type;
@@ -71,7 +66,7 @@ public class DefaultKioskCollection implements KioskCollectionType {
             return this;
         }
 
-        public Builder kioskCollectionMetadata(KioskCollectionMetadata kioskCollectionMetadata) {
+        public Builder kioskCollectionMetadata(NonLocalizableKioskCollectionMetadata kioskCollectionMetadata) {
             this.kioskCollectionMetadata = kioskCollectionMetadata;
             return this;
         }
@@ -91,20 +86,10 @@ public class DefaultKioskCollection implements KioskCollectionType {
             return this;
         }
 
-        public Builder withLocaleId(Long kioskLocaleId) {
-            this.kioskLocaleId = kioskLocaleId;
-            return this;
-        }
-
-        public Builder locale(String kioskLocale) {
-            this.kioskLocale = kioskLocale;
-            return this;
-        }
-
-        public KioskCollectionType build() {
+        public NonLocalizableKioskCollectionType build() {
             validateAndPrepare();
                
-            return new DefaultKioskCollection(type, collectionNameField, kioskCollectionMetadata, id);
+            return new DefaultNonLocalizableKioskCollection(type, collectionNameField, kioskCollectionMetadata, id);
         }
 
 
@@ -141,11 +126,7 @@ public class DefaultKioskCollection implements KioskCollectionType {
                     throw new RuntimeException("CreatedOn cannot be after lastModified");
                 }
 
-                if(this.kioskLocaleId == null) {
-                    throw new RuntimeException("Locale id is required");
-                }
-
-                kioskCollectionMetadata = new KioskCollectionMetadata(kioskLocaleId, kioskLocale, status, createdOn, lastModified);
+                kioskCollectionMetadata = new NonLocalizableKioskCollectionMetadata(status, createdOn, lastModified);
 
             }
 
@@ -157,5 +138,4 @@ public class DefaultKioskCollection implements KioskCollectionType {
         }
 
     }
-    
 }

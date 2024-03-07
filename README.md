@@ -89,5 +89,4 @@ since collection metadata requires a localeId even for non-localizable types
 We shouldn't have to use an empty collection localized props instance to use adapters
 - on same note as above, fix seasonalEventViewsConverter methods to assume no locale
 - fix localized service base -> collection type should not be set to bathroom
-- incorporate SeasonalEventAdminView into controller class
 - test NonLocalizedCollectionServiceBase

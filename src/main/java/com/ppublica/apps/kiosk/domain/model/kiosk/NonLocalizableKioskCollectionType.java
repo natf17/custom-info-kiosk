@@ -1,16 +1,14 @@
 package com.ppublica.apps.kiosk.domain.model.kiosk;
 
 /*
- * A localizable kiosk collection type.
+ * The non-localizable equivalent of KioskCollectionType
  */
-public interface KioskCollectionType {
-
+public interface NonLocalizableKioskCollectionType {
     Long collectionId();
 
     CollectionType kioskCollectionType();
 
     KioskCollectionField<String> kioskCollectionNameField();
 
-    KioskCollectionMetadata kioskCollectionMetadata();
-
+    NonLocalizableKioskCollectionMetadata kioskCollectionMetadata();
 }

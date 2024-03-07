@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /*
- * Base class for composite kiosk collections that are localizable.
+ * The non-localizable equivalent of KioskCollectionTypeBase.
  */
-public abstract class KioskCollectionTypeBase implements KioskCollectionType {
-    private KioskCollectionType kioskCollectionType;
+public abstract class NonLocalizableKioskCollectionTypeBase implements NonLocalizableKioskCollectionType {
+    private NonLocalizableKioskCollectionType kioskCollectionType;
 
     @Override
     public Long collectionId() {
@@ -25,26 +25,25 @@ public abstract class KioskCollectionTypeBase implements KioskCollectionType {
     }
 
     @Override
-    public KioskCollectionMetadata kioskCollectionMetadata() {
+    public NonLocalizableKioskCollectionMetadata kioskCollectionMetadata() {
         return this.kioskCollectionType.kioskCollectionMetadata();
     }
 
-    protected KioskCollectionTypeBase(KioskCollectionType kioskCollectionType) {
+    protected NonLocalizableKioskCollectionTypeBase(NonLocalizableKioskCollectionType kioskCollectionType) {
         this.kioskCollectionType = kioskCollectionType;
     }
 
-    public static abstract class Builder<B extends Builder<B, M>, M extends KioskCollectionTypeBase> {
+    public static abstract class Builder<B extends Builder<B, M>, M extends NonLocalizableKioskCollectionTypeBase> {
         protected Long id;
 
         protected CollectionType type;
 
         protected KioskCollectionField<String> collectionNameField;
 
-        protected KioskCollectionMetadata kioskCollectionMetadata;
+        protected NonLocalizableKioskCollectionMetadata kioskCollectionMetadata;
         private Status status;
         private LocalDate createdOn;
         private LocalDateTime lastModified;
-        private Long kioskLocaleId;
 
         protected Builder(CollectionType type) {
             this.type = type;
@@ -60,7 +59,7 @@ public abstract class KioskCollectionTypeBase implements KioskCollectionType {
             return self();
         }
 
-        public B kioskCollectionMetadata(KioskCollectionMetadata kioskCollectionMetadata) {
+        public B kioskCollectionMetadata(NonLocalizableKioskCollectionMetadata kioskCollectionMetadata) {
             this.kioskCollectionMetadata = kioskCollectionMetadata;
             return self();
         }
@@ -80,27 +79,21 @@ public abstract class KioskCollectionTypeBase implements KioskCollectionType {
             return self();
         }
 
-        public B withLocaleId(Long kioskLocaleId) {
-            this.kioskLocaleId = kioskLocaleId;
-            return self();
-        }
-
         public M build() {
             validateAndPrepare();
 
-            DefaultKioskCollection.Builder kioskCollectionBuilder = new DefaultKioskCollection.Builder(type)
+            DefaultNonLocalizableKioskCollection.Builder kioskCollectionBuilder = new DefaultNonLocalizableKioskCollection.Builder(type)
                                                                     .collectionNameField(collectionNameField)
                                                                     .id(id);
             if(this.kioskCollectionMetadata == null) {
                 kioskCollectionBuilder.status(status)
                                         .createdOn(createdOn)
-                                        .withLocaleId(kioskLocaleId)
                                         .lastModified(lastModified);
             } else {
                 kioskCollectionBuilder.kioskCollectionMetadata(kioskCollectionMetadata);
             }
             
-            KioskCollectionType kioskCollectionType = kioskCollectionBuilder.build();
+            NonLocalizableKioskCollectionType kioskCollectionType = kioskCollectionBuilder.build();
 
             return buildChild(kioskCollectionType);
         }
@@ -116,7 +109,7 @@ public abstract class KioskCollectionTypeBase implements KioskCollectionType {
 
         protected abstract void validateAndPrepareChild();
 
-        protected abstract M buildChild(KioskCollectionType kioskCollectionType);
+        protected abstract M buildChild(NonLocalizableKioskCollectionType kioskCollectionType);
 
         protected abstract B self();        
 
