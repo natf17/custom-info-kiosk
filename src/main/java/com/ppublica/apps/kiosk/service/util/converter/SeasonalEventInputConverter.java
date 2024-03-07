@@ -9,6 +9,7 @@ import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultSeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
+import com.ppublica.apps.kiosk.domain.model.kiosk.NonLocalizableKioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.service.payloads.data.seasonalevent.SeasonalEventInput;
@@ -18,14 +19,13 @@ import com.ppublica.apps.kiosk.service.util.StringToLocalDateConverter;
 
 @Component
 public class SeasonalEventInputConverter {
-    private Long defaultLocaleId = 1L;
 
     // will return list with >= 1 elements
     // always creates a KioskCollectionMetadata with published status and a creation/last modified time of "now"
     // grabs name from first localized field and sets is as the collection name
     public SeasonalEventType toSeasonalEvent(SeasonalEventInput adminInput) {
         DefaultSeasonalEventType seasonalEvent = new DefaultSeasonalEventType.Builder()
-                                                                    .kioskCollectionMetadata(new KioskCollectionMetadata(defaultLocaleId, null, Status.PUBLISHED, LocalDate.now(), LocalDateTime.now()))
+                                                                    .kioskCollectionMetadata(new NonLocalizableKioskCollectionMetadata( Status.PUBLISHED, LocalDate.now(), LocalDateTime.now()))
                                                                     .collectionNameField(new KioskCollectionField<>(CollectionType.SEASONAL_EVENT.toString(), false))
                                                                     .startDate(new LocalDateKioskFieldCreator()
                                                                                         .create(new StringToLocalDateConverter()

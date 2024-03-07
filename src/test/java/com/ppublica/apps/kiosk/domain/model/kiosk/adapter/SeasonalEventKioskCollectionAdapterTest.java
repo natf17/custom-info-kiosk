@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionNameField;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionRelationship;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedInternals;
@@ -20,7 +17,7 @@ import com.ppublica.apps.kiosk.domain.model.cms.collection.TextField;
 import com.ppublica.apps.kiosk.domain.model.cms.pages.PageStatus;
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultSeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
+import com.ppublica.apps.kiosk.domain.model.kiosk.NonLocalizableKioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.SeasonalEventInfoConverter;
@@ -29,7 +26,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
     LocalDate testDate;
     LocalDateTime testDateTime;
     Long enLocaleId = 5L;
-    CollectionLocalizedProperties cmsLocObj;
     CollectionSharedProperties cmsSharedObj;
 
     SeasonalEventType kioskObj;
@@ -55,16 +51,12 @@ public class SeasonalEventKioskCollectionAdapterTest {
                                 .collectionSharedInternals(new CollectionSharedInternals(PageStatus.PUBLISHED, testDate, testDateTime))
                                 .build();
         
-        this.cmsLocObj = new CollectionLocalizedPropertiesImpl.Builder(1L)
-                                .collectionInternals(new CollectionInternals(enLocaleId, "en", PageStatus.PUBLISHED, testDate, testDateTime))
-                                .build();
-        
 
 
         this.kioskObj = new DefaultSeasonalEventType.Builder()
                                             .id(1L)
                                             .collectionNameField(new KioskCollectionField<String>("Seasonal event", true))
-                                            .kioskCollectionMetadata(new KioskCollectionMetadata(enLocaleId, "en", Status.PUBLISHED, testDate, testDateTime))
+                                            .kioskCollectionMetadata(new NonLocalizableKioskCollectionMetadata(Status.PUBLISHED, testDate, testDateTime))
                                             .eventLanguage(new KioskCollectionField<String>("eventLang_fieldValue", false))
                                             .startDate(new KioskCollectionField<LocalDate>(seasonalEventDate, false))
                                             .seasonId(new KioskCollectionField<Long>(seasonId, false))
@@ -75,7 +67,7 @@ public class SeasonalEventKioskCollectionAdapterTest {
     @Test
     public void givenValidCms_correctCmsGetters() {
 
-        SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().sharedCmsPiece(cmsSharedObj).localizedCmsPiece(cmsLocObj).build();
+        SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().sharedCmsPiece(cmsSharedObj).build();
 
         Assertions.assertEquals(cmsSharedObj.id(), seasonalEventAdapter.id());
         Assertions.assertEquals(cmsSharedObj.withId(1L), seasonalEventAdapter.withId(1L));
@@ -89,16 +81,6 @@ public class SeasonalEventKioskCollectionAdapterTest {
         Assertions.assertEquals(cmsSharedObj.linkedCollectionFields(), seasonalEventAdapter.linkedCollectionFields());
         Assertions.assertEquals(cmsSharedObj.collectionSharedInternals(), seasonalEventAdapter.collectionSharedInternals());
         Assertions.assertEquals(cmsSharedObj.collectionRelationships(), seasonalEventAdapter.collectionRelationships());
-
-        Assertions.assertEquals(cmsLocObj.locWithId(2L), seasonalEventAdapter.locWithId(2L));
-        Assertions.assertEquals(cmsLocObj.locId(), seasonalEventAdapter.locId());
-        Assertions.assertEquals(cmsLocObj.locCollectionNameField(), seasonalEventAdapter.locCollectionNameField());
-        Assertions.assertEquals(cmsLocObj.locNumericFields(), seasonalEventAdapter.locNumericFields());
-        Assertions.assertEquals(cmsLocObj.locBooleanFields(), seasonalEventAdapter.locBooleanFields());
-        Assertions.assertEquals(cmsLocObj.locTextFields(), seasonalEventAdapter.locTextFields());
-        Assertions.assertEquals(cmsLocObj.locImageFields(), seasonalEventAdapter.locImageFields());
-        Assertions.assertEquals(cmsLocObj.parentId(), seasonalEventAdapter.parentId());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals(), seasonalEventAdapter.locCollectionInternals());
  
     }
 
@@ -125,30 +107,13 @@ public class SeasonalEventKioskCollectionAdapterTest {
         Assertions.assertEquals(cmsSharedObj.collectionSharedInternals().getCreatedOn(), seasonalEventAdapter.collectionSharedInternals().getCreatedOn());
         Assertions.assertEquals(cmsSharedObj.collectionSharedInternals().getLastModified(), seasonalEventAdapter.collectionSharedInternals().getLastModified());
         Assertions.assertEquals(cmsSharedObj.collectionRelationships().size(), seasonalEventAdapter.collectionRelationships().size());
-
-        Assertions.assertNotNull(seasonalEventAdapter.locWithId(2L));
-        Assertions.assertNull(seasonalEventAdapter.locId());
-        Assertions.assertEquals(cmsLocObj.locCollectionNameField(), seasonalEventAdapter.locCollectionNameField()); // both null
-        Assertions.assertEquals(cmsLocObj.locNumericFields().size(), seasonalEventAdapter.locNumericFields().size());
-        Assertions.assertEquals(cmsLocObj.locBooleanFields().size(), seasonalEventAdapter.locBooleanFields().size());
-        Assertions.assertEquals(cmsLocObj.locTextFields().size(), seasonalEventAdapter.locTextFields().size());
-        Assertions.assertEquals(cmsLocObj.locImageFields().size(), seasonalEventAdapter.locImageFields().size());
-        Assertions.assertEquals(cmsLocObj.parentId(), seasonalEventAdapter.parentId());
-        Assertions.assertNotNull(seasonalEventAdapter.locCollectionInternals());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals().getKioskLocaleId(), seasonalEventAdapter.locCollectionInternals().getKioskLocaleId());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals().getKioskLocale(), seasonalEventAdapter.locCollectionInternals().getKioskLocale());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals().getCreatedOn(), seasonalEventAdapter.locCollectionInternals().getCreatedOn());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals().getLastModified(), seasonalEventAdapter.locCollectionInternals().getLastModified());
-        Assertions.assertEquals(cmsLocObj.locCollectionInternals().getStatus(), seasonalEventAdapter.locCollectionInternals().getStatus());
- 
-
         
     }
 
     @Test
     public void givenValidCms_correctKioskGetters() {
 
-        SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().sharedCmsPiece(cmsSharedObj).localizedCmsPiece(cmsLocObj).build();
+        SeasonalEventKioskCollectionAdapter seasonalEventAdapter = new SeasonalEventKioskCollectionAdapter.Builder().sharedCmsPiece(cmsSharedObj).build();
 
         Assertions.assertEquals(kioskObj.eventLanguage(), seasonalEventAdapter.eventLanguage());
         Assertions.assertEquals(kioskObj.startDate(), seasonalEventAdapter.startDate());

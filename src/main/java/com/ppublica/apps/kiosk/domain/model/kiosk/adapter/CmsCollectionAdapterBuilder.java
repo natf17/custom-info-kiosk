@@ -44,7 +44,7 @@ public abstract class CmsCollectionAdapterBuilder<B extends CmsCollectionAdapter
             return buildChild();
         }
 
-        throw new RuntimeException("The cms pieces and the bathroom type cannot both be null.");
+        throw new RuntimeException("The cms pieces and the kiosk type cannot both be null.");
     }
 
     protected abstract S buildChild();

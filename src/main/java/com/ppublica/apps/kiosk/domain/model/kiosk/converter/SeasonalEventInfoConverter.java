@@ -3,8 +3,6 @@ package com.ppublica.apps.kiosk.domain.model.kiosk.converter;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionRelationship;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
@@ -24,7 +22,7 @@ public class SeasonalEventInfoConverter {
     public static final String SEASON_TO_EVENT_REL_FIELD_TYPE = "Season:Event";
 
 
-    public SeasonalEvent convert(CollectionSharedProperties sharedCmsPiece, CollectionLocalizedProperties localizedCmsPiece) {
+    public SeasonalEvent convert(CollectionSharedProperties sharedCmsPiece) {
         List<NumericField> sharedNumericFields = sharedCmsPiece.numericFields();
         List<TextField> sharedTextFields = sharedCmsPiece.textFields();
         List<CollectionRelationship> sharedRelationships = sharedCmsPiece.collectionRelationships();
@@ -59,7 +57,7 @@ public class SeasonalEventInfoConverter {
         
     }
 
-    public void transferKioskRepToCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, CollectionLocalizedPropertiesImpl.Builder localizedCmsBuilder, SeasonalEvent seasonalEventInfo) {
+    public void transferKioskRepToCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, SeasonalEvent seasonalEventInfo) {
 
         sharedCmsBuilder.addNumericField(toCmsCollectionConverter.toNumericFieldFromDate(seasonalEventInfo.startDate(), START_DATE_FIELD_TYPE))
                         .addTextField(toCmsCollectionConverter.toTextField(seasonalEventInfo.eventLanguage(), EVENT_LANG_FIELD_TYPE))

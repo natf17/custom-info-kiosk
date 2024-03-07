@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import com.ppublica.apps.kiosk.domain.model.kiosk.DefaultSeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionMetadata;
+import com.ppublica.apps.kiosk.domain.model.kiosk.NonLocalizableKioskCollectionMetadata;
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.Status;
 import com.ppublica.apps.kiosk.service.views.data.seasonalevent.SeasonalEventAdminView;
@@ -38,7 +38,7 @@ public class SeasonalEventViewsConverterTest {
         seasonalEventType = new DefaultSeasonalEventType.Builder()
                                             .id(1L)
                                             .collectionNameField(new KioskCollectionField<String>("Event season", false))
-                                            .kioskCollectionMetadata(new KioskCollectionMetadata(enLocaleId, "en", Status.PUBLISHED, testDate, testDateTime))
+                                            .kioskCollectionMetadata(new NonLocalizableKioskCollectionMetadata(Status.PUBLISHED, testDate, testDateTime))
                                             .startDate(new KioskCollectionField<>(LocalDate.of(2024, 3, 6), false))
                                             .eventLanguage(new KioskCollectionField<>("eventLang", false))
                                             .seasonId(new KioskCollectionField<>(10L, false))

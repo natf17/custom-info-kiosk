@@ -77,16 +77,13 @@ Kiosk Collections -> CMS `SimpleCollectionType`s/`DataCollectionType`s
 TODOS:
 - determine usefulness of the isLocalizable prop
 - verify that when not provided, the builder will generate a kiosk field with the correct isLocalizable value
-- imporove ugly conversion in event season and location converters (Integer to Long numeric types)
+- imporove ugly conversion in event season and location converters (e.g. Integer to Long numeric types)
 - add validation for event season types
-- handle batch llocations and event seasons more efficiently
+- handle batch locations and event seasons more efficiently
 - add test for new cms shared props method (adapter tests)
 - LocalizedFieldsProcessor processParent method should not expect list of builders to be empty
-- the app should have a default locale and locale id for use by for example SeasonalEventInputConverter
-since collection metadata requires a localeId even for non-localizable types
+- the app should have a default locale and locale id
 - transition converters to LocalizedFieldsProcessor
-- NonLocalizedCollectionServiceBase doesn't use the localized props; seasonal event type shouldnt either!
-We shouldn't have to use an empty collection localized props instance to use adapters
 - on same note as above, fix seasonalEventViewsConverter methods to assume no locale
 - fix localized service base -> collection type should not be set to bathroom
 - test NonLocalizedCollectionServiceBase

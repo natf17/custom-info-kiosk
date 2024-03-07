@@ -45,8 +45,6 @@ public class SeasonalEventInputConverterTest {
         Assertions.assertEquals(CollectionType.SEASONAL_EVENT, seasonalEventType.kioskCollectionType());
         Assertions.assertEquals(new KioskCollectionField<>("SEASONAL_EVENT", false), seasonalEventType.kioskCollectionNameField());
         Assertions.assertNotNull(seasonalEventType.kioskCollectionMetadata());
-        Assertions.assertNotNull(seasonalEventType.kioskCollectionMetadata().localeId());
-        Assertions.assertNull(seasonalEventType.kioskCollectionMetadata().kioskLocale());
         Assertions.assertEquals(Status.PUBLISHED, seasonalEventType.kioskCollectionMetadata().status());
         Assertions.assertNotNull(seasonalEventType.kioskCollectionMetadata().createdOn());
         Assertions.assertNotNull(seasonalEventType.kioskCollectionMetadata().lastModified());

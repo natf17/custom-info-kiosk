@@ -2,37 +2,35 @@ package com.ppublica.apps.kiosk.domain.model.kiosk.adapter;
 
 import java.time.LocalDate;
 
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionField;
-import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.NonLocalizableKioskCollectionType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEvent;
 import com.ppublica.apps.kiosk.domain.model.kiosk.SeasonalEventType;
 import com.ppublica.apps.kiosk.domain.model.kiosk.converter.SeasonalEventInfoConverter;
 
-public class SeasonalEventKioskCollectionAdapter extends KioskCollectionTypeBaseAdapter implements SeasonalEventType {
+public class SeasonalEventKioskCollectionAdapter extends NonLocalizableKioskCollectionTypeBaseAdapter implements SeasonalEventType {
     private SeasonalEvent seasonalEventInfo;
 
     private SeasonalEventInfoConverter seasonalEventInfoConverter = new SeasonalEventInfoConverter();
 
 
-    public SeasonalEventKioskCollectionAdapter(SeasonalEvent seasonalEventInfo, KioskCollectionType baseKioskCollection, CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
-        super(baseKioskCollection, localizedCmsPiece, sharedCmsPiece);
+    public SeasonalEventKioskCollectionAdapter(SeasonalEvent seasonalEventInfo, NonLocalizableKioskCollectionType baseKioskCollection, CollectionSharedProperties sharedCmsPiece) {
+        super(baseKioskCollection, sharedCmsPiece);
         this.seasonalEventInfo = seasonalEventInfo;
     }
 
     public SeasonalEventKioskCollectionAdapter(SeasonalEventType seasonalEventType) {
-        this(seasonalEventType, seasonalEventType, null, null);
+        this(seasonalEventType, seasonalEventType, null);
     }
 
-    public SeasonalEventKioskCollectionAdapter(SeasonalEvent seasonalEventInfo, KioskCollectionType baseKioskCollection) {
-        this(seasonalEventInfo, baseKioskCollection, null, null);
+    public SeasonalEventKioskCollectionAdapter(SeasonalEvent seasonalEventInfo, NonLocalizableKioskCollectionType baseKioskCollection) {
+        this(seasonalEventInfo, baseKioskCollection, null);
     }
 
-    public SeasonalEventKioskCollectionAdapter(CollectionLocalizedProperties localizedCmsPiece, CollectionSharedProperties sharedCmsPiece) {
-        this(null, null, localizedCmsPiece, sharedCmsPiece);
+    public SeasonalEventKioskCollectionAdapter(CollectionSharedProperties sharedCmsPiece) {
+        this(null, null, sharedCmsPiece);
     }
 
     @Override
@@ -51,8 +49,8 @@ public class SeasonalEventKioskCollectionAdapter extends KioskCollectionTypeBase
     }
 
     @Override
-    protected void processCmsBuilders(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder, CollectionLocalizedPropertiesImpl.Builder localizedCmsBuilder) {
-        seasonalEventInfoConverter.transferKioskRepToCmsBuilders(sharedCmsBuilder, localizedCmsBuilder, this.seasonalEventInfo);
+    protected void processCmsBuilder(CollectionSharedPropertiesImpl.Builder sharedCmsBuilder) {
+        seasonalEventInfoConverter.transferKioskRepToCmsBuilders(sharedCmsBuilder, this.seasonalEventInfo);
 
     }
 
@@ -65,14 +63,14 @@ public class SeasonalEventKioskCollectionAdapter extends KioskCollectionTypeBase
     }
 
     protected void buildAndSetLocation() {
-        this.seasonalEventInfo = seasonalEventInfoConverter.convert(getSharedCmsPiece(), getLocalizedCmsPiece());
+        this.seasonalEventInfo = seasonalEventInfoConverter.convert(getSharedCmsPiece());
     }
 
-     public static class Builder extends CmsCollectionAdapterBuilder<Builder, SeasonalEventType, SeasonalEventKioskCollectionAdapter> {
+     public static class Builder extends NonLocalizableCmsCollectionAdapterBuilder<Builder, SeasonalEventType, SeasonalEventKioskCollectionAdapter> {
 
         @Override
         protected SeasonalEventKioskCollectionAdapter buildChild() {
-            return new SeasonalEventKioskCollectionAdapter(super.kioskCollection, super.kioskCollection, super.localizedCmsPiece, super.sharedCmsPiece);
+            return new SeasonalEventKioskCollectionAdapter(super.kioskCollection, super.kioskCollection, super.sharedCmsPiece);
         }
 
         @Override

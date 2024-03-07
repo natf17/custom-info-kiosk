@@ -2,12 +2,12 @@ package com.ppublica.apps.kiosk.domain.model.kiosk;
 
 import java.time.LocalDate;
 
-public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements SeasonalEventType{
+public class DefaultSeasonalEventType extends NonLocalizableKioskCollectionTypeBase implements SeasonalEventType {
     public static final CollectionType KIOSK_COLLECTION_TYPE_NAME = CollectionType.SEASONAL_EVENT;
 
     private SeasonalEvent seasonalEventInfo;
 
-    protected DefaultSeasonalEventType(KioskCollectionType kioskCollectionType, SeasonalEvent seasonalEventInfo) {
+    protected DefaultSeasonalEventType(NonLocalizableKioskCollectionType kioskCollectionType, SeasonalEvent seasonalEventInfo) {
         super(kioskCollectionType);
         this.seasonalEventInfo = seasonalEventInfo;
     }
@@ -27,7 +27,7 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
         return this.seasonalEventInfo.seasonId();
     }
 
-    public static class Builder extends KioskCollectionTypeBase.Builder<Builder, DefaultSeasonalEventType> {
+    public static class Builder extends NonLocalizableKioskCollectionTypeBase.Builder<Builder, DefaultSeasonalEventType> {
         protected KioskCollectionField<LocalDate> startDate;
         protected KioskCollectionField<String> eventLanguage;
         protected KioskCollectionField<Long> seasonId;
@@ -60,7 +60,7 @@ public class DefaultSeasonalEventType extends KioskCollectionTypeBase implements
         }
 
         @Override
-        protected DefaultSeasonalEventType buildChild(KioskCollectionType kioskCollectionType) {
+        protected DefaultSeasonalEventType buildChild(NonLocalizableKioskCollectionType kioskCollectionType) {
             SeasonalEvent eventSeasonInfo = new DefaultSeasonalEventPiece.Builder()
                                                         .startDate(startDate)
                                                         .eventLanguage(eventLanguage)

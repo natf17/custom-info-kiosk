@@ -3,17 +3,14 @@ package com.ppublica.apps.kiosk.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionInternals;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedProperties;
-import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionLocalizedPropertiesImpl;
 import com.ppublica.apps.kiosk.domain.model.cms.collection.CollectionSharedProperties;
 import com.ppublica.apps.kiosk.domain.model.kiosk.CollectionType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.KioskCollectionType;
-import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.CmsCollectionAdapterBuilder;
-import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.KioskCollectionTypeBaseAdapter;
+import com.ppublica.apps.kiosk.domain.model.kiosk.NonLocalizableKioskCollectionType;
+import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.NonLocalizableCmsCollectionAdapterBuilder;
+import com.ppublica.apps.kiosk.domain.model.kiosk.adapter.NonLocalizableKioskCollectionTypeBaseAdapter;
 import com.ppublica.apps.kiosk.repository.collection.CollectionSharedPropertiesRepository;
 
-public abstract class NonLocalizedCollectionServiceBase <T extends KioskCollectionTypeBaseAdapter, U extends KioskCollectionType, B extends CmsCollectionAdapterBuilder<B, U, T>> {
+public abstract class NonLocalizedCollectionServiceBase <T extends NonLocalizableKioskCollectionTypeBaseAdapter, U extends NonLocalizableKioskCollectionType, B extends NonLocalizableCmsCollectionAdapterBuilder<B, U, T>> {
     /*
      * Requires CollectionSharedProperties to have an id
      */
@@ -49,7 +46,6 @@ public abstract class NonLocalizedCollectionServiceBase <T extends KioskCollecti
     private T createAdapter(CollectionSharedProperties sharedPropsInstance, B builder) {
 
         return builder.sharedCmsPiece(sharedPropsInstance)
-                    .localizedCmsPiece(getEmptyCollectionLocalizedProperties())
                 .build();
     }
 
@@ -87,10 +83,5 @@ public abstract class NonLocalizedCollectionServiceBase <T extends KioskCollecti
     
     protected abstract B getAdapterBuilder();
 
-    protected CollectionLocalizedProperties getEmptyCollectionLocalizedProperties() {
-        return new CollectionLocalizedPropertiesImpl.Builder(null)
-                        .collectionInternals(new CollectionInternals(null, null, null, null, null))
-                        .build();
-    }
 
 }
