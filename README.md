@@ -84,6 +84,4 @@ TODOS:
 - LocalizedFieldsProcessor processParent method should not expect list of builders to be empty
 - the app should have a default locale and locale id
 - transition converters to LocalizedFieldsProcessor
-- on same note as above, fix seasonalEventViewsConverter methods to assume no locale
-- fix localized service base -> collection type should not be set to bathroom
 - test NonLocalizedCollectionServiceBase

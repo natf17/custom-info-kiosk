@@ -52,7 +52,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
     }
 
     protected List<T> loadAdapters(CollectionType type, String locale, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
-        List<CmsLocalizedEntityHolder> cmsLocalizedEntityHolders = getLocalizedCmsObjects(CollectionType.BATHROOM, locale, collSharedPropsRepo, collLocalizedPropsRepo);
+        List<CmsLocalizedEntityHolder> cmsLocalizedEntityHolders = getLocalizedCmsObjects(type, locale, collSharedPropsRepo, collLocalizedPropsRepo);
         List<T> adapters = cmsLocalizedEntityHolders
                                 .stream()
                                 .map(localizedCmsHolder -> createAdapter(localizedCmsHolder, getAdapterBuilder()))
@@ -103,7 +103,7 @@ public abstract class LocalizedCollectionServiceBase<T extends KioskCollectionTy
     }
 
     protected List<List<T>> loadListOfAdaptersList(CollectionType type, CollectionSharedPropertiesRepository collSharedPropsRepo, CollectionLocalizedPropertiesRepository collLocalizedPropsRepo) {
-        List<CmsEntityHolder> cmsEntityHolders = getCmsObjects(CollectionType.BATHROOM, collSharedPropsRepo, collLocalizedPropsRepo);
+        List<CmsEntityHolder> cmsEntityHolders = getCmsObjects(type, collSharedPropsRepo, collLocalizedPropsRepo);
 
         return cmsEntityHolders
                 .stream()
