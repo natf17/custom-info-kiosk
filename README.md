@@ -85,3 +85,4 @@ TODOS:
 - the app should have a default locale and locale id
 - transition converters to LocalizedFieldsProcessor
 - test NonLocalizedCollectionServiceBase
+- make cms fields records for easier equality checking
